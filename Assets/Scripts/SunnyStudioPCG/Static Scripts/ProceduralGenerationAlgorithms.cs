@@ -36,6 +36,60 @@ public static class ProceduralGenerationAlgorithms
         return corridor;
     }
 
+    public static List<BoundsInt> BinarySpacePartitioning(BoundsInt spaceToSplit, int minWidth, int minHeight, int numberOfRooms, int depth)
+    {
+        Queue<BoundsInt> roomsQueue = new Queue<BoundsInt>();
+        List<BoundsInt> roomsList = new List<BoundsInt>();
+        roomsQueue.Enqueue(spaceToSplit);
+        while(roomsQueue.Count > 0)
+        {
+            var room = roomsQueue.Dequeue();
+            if(room.size.y >= minHeight && room.size.x >= minWidth)
+            {
+                if(Random.value < 0.5f)
+                {
+                    if(room.size.y >= minHeight * 2)
+                    {
+                        SplitHorizontally(minHeight, roomsQueue, room);
+                    }
+                    else if (room.size.x >= minWidth * 2)
+                    {
+                        SplitVertically(minWidth, roomsQueue, room);
+                    }
+                    else
+                    {
+                        roomsList.Add(room);
+                    }
+                }
+                else
+                {
+                    if (room.size.x >= minWidth * 2)
+                    {
+                        SplitVertically(minWidth, roomsQueue, room);
+                    }
+                    else if(room.size.y >= minHeight * 2)
+                    {
+                        SplitHorizontally(minHeight, roomsQueue, room);
+                    }
+                    else
+                    {
+                        roomsList.Add(room);
+                    }
+                }
+            }
+        }
+        if(roomsList.Count != numberOfRooms && depth < 100)
+        {
+            depth++;
+            roomsList.Clear();
+            roomsList = BinarySpacePartitioning(spaceToSplit, minWidth, minHeight, numberOfRooms, depth);
+        }
+        
+        return roomsList;
+        
+        
+    }
+
     public static List<BoundsInt> BinarySpacePartitioning(BoundsInt spaceToSplit, int minWidth, int minHeight)
     {
         Queue<BoundsInt> roomsQueue = new Queue<BoundsInt>();

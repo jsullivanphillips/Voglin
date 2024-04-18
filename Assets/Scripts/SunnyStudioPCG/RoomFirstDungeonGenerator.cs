@@ -70,6 +70,8 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGeneration
         return corridors;
     } 
 
+    
+
     private Vector2Int FindClosestPointTo(Vector2Int currentRoomCenter, List<Vector2Int> roomCenters)
     {
         Vector2Int closestCenter = Vector2Int.zero;

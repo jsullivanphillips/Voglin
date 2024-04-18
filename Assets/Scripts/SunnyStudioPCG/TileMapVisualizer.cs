@@ -9,6 +9,8 @@ public class TileMapVisualizer : MonoBehaviour
     private Tilemap floorTilemap, wallTilemap;
     [SerializeField]
     private TileBase floorTile, wallTop;
+    [SerializeField]
+    private RuleTile wallRuleTile;
     
 
     public void PaintFloorTiles(IEnumerable<Vector2Int> floorPositions) 
@@ -26,6 +28,7 @@ public class TileMapVisualizer : MonoBehaviour
 
     internal void PaintSingleBasicWall(Vector2Int position)
     {
+        // floortileMap, wall tilemap
         PaintSingleTile(wallTilemap, wallTop, position);
     }
 

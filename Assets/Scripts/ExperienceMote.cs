@@ -1,0 +1,51 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ExperienceMote : MonoBehaviour
+{
+    private float speed = 2f;
+    private Transform playerTransform;
+    private bool isMovingToPlayer;
+
+    void Start()
+    {
+        playerTransform = GameObject.Find("Player").transform;
+    }
+
+    void Update()
+    {
+        if(isMovingToPlayer)
+        {
+            MoveToPlayer();
+        }
+    }
+
+    public void MoveToPlayer()
+    {
+        Debug.Log("Speed: " + speed);
+        Vector2 direction = playerTransform.position - transform.position;
+        direction.Normalize();
+
+        float acceleration = 10f; // Adjust the acceleration value as needed
+        speed += acceleration * Time.deltaTime;
+
+        Vector2 movement = direction * speed * Time.deltaTime;
+        
+        transform.position += new Vector3(movement.x, movement.y, 0f);
+    }
+
+    public void SetMoveToPlayer(bool value)
+    {
+        isMovingToPlayer = value;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            other.gameObject.GetComponent<Player>().GainExperience(1);
+            Destroy(gameObject);
+        }
+    }
+}

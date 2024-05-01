@@ -15,6 +15,9 @@ public class GameStateManager : MonoBehaviour
 
     public GameState CurrentGameState { get; private set; }
 
+    [SerializeField]
+    private bool resumeAfterDelay = false;
+
     private void Awake()
     {
         if (Instance == null)
@@ -24,21 +27,6 @@ public class GameStateManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
-        }
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape)) 
-        {
-            if (CurrentGameState == GameState.Playing) 
-            { 
-                PauseGame(); 
-            }
-            else if (CurrentGameState == GameState.Paused) 
-            {
-                ResumeGame(); 
-            } 
         }
     }
 
@@ -55,6 +43,22 @@ public class GameStateManager : MonoBehaviour
 
     public void ResumeGame()
     {
+        if(resumeAfterDelay)
+        {
+            StartCoroutine(ResumeAfterDelay(0.5f));
+        }
+        else
+        {
+            CurrentGameState = GameState.Playing;
+            _PauseMenuUI.SetActive(false);
+        }
+        
+    }
+    
+    private IEnumerator ResumeAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+    
         CurrentGameState = GameState.Playing;
         _PauseMenuUI.SetActive(false);
     }

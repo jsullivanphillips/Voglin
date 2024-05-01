@@ -3,13 +3,12 @@ using System.Collections;
 using UnityEngine.EventSystems;
 using UnityEngine;
 
-public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    private Vector2 offset = Vector2.zero;
+    protected Vector2 offset = Vector2.zero;
     public RectTransform boundsBox; // The box that defines the bounds
     [SerializeField]
     private CanvasGroup canvasGroup;
-    private Guid id;
 
     private void Awkae()
     {
@@ -18,7 +17,6 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        Debug.Log("OnBeginDrag");
         offset = new Vector2(this.transform.position.x, this.transform.position.y) - eventData.position;
     
         // Move this card to the end of its parent's list of children so it appears on top
@@ -27,7 +25,7 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         canvasGroup.blocksRaycasts = false;
     }
 
-    public void OnDrag(PointerEventData eventData)
+    public virtual void OnDrag(PointerEventData eventData)
     {
         Vector2 pos = eventData.position + offset;
     
@@ -51,18 +49,6 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Debug.Log("OnEndDrag");
-
         canvasGroup.blocksRaycasts = true;
-    }
-
-    public void SetGuid(Guid guid)
-    {
-        id = guid;
-    }
-
-    public Guid GetGuid()
-    {
-        return id;
     }
 }

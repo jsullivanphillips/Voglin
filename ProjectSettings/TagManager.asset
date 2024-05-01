@@ -5,8 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Mob
-  - ExperienceMote
   - DisposalZone
+  - PickupableObject
   layers:
   - Default
   - TransparentFX

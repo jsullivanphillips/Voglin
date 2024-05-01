@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 public class DisposalZone : MonoBehaviour, IDropHandler
 {
     [SerializeField]
-    CraftingTableCardManager craftingTableCardManager;
+    CraftingTableItemManager craftingTableItemManager;
 
     public void OnDrop(PointerEventData eventData)
     {
@@ -12,7 +12,7 @@ public class DisposalZone : MonoBehaviour, IDropHandler
         if (card != null)
         {
             Debug.Log("Card dropped in disposal zone");
-            craftingTableCardManager.RemoveCard(card.GetGuid());
+            craftingTableItemManager.RemoveCard(card.GetGuid());
         }
     }
 }

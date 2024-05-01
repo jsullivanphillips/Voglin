@@ -31,22 +31,22 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        CheckExperienceMotes();
+        CheckForPickupableObjects();
     }
 
     private float pickupRadius = 2f;
 
-    private void CheckExperienceMotes()
+    private void CheckForPickupableObjects()
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, pickupRadius);
         foreach (Collider2D collider in colliders)
         {
-            if (collider.CompareTag("ExperienceMote"))
+            if (collider.CompareTag("PickupableObject"))
             {
-                ExperienceMote experienceMote = collider.GetComponent<ExperienceMote>();
-                if (experienceMote != null)
+                PickupableObject pickupableObject = collider.GetComponent<PickupableObject>();
+                if (pickupableObject != null)
                 {
-                    experienceMote.SetMoveToPlayer(true);
+                    pickupableObject.SetMoveToPlayer(true);
                 }
             }
         }

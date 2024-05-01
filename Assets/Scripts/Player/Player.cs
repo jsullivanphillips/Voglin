@@ -7,8 +7,6 @@ public class Player : MonoBehaviour
     public delegate void HealthChangedDelegate(float newHealth);
     public event HealthChangedDelegate OnHealthChanged;
 
-    private float maxHealth = 100;
-
     private float _currentHealth = 100;
     public float currentHealth
     {

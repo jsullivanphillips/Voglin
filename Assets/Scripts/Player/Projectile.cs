@@ -13,6 +13,10 @@ public class Projectile : MonoBehaviour
 
     private void Update()
     {
+        if (GameStateManager.Instance.IsPaused())
+        {
+            return;
+        }
         transform.position += direction * speed * Time.deltaTime;
         lifetime -= Time.deltaTime;
         if(lifetime <= 0)

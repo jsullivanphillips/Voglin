@@ -297,7 +297,7 @@ MonoBehaviour:
   _BoxCollider2D: {fileID: 4329587010453625093}
   _CollisionLayerMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 256
 --- !u!114 &-6772257040816583305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,6 +311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ProjectilePrefab: {fileID: 2025617104460581626, guid: ecd53f17c927b124db4b14b6c8fc5c9b, type: 3}
+  cooldown: 1.75
 --- !u!114 &-6968143222234137950
 MonoBehaviour:
   m_ObjectHideFlags: 0

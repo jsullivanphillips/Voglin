@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Mob
   - ExperienceMote
+  - DisposalZone
   layers:
   - Default
   - TransparentFX

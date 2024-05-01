@@ -42,6 +42,10 @@ public class Mob : MonoBehaviour
 
     private void Update()
     {
+        if (GameStateManager.Instance.IsPaused())
+        {
+            return;
+        }
         if (player != null && Vector3.Distance(transform.position, player.transform.position) <= attackRange)
         {
             if (currentCooldown <= 0f)

@@ -16,9 +16,13 @@ public class MobMovement : MonoBehaviour
         playerTransform = GameObject.Find("Player").transform;
     }
 
-
     void Update()
     {
+        if (GameStateManager.Instance.IsPaused())
+        {
+            return;
+        }
+
         Vector2 currentPosition = new Vector2(transform.position.x, transform.position.y);
         Vector2 direction = new Vector2(playerTransform.position.x - currentPosition.x, playerTransform.position.y - currentPosition.y);
         direction.Normalize();

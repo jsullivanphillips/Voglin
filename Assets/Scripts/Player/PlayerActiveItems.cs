@@ -6,6 +6,7 @@ public class PlayerActiveItems : MonoBehaviour
 {
     [SerializeField] private GameObject _ProjectilePrefab;
 
+    [SerializeField]
     private float cooldown = 2f;
     private float cooldownTimer = 0;
 
@@ -13,6 +14,10 @@ public class PlayerActiveItems : MonoBehaviour
 
     void Update()
     {
+        if (GameStateManager.Instance.IsPaused())
+        {
+            return;
+        }
         if (cooldownTimer > 0)
         {
             cooldownTimer -= Time.deltaTime;

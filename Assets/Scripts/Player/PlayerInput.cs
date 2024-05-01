@@ -7,9 +7,18 @@ public class PlayerInput : MonoBehaviour
     
     [SerializeField] PlayerMovement _PlayerMovement;
 
+    private void Start()
+    {
+        _PlayerMovement = GetComponent<PlayerMovement>();
+    }
+
     private void Update() 
     {
-         MovementInput();
+        if (GameStateManager.Instance.IsPaused())
+        {
+            return;
+        }
+        MovementInput();
     }
 
     private void MovementInput()

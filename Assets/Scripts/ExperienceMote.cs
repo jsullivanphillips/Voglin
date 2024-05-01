@@ -23,7 +23,6 @@ public class ExperienceMote : MonoBehaviour
 
     public void MoveToPlayer()
     {
-        Debug.Log("Speed: " + speed);
         Vector2 direction = playerTransform.position - transform.position;
         direction.Normalize();
 

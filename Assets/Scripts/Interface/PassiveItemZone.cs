@@ -20,7 +20,7 @@ public class PassiveItemZone : MonoBehaviour, IDropHandler
             Debug.Log("Card dropped in passive item zone");
             card.transform.SetParent(this.transform);
             card.isInPassiveItemZone = true;
-
+            card.isInRack = true;
             _HUDPassiveItemZone.AddPassiveItem(card.GetPassiveItemSO(), card.GetId());
             PlayerPassiveItems.Instance.AddPassiveItem(card.GetPassiveItemSO(), card.GetId());
         }

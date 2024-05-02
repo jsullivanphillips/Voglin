@@ -720,6 +720,7 @@ MonoBehaviour:
   simpleCardAnimations: {fileID: 4091207754615977887}
   _CraftingFillBar: {fileID: 2357120481599816282}
   _FillBarGO: {fileID: 4029222262708254593}
+  craftingHandler: {fileID: 350875510625232788}
   isCrafting: 0
   _TitleText: {fileID: 4559347083933542005}
   _EffectType_1_Text: {fileID: 8619534480219920301}

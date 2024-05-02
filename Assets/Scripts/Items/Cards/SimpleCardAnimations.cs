@@ -33,7 +33,6 @@ public class SimpleCardAnimations : MonoBehaviour
     private IEnumerator HoverWithDraggedCardAnimation()
     {
         originalPosition = transform.position;
-        Debug.Log("Hovering with dragged card");
         while(true)
         {
             transform.position = originalPosition + new Vector3(0, 2f, 0);

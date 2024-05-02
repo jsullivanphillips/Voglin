@@ -73,6 +73,25 @@ public class CraftingTableItemManager : MonoBehaviour
        activeCardScript.SetId(card.Id);
        activeCardScript.itemMat = _ItemMat;
        activeCardScript.SetCardType(CardType.Active);
+       activeCardScript.SetItemSO(newActiveItemSO);
+
+       activeCardScript.SetActiveItemSO(newActiveItemSO);
+    }
+
+    public void SpawnActiveCard(ActiveItemSO newActiveItemSO, Vector3 position)
+    {
+        GameObject cardObject = Instantiate(_ActiveCardPrefab, position, Quaternion.identity, _ItemMat);
+        ActiveCard activeCardScript = cardObject.GetComponent<ActiveCard>();
+
+        Card card = new Card(cardObject, activeCardScript);
+        _cards.Add(card.Id, card);
+        _activeCards.Add(card.Id, activeCardScript);
+
+       activeCardScript.boundsBox = _BoundsBox;
+       activeCardScript.SetId(card.Id);
+       activeCardScript.itemMat = _ItemMat;
+       activeCardScript.SetCardType(CardType.Active);
+       activeCardScript.SetItemSO(newActiveItemSO);
 
        activeCardScript.SetActiveItemSO(newActiveItemSO);
     }
@@ -90,6 +109,24 @@ public class CraftingTableItemManager : MonoBehaviour
         passiveCardScript.SetId(card.Id);
         passiveCardScript.itemMat = _ItemMat;
         passiveCardScript.SetCardType(CardType.Passive);
+        passiveCardScript.SetItemSO(newPassiveItemSO);
+
+        passiveCardScript.SetPassiveItemSO(newPassiveItemSO);
+    }
+
+    public void SpawnPassiveCard(PassiveItemSO newPassiveItemSO, Vector3 position)
+    {
+        GameObject cardObject = Instantiate(_PassiveCardPrefab, position, Quaternion.identity, _ItemMat);
+        PassiveCard passiveCardScript = cardObject.GetComponent<PassiveCard>();
+
+        Card card = new Card(cardObject, passiveCardScript);
+        _cards.Add(card.Id, card);
+
+        passiveCardScript.boundsBox = _BoundsBox;
+        passiveCardScript.SetId(card.Id);
+        passiveCardScript.itemMat = _ItemMat;
+        passiveCardScript.SetCardType(CardType.Passive);
+        passiveCardScript.SetItemSO(newPassiveItemSO);
 
         passiveCardScript.SetPassiveItemSO(newPassiveItemSO);
     }

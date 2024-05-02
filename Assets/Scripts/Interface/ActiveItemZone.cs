@@ -20,7 +20,7 @@ public class ActiveItemZone : MonoBehaviour, IDropHandler
             Debug.Log("Card dropped in active item zone");
             card.transform.SetParent(this.transform);
             card.isInActiveItemsZone = true;
-
+            card.isInRack = true;
             _HUDActiveItemZone.AddActiveItem(card.GetActiveItemSO(), card.GetId());
             PlayerActiveItems.Instance.AddActiveItem(card.GetActiveItemSO(), card.GetId());
         }

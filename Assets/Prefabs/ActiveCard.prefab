@@ -813,6 +813,7 @@ MonoBehaviour:
   simpleCardAnimations: {fileID: 5348316978339525224}
   _CraftingFillBar: {fileID: 6745091419027845490}
   _FillBarGO: {fileID: 2532743525653456167}
+  craftingHandler: {fileID: 8237725807413212127}
   isCrafting: 0
   _TitleText: {fileID: 4559347083933542005}
   _DamageText: {fileID: 8619534480219920301}

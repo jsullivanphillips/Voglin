@@ -23,9 +23,14 @@ public class DraggableCard : DraggableObject
     private Image _CraftingFillBar;
     [SerializeField]
     private GameObject _FillBarGO;
+    [SerializeField]
+    private CraftingHandler craftingHandler;
 
     private DraggableCard craftingPartner;
     public bool isCrafting = false;
+    private ItemSO itemSO;
+
+    public bool isInRack = false;
 
     public void SetId(int _id)
     {
@@ -47,6 +52,26 @@ public class DraggableCard : DraggableObject
         return cardType;
     }
 
+    public void SetItemSO(ItemSO _itemSO)
+    {
+        itemSO = _itemSO;
+    }
+
+    public ItemSO GetItemSO()
+    {
+        return itemSO;
+    }
+
+    public override void OnBeginDrag(PointerEventData eventData)
+    {
+        if(!isDraggable)
+        {
+            return;
+        }
+        base.OnBeginDrag(eventData);
+        isInRack = false;
+    }
+
     public override void OnEndDrag(PointerEventData eventData)
     {
         if(!isDraggable)
@@ -64,6 +89,7 @@ public class DraggableCard : DraggableObject
             return;
         }
         base.OnDrag(eventData);
+
         simpleCardAnimations.StartCardBeingDraggedAnimation();
         StopCraftingAnimation();
     }
@@ -75,10 +101,9 @@ public class DraggableCard : DraggableObject
         isCrafting = true;
     }
 
-    
-
-    public void StartCraftingAnimation()
+    public void StartCraftingAnimation(DraggableCard craftingPartner)
     {
+        this.craftingPartner = craftingPartner;
         isCrafting = true;
         _FillBarGO.SetActive(true);
         fillBarAnimation = StartCoroutine(FillCraftingBar());
@@ -93,6 +118,7 @@ public class DraggableCard : DraggableObject
             _CraftingFillBar.fillAmount = fillAmount;
             yield return null;
         }
+        craftingHandler.CraftItems(this, craftingPartner);
         _FillBarGO.SetActive(false);
         isCrafting = false;
     }

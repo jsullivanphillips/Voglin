@@ -8,10 +8,8 @@ public enum PassiveEffect
     RangeBoost,
 }
 [CreateAssetMenu(fileName = "New Passive Item", menuName = "Items/Passive Item")]
-public class PassiveItemSO : ScriptableObject
+public class PassiveItemSO : ItemSO
 {
-    public string itemName = "New Passive Item";
-    public int id;
     public List<PassiveEffect> passiveEffects;
     public List<float> effectValues;
 }

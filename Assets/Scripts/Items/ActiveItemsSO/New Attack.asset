@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87eb1463f03f8c94990e85ccc50cd7d1, type: 3}
+  m_Name: New Attack
+  m_EditorClassIdentifier: 
+  itemName: New Attack
+  id: 0
+  cardType: 0
+  cooldown: 1
+  cooldownTimer: 0
+  attackRange: 5
+  damage: 6
+  projectilePrefab: {fileID: 2025617104460581626, guid: ecd53f17c927b124db4b14b6c8fc5c9b, type: 3}

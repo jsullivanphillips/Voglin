@@ -150,6 +150,7 @@ MonoBehaviour:
   health: 5
   _ExperienceMotePrefab: {fileID: 8416166615506956229, guid: 3ce8f1271c82ffb44a82d142aaa28d28, type: 3}
   _ItemDropPrefab: {fileID: 7866015723002787324, guid: e57c9fd4082b5ec46ba5e2c5762daefa, type: 3}
+  orbDropChance: 10
 --- !u!114 &8706485320158925668
 MonoBehaviour:
   m_ObjectHideFlags: 0

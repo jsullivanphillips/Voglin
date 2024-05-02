@@ -12,7 +12,7 @@ public class DisposalZone : MonoBehaviour, IDropHandler
         if (card != null)
         {
             Debug.Log("Card dropped in disposal zone");
-            craftingTableItemManager.RemoveCard(card.GetGuid());
+            craftingTableItemManager.RemoveCard(card.GetId());
         }
     }
 }

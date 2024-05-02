@@ -9,13 +9,13 @@ using Random = UnityEngine.Random;
 
 public class Card
 {
-    public Guid Id { get; private set; }
+    public int Id { get; private set; }
     public GameObject _gameObject { get; private set; }
     public DraggableCard _draggableCard { get; private set; }
 
     public Card(GameObject gameObject, DraggableCard draggableCard)
     {
-        Id = Guid.NewGuid();
+        Id = Random.Range(0, int.MaxValue);
         _gameObject = gameObject;
         _draggableCard = draggableCard;
         // Initialize other card properties...
@@ -26,6 +26,8 @@ public class CraftingTableItemManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject _CardPrefab;
+    [SerializeField]
+    private GameObject _ActiveCardPrefab;
     [SerializeField]
     private GameObject _OrbPrefab;
     [SerializeField]
@@ -39,7 +41,9 @@ public class CraftingTableItemManager : MonoBehaviour
     [SerializeField]
     private RectTransform _DisposalBoundsBox;
 
-    private Dictionary<Guid, Card> _cards = new Dictionary<Guid, Card>();
+    private Dictionary<int, Card> _cards = new Dictionary<int, Card>();
+
+    private Dictionary<int, ActiveCard> _activeCards = new Dictionary<int, ActiveCard>();
 
     public static CraftingTableItemManager Instance { get; private set; }
 
@@ -56,12 +60,12 @@ public class CraftingTableItemManager : MonoBehaviour
     }
 
     // Testing funzies
-    public void Create3CardsBtn()
+    public void Create2CardsBtn()
     {
-        StartCoroutine(Create3Cards());
+        StartCoroutine(Create2Cards());
     }
 
-    public IEnumerator Create3Cards()
+    public IEnumerator Create2Cards()
     {
         Vector3 randomPositionWithinBounds = new Vector3(
             Random.Range(_SpawnBoundsBox.rect.xMin, _SpawnBoundsBox.rect.xMax),
@@ -71,44 +75,30 @@ public class CraftingTableItemManager : MonoBehaviour
 
         randomPositionWithinBounds = _SpawnBoundsBox.TransformPoint(randomPositionWithinBounds);
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 2; i++)
         {
-            CreateCard(randomPositionWithinBounds + (i * Vector3.right * 100f));
+            CreateActiveCard(randomPositionWithinBounds + (i * Vector3.right * 100f));
             yield return new WaitForSeconds(0.1f);
         }
     }
     // ^ Delete after
 
-    public void CreateCard(Vector2 position)
+    public void CreateActiveCard(Vector2 position)
     {
-        GameObject cardObject = Instantiate(_CardPrefab, position, Quaternion.identity, _ItemMat);
-        DraggableCard draggableCardScript = cardObject.GetComponent<DraggableCard>();
+        GameObject cardObject = Instantiate(_ActiveCardPrefab, position, Quaternion.identity, _ItemMat);
+        ActiveCard activeCardScript = cardObject.GetComponent<ActiveCard>();
 
-        Card card = new Card(cardObject, draggableCardScript);
+        Card card = new Card(cardObject, activeCardScript);
         _cards.Add(card.Id, card);
+        _activeCards.Add(card.Id, activeCardScript);
 
-       draggableCardScript.boundsBox = _BoundsBox;
-       draggableCardScript.SetGuid(card.Id);
-    }
+       activeCardScript.boundsBox = _BoundsBox;
+       activeCardScript.SetId(card.Id);
+       activeCardScript.itemMat = _ItemMat;
 
-    public void CreateCard()
-    {
-        Vector3 randomPositionWithinBounds = new Vector3(
-            Random.Range(_SpawnBoundsBox.rect.xMin, _SpawnBoundsBox.rect.xMax),
-            Random.Range(_SpawnBoundsBox.rect.yMin, _SpawnBoundsBox.rect.yMax),
-            0f
-        );
+       ActiveItemSO newActiveItemSO = CardSpawnMaster.Instance.GetRandomActiveItem();
+       activeCardScript.SetActiveItemSO(newActiveItemSO);
 
-        randomPositionWithinBounds = _SpawnBoundsBox.TransformPoint(randomPositionWithinBounds);
-
-        GameObject cardObject = Instantiate(_CardPrefab, randomPositionWithinBounds, Quaternion.identity, _ItemMat);
-        DraggableCard draggableCardScript = cardObject.GetComponent<DraggableCard>();
-
-        Card card = new Card(cardObject, draggableCardScript);
-        _cards.Add(card.Id, card);
-
-       draggableCardScript.boundsBox = _BoundsBox;
-       draggableCardScript.SetGuid(card.Id);
     }
 
     public void CreateOrb()
@@ -127,6 +117,7 @@ public class CraftingTableItemManager : MonoBehaviour
             DraggableOrb draggableOrbScript = orbObject.GetComponent<DraggableOrb>();
         
             draggableOrbScript.boundsBox = _BoundsBox;
+            draggableOrbScript.itemMat = _ItemMat;
         }
         else
         {
@@ -141,17 +132,23 @@ public class CraftingTableItemManager : MonoBehaviour
             DraggableOrb draggableOrbScript = orbObject.GetComponent<DraggableOrb>();
         
             draggableOrbScript.boundsBox = _BoundsBox;
+            draggableOrbScript.itemMat = _ItemMat;
         }
     
        
     }
 
-    public void RemoveCard(Guid cardId)
+    public void UpdateCooldown(int id, float cooldownPercentage)
     {
-        if (_cards.ContainsKey(cardId))
+        _activeCards[id].SetCooldownPercentage(cooldownPercentage);
+    }
+
+    public void RemoveCard(int id)
+    {
+        if (_cards.ContainsKey(id))
         {
-            Card card = _cards[cardId];
-            _cards.Remove(cardId);
+            Card card = _cards[id];
+            _cards.Remove(id);
             Destroy(card._gameObject);
         }
     }

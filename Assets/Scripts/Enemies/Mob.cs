@@ -5,12 +5,14 @@ using UnityEngine;
 public class Mob : MonoBehaviour
 {
     [SerializeField]
-    private int health = 5;
+    private float health = 5;
 
     [SerializeField]
     private GameObject _ExperienceMotePrefab;
     [SerializeField]
     private GameObject _ItemDropPrefab;
+    [SerializeField]
+    private float orbDropChance = 50f;
 
     private float attackCooldown = 1f;
     private float currentCooldown = 0f;
@@ -19,7 +21,7 @@ public class Mob : MonoBehaviour
     GameObject player;
 
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         health -= damage;
         if (health <= 0)
@@ -32,7 +34,7 @@ public class Mob : MonoBehaviour
     {
         Vector3 spawnLocation = new Vector3(transform.position.x, transform.position.y, 1f);
         Instantiate(_ExperienceMotePrefab, spawnLocation, Quaternion.Euler(0f, 0f, 90f));
-        if(Random.Range(0, 100) < 50)
+        if(Random.Range(0, 100) < orbDropChance)
         {
             Vector3 offsetSpawnLocation = spawnLocation + new Vector3(Random.Range(-1f,1f), Random.Range(-1f,1f), 0f);
             Instantiate(_ItemDropPrefab, offsetSpawnLocation, Quaternion.identity);

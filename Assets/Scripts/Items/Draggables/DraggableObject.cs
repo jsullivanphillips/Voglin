@@ -7,26 +7,38 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 {
     protected Vector2 offset = Vector2.zero;
     public RectTransform boundsBox; // The box that defines the bounds
+    public Transform itemMat;
     [SerializeField]
-    private CanvasGroup canvasGroup;
+    protected CanvasGroup canvasGroup;
 
-    private void Awkae()
+    protected bool isDraggable = true;
+
+    private void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
+    public virtual void OnBeginDrag(PointerEventData eventData)
     {
+        if(!isDraggable)
+        {
+            return;
+        }
         offset = new Vector2(this.transform.position.x, this.transform.position.y) - eventData.position;
     
         // Move this card to the end of its parent's list of children so it appears on top
+        this.transform.SetParent(itemMat);
         this.transform.SetAsLastSibling();
-
+        
         canvasGroup.blocksRaycasts = false;
     }
 
     public virtual void OnDrag(PointerEventData eventData)
     {
+        if(!isDraggable)
+        {
+            return;
+        }
         Vector2 pos = eventData.position + offset;
     
         // Get the corners of the card in screen space
@@ -49,6 +61,10 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if(!isDraggable)
+        {
+            return;
+        }
         canvasGroup.blocksRaycasts = true;
     }
 }

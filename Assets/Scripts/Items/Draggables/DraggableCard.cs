@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class DraggableCard : DraggableObject
 {
-    private Guid id;
+    protected int id;
 
-    public void SetGuid(Guid guid)
+    public void SetId(int _id)
     {
-        id = guid;
+        id = _id;
     }
 
-    public Guid GetGuid()
+    public int GetId()
     {
         return id;
     }

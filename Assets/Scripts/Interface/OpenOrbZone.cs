@@ -12,7 +12,7 @@ public class OpenOrbZone : MonoBehaviour, IDropHandler
         if (orb != null)
         {
             Debug.Log("Orb dropped in opening zone");
-            craftingTableItemManager.Create3CardsBtn();
+            craftingTableItemManager.Create2CardsBtn();
             Destroy(orb.gameObject);
         }
     }

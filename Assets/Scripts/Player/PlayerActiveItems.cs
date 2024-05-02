@@ -4,13 +4,21 @@ using UnityEngine;
 
 public class PlayerActiveItems : MonoBehaviour
 {
-    [SerializeField] private GameObject _ProjectilePrefab;
+    public static PlayerActiveItems Instance { get; private set; }
 
-    [SerializeField]
-    private float cooldown = 2f;
-    private float cooldownTimer = 0;
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
-    private float attackRange = 5f;
+    Dictionary<int, ActiveItemSO> activeItems = new Dictionary<int, ActiveItemSO>();
 
     void Update()
     {
@@ -18,26 +26,46 @@ public class PlayerActiveItems : MonoBehaviour
         {
             return;
         }
-        if (cooldownTimer > 0)
+        foreach (ActiveItemSO item in activeItems.Values)
         {
-            cooldownTimer -= Time.deltaTime;
-        }
-        else
-        {
-            Shoot();
+            if(GameStateManager.Instance.IsPaused())
+            {
+                return;
+            }
+            if(item.cooldownTimer <= 0f)
+            {
+                Shoot(item);
+            }
+            else
+            {
+                item.cooldownTimer -= Time.deltaTime;
+                HUDActiveItemZone.Instance.UpdateCooldown(item.id, item.cooldownTimer / item.cooldown);
+            }
         }
     }
 
-    private void Shoot()
+    public void AddActiveItem(ActiveItemSO item, int id)
     {
-        if(DetectMobs(out Collider2D closestMob))
-        {
-            PerformAttack(closestMob.transform.position);
-        }
-        cooldownTimer = cooldown;
+        activeItems[id] = item;
+        item.id = id;
     }
 
-    private void PerformAttack(Vector3 target)
+    public void RemoveActiveItem(int id)
+    {
+        activeItems.Remove(id);
+    }
+
+    private void Shoot(ActiveItemSO item)
+    {
+        if (DetectMobs(item.attackRange, out Collider2D closestMob))
+        {
+            PerformAttack(item, closestMob.transform.position);
+            item.cooldownTimer = item.cooldown;
+        }
+        
+    }
+
+    private void PerformAttack(ActiveItemSO item, Vector3 target)
     {
         Vector3 direction = (target - transform.position).normalized;
         Quaternion rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90);
@@ -46,9 +74,10 @@ public class PlayerActiveItems : MonoBehaviour
         float offsetDistance = 1f;
         Vector3 spawnPosition = transform.position + direction * offsetDistance;
 
-        GameObject projectile = Instantiate(_ProjectilePrefab, spawnPosition, rotation);
+        GameObject projectile = Instantiate(item.projectilePrefab, spawnPosition, rotation);
         Projectile projectileScript = projectile.GetComponent<Projectile>();
-        projectileScript.distanceToLive = attackRange + 1;
+        projectileScript.distanceToLive = item.attackRange;
+        projectileScript.damage = item.damage;
         projectileScript.SetLifetime();
         
         projectileScript.direction = direction;
@@ -56,9 +85,9 @@ public class PlayerActiveItems : MonoBehaviour
     }
 
 
-    private bool DetectMobs(out Collider2D closestMob)
+    private bool DetectMobs(float range, out Collider2D closestMob)
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, attackRange + 1);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, range);
         closestMob = null;
         float closestDistance = Mathf.Infinity;
 

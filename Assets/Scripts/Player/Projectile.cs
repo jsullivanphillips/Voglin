@@ -9,7 +9,7 @@ public class Projectile : MonoBehaviour
     public float distanceToLive = 5f;
     private float lifetime = 2f;
     private bool destroyOnCollision = true;
-    private int damage = 5;
+    public float damage = 5;
 
     private void Update()
     {

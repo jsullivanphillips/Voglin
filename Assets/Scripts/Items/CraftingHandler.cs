@@ -82,8 +82,8 @@ public class CraftingHandler : MonoBehaviour, IDropHandler, IPointerEnterHandler
             {
                 CraftingTableItemManager.Instance.SpawnActiveCard((ActiveItemSO)result, transform.position);
             }
-            Destroy(otherCard.gameObject);
-            Destroy(thisCard.gameObject);
+            CraftingTableItemManager.Instance.RemoveCard(otherCard.GetId());
+            CraftingTableItemManager.Instance.RemoveCard(thisCard.GetId());
         }
     }
 }

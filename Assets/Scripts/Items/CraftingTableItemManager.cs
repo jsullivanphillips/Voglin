@@ -86,6 +86,7 @@ public class CraftingTableItemManager : MonoBehaviour
         Card card = new Card(cardObject, activeCardScript);
         _cards.Add(card.Id, card);
         _activeCards.Add(card.Id, activeCardScript);
+        Debug.Log("NewCard Id: " + card.Id);
 
        activeCardScript.boundsBox = _BoundsBox;
        activeCardScript.SetId(card.Id);

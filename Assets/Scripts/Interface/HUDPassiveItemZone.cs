@@ -35,6 +35,7 @@ public class HUDPassiveItemZone : MonoBehaviour
         passiveCardComponent.SetId(id);
         passiveCardComponent.SetPassiveItemSO(passiveItem);
         passiveCardComponent.SetIsDraggable(false);
+        passiveCardComponent.isInRack = true;
         passiveCards[id] = passiveCardComponent;
     }
 

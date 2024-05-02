@@ -26,21 +26,22 @@ public class PlayerActiveItems : MonoBehaviour
         {
             return;
         }
-        foreach (ActiveItemSO item in activeItems.Values)
+        foreach (int id in activeItems.Keys)
         {
             if(GameStateManager.Instance.IsPaused())
             {
                 return;
             }
-            if(item.cooldownTimer <= 0f)
+            if(activeItems[id].cooldownTimer <= 0f)
             {
-                Shoot(item);
+                Shoot(activeItems[id]);
             }
             else
             {
-                item.cooldownTimer -= Time.deltaTime;
-                HUDActiveItemZone.Instance.UpdateCooldown(item.id, item.cooldownTimer / item.cooldown);
-                CraftingTableItemManager.Instance.UpdateCooldown(item.id, item.cooldownTimer / item.cooldown);
+                Debug.Log($"[{Time.frameCount}] Reducing cooldown for item: {id}");
+                activeItems[id].cooldownTimer -= Time.deltaTime;
+                HUDActiveItemZone.Instance.UpdateCooldown(id, activeItems[id].cooldownTimer / activeItems[id].cooldown);
+                CraftingTableItemManager.Instance.UpdateCooldown(id, activeItems[id].cooldownTimer / activeItems[id].cooldown);
             }
         }
     }

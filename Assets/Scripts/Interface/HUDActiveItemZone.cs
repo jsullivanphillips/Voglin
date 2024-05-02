@@ -35,6 +35,7 @@ public class HUDActiveItemZone : MonoBehaviour
         activeCardComponent.SetId(id);
         activeCardComponent.SetActiveItemSO(activeItem);
         activeCardComponent.SetIsDraggable(false);
+        activeCardComponent.isInRack = true;
         activeCards[id] = activeCardComponent;
     }
 

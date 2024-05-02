@@ -45,12 +45,12 @@ public class CraftingRecipes : MonoBehaviour
             if(recipe.item1.itemName == item1.itemName 
             && recipe.item2.itemName == item2.itemName)
             {
-                return recipe.result;
+                return Instantiate(recipe.result);
             }
             else if(recipe.item1.itemName == item2.itemName 
             && recipe.item2.itemName == item1.itemName)
             {
-                return recipe.result;
+                return Instantiate(recipe.result);
             }
         }
         return null;

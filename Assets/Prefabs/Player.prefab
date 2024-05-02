@@ -165,6 +165,7 @@ GameObject:
   - component: {fileID: 4329587010453625093}
   - component: {fileID: 4329587010453625092}
   - component: {fileID: 4329587010453625095}
+  - component: {fileID: -2930480940754479100}
   - component: {fileID: -6772257040816583305}
   - component: {fileID: -6968143222234137950}
   - component: {fileID: 2882368088401893941}
@@ -298,6 +299,18 @@ MonoBehaviour:
   _CollisionLayerMask:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &-2930480940754479100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4329587010453625088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90d7a75d7ba3af84bb5dceda78a0ae00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &-6772257040816583305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,8 +323,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efc3dc8555fbdd249bfdad523af0dc41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ProjectilePrefab: {fileID: 2025617104460581626, guid: ecd53f17c927b124db4b14b6c8fc5c9b, type: 3}
-  cooldown: 1.75
 --- !u!114 &-6968143222234137950
 MonoBehaviour:
   m_ObjectHideFlags: 0

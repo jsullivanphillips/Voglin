@@ -21,16 +21,16 @@ public class HUDActiveItemZone : MonoBehaviour
 
     Dictionary<int, ActiveCard> activeCards = new Dictionary<int, ActiveCard>();
     [SerializeField]
-    Transform ActiveItemZone;
+    Transform _ActiveItemZone;
     [SerializeField]
-    GameObject activeCardPrefab;
+    GameObject _ActiveCardPrefab;
 
 
     public void AddActiveItem(ActiveItemSO activeItem, int id)
     {
         Debug.Log("Adding active item to HUD");
         // Add active item to HUD
-        GameObject activeCard = Instantiate(activeCardPrefab, ActiveItemZone);
+        GameObject activeCard = Instantiate(_ActiveCardPrefab, _ActiveItemZone);
         ActiveCard activeCardComponent = activeCard.GetComponent<ActiveCard>();
         activeCardComponent.SetId(id);
         activeCardComponent.SetActiveItemSO(activeItem);

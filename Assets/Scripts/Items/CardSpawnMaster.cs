@@ -22,11 +22,19 @@ public class CardSpawnMaster : MonoBehaviour
     [SerializeField]
     private List<ActiveItemSO> activeItems = new List<ActiveItemSO>();
 
-    public ActiveItemSO GetRandomActiveItem()
+    public ActiveItemSO GetRandomActiveItem(int rank)
     {
         ActiveItemSO activeItem = Instantiate(activeItems[Random.Range(0, activeItems.Count)]);
         activeItem.cooldownTimer = 0f;
         activeItem.cooldown = activeItem.cooldown + Random.Range(-0.5f, 0.5f);
         return activeItem;
+    }
+
+    [SerializeField]
+    private List<PassiveItemSO> passiveItems = new List<PassiveItemSO>();
+
+    public PassiveItemSO GetRandomPassiveItem(int rank)
+    {
+        return Instantiate(passiveItems[Random.Range(0, passiveItems.Count)]);
     }
 }

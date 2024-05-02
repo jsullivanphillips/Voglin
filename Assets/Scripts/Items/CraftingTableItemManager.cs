@@ -25,9 +25,9 @@ public class Card
 public class CraftingTableItemManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _CardPrefab;
-    [SerializeField]
     private GameObject _ActiveCardPrefab;
+    [SerializeField]
+    private GameObject _PassiveCardPrefab;
     [SerializeField]
     private GameObject _OrbPrefab;
     [SerializeField]
@@ -59,32 +59,9 @@ public class CraftingTableItemManager : MonoBehaviour
         }
     }
 
-    // Testing funzies
-    public void Create2CardsBtn()
+    public void SpawnActiveCard(ActiveItemSO newActiveItemSO)
     {
-        StartCoroutine(Create2Cards());
-    }
-
-    public IEnumerator Create2Cards()
-    {
-        Vector3 randomPositionWithinBounds = new Vector3(
-            Random.Range(_SpawnBoundsBox.rect.xMin, _SpawnBoundsBox.rect.xMax),
-            Random.Range(_SpawnBoundsBox.rect.yMin, _SpawnBoundsBox.rect.yMax),
-            0f
-        );
-
-        randomPositionWithinBounds = _SpawnBoundsBox.TransformPoint(randomPositionWithinBounds);
-
-        for (int i = 0; i < 2; i++)
-        {
-            CreateActiveCard(randomPositionWithinBounds + (i * Vector3.right * 100f));
-            yield return new WaitForSeconds(0.1f);
-        }
-    }
-    // ^ Delete after
-
-    public void CreateActiveCard(Vector2 position)
-    {
+        Vector3 position = GetRandomPositionOnMat();
         GameObject cardObject = Instantiate(_ActiveCardPrefab, position, Quaternion.identity, _ItemMat);
         ActiveCard activeCardScript = cardObject.GetComponent<ActiveCard>();
 
@@ -96,9 +73,23 @@ public class CraftingTableItemManager : MonoBehaviour
        activeCardScript.SetId(card.Id);
        activeCardScript.itemMat = _ItemMat;
 
-       ActiveItemSO newActiveItemSO = CardSpawnMaster.Instance.GetRandomActiveItem();
        activeCardScript.SetActiveItemSO(newActiveItemSO);
+    }
 
+    public void SpawnPassiveCard(PassiveItemSO newPassiveItemSO)
+    {
+        Vector3 position = GetRandomPositionOnMat();
+        GameObject cardObject = Instantiate(_PassiveCardPrefab, position, Quaternion.identity, _ItemMat);
+        PassiveCard passiveCardScript = cardObject.GetComponent<PassiveCard>();
+
+        Card card = new Card(cardObject, passiveCardScript);
+        _cards.Add(card.Id, card);
+
+        passiveCardScript.boundsBox = _BoundsBox;
+        passiveCardScript.SetId(card.Id);
+        passiveCardScript.itemMat = _ItemMat;
+
+        passiveCardScript.SetPassiveItemSO(newPassiveItemSO);
     }
 
     public void CreateOrb()
@@ -121,12 +112,7 @@ public class CraftingTableItemManager : MonoBehaviour
         }
         else
         {
-            Vector3 randomPositionWithinBounds = new Vector3(
-                Random.Range(_SpawnBoundsBox.rect.xMin, _SpawnBoundsBox.rect.xMax),
-                Random.Range(_SpawnBoundsBox.rect.yMin, _SpawnBoundsBox.rect.yMax),
-                0f
-            );
-            randomPositionWithinBounds = _SpawnBoundsBox.TransformPoint(randomPositionWithinBounds);
+            Vector3 randomPositionWithinBounds = GetRandomPositionOnMat();
             
             GameObject orbObject = Instantiate(_OrbPrefab, randomPositionWithinBounds, Quaternion.identity, _ItemMat);
             DraggableOrb draggableOrbScript = orbObject.GetComponent<DraggableOrb>();
@@ -136,6 +122,18 @@ public class CraftingTableItemManager : MonoBehaviour
         }
     
        
+    }
+
+    private Vector3 GetRandomPositionOnMat()
+    {
+        Vector3 randomPositionWithinBounds = new Vector3(
+            Random.Range(_SpawnBoundsBox.rect.xMin, _SpawnBoundsBox.rect.xMax),
+            Random.Range(_SpawnBoundsBox.rect.yMin, _SpawnBoundsBox.rect.yMax),
+            0f
+        );
+        randomPositionWithinBounds = _SpawnBoundsBox.TransformPoint(randomPositionWithinBounds);
+        
+        return randomPositionWithinBounds;
     }
 
     public void UpdateCooldown(int id, float cooldownPercentage)

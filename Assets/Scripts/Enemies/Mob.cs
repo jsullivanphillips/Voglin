@@ -23,6 +23,7 @@ public class Mob : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        Debug.Log("Taking " + damage + " damage");
         health -= damage;
         if (health <= 0)
         {

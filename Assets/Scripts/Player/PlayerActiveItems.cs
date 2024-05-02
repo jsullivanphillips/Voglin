@@ -56,6 +56,11 @@ public class PlayerActiveItems : MonoBehaviour
         activeItems.Remove(id);
     }
 
+    public int GetActiveItemsCount()
+    {
+        return activeItems.Count;
+    }
+
     private void Shoot(ActiveItemSO item)
     {
         if (DetectMobs(item.attackRange, out Collider2D closestMob))
@@ -78,7 +83,7 @@ public class PlayerActiveItems : MonoBehaviour
         GameObject projectile = Instantiate(item.projectilePrefab, spawnPosition, rotation);
         Projectile projectileScript = projectile.GetComponent<Projectile>();
         projectileScript.distanceToLive = item.attackRange;
-        projectileScript.damage = item.damage;
+        projectileScript.damage = item.damage + PlayerPassiveItems.Instance.GetDamageBonuses();
         projectileScript.SetLifetime();
         
         projectileScript.direction = direction;

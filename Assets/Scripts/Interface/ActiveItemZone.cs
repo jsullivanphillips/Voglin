@@ -8,6 +8,12 @@ public class ActiveItemZone : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
+        if(PlayerActiveItems.Instance.GetActiveItemsCount() >= 4)
+        {
+            Debug.Log("You can't have more than 4 active items");
+            return;
+        }
+
         ActiveCard card = eventData.pointerDrag.GetComponent<ActiveCard>();
         if (card != null)
         {

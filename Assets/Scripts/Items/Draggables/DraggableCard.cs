@@ -3,6 +3,11 @@ using System.Collections;
 using UnityEngine.EventSystems;
 using UnityEngine;
 
+public enum CardType
+{
+    Active,
+    Passive
+}
 public class DraggableCard : DraggableObject
 {
     protected int id;

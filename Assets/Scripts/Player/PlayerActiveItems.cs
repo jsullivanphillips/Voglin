@@ -40,6 +40,7 @@ public class PlayerActiveItems : MonoBehaviour
             {
                 item.cooldownTimer -= Time.deltaTime;
                 HUDActiveItemZone.Instance.UpdateCooldown(item.id, item.cooldownTimer / item.cooldown);
+                CraftingTableItemManager.Instance.UpdateCooldown(item.id, item.cooldownTimer / item.cooldown);
             }
         }
     }

@@ -59,7 +59,7 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         this.transform.position = new Vector2(clampedX, clampedY);
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+    public virtual void OnEndDrag(PointerEventData eventData)
     {
         if(!isDraggable)
         {

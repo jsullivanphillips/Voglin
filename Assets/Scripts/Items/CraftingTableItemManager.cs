@@ -72,6 +72,7 @@ public class CraftingTableItemManager : MonoBehaviour
        activeCardScript.boundsBox = _BoundsBox;
        activeCardScript.SetId(card.Id);
        activeCardScript.itemMat = _ItemMat;
+       activeCardScript.SetCardType(CardType.Active);
 
        activeCardScript.SetActiveItemSO(newActiveItemSO);
     }
@@ -88,6 +89,7 @@ public class CraftingTableItemManager : MonoBehaviour
         passiveCardScript.boundsBox = _BoundsBox;
         passiveCardScript.SetId(card.Id);
         passiveCardScript.itemMat = _ItemMat;
+        passiveCardScript.SetCardType(CardType.Passive);
 
         passiveCardScript.SetPassiveItemSO(newPassiveItemSO);
     }

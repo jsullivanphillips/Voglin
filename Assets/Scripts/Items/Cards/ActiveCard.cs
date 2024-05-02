@@ -59,13 +59,7 @@ public class ActiveCard : DraggableCard
             return;
         }
         
-        offset = new Vector2(this.transform.position.x, this.transform.position.y) - eventData.position;
-    
-        // Move this card to the end of its parent's list of children so it appears on top
-        this.transform.SetParent(itemMat);
-        this.transform.SetAsLastSibling();
-        
-        canvasGroup.blocksRaycasts = false;
+        base.OnBeginDrag(eventData);
 
         // if this card was in activeItems, remove it
         if(isInActiveItemsZone)

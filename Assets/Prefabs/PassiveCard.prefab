@@ -722,6 +722,7 @@ MonoBehaviour:
   _FillBarGO: {fileID: 4029222262708254593}
   craftingHandler: {fileID: 350875510625232788}
   isCrafting: 0
+  isInRack: 0
   _TitleText: {fileID: 4559347083933542005}
   _EffectType_1_Text: {fileID: 8619534480219920301}
   _EffectValue_1_Text: {fileID: 1280497177016399370}
@@ -1294,7 +1295,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: new active item
+  m_text: passive item
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1321,7 +1322,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12.65
+  m_fontSize: 15.7
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1

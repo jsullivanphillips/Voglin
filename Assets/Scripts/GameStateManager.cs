@@ -30,11 +30,6 @@ public class GameStateManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        CurrentGameState = GameState.Playing;
-    }
-
     public void PauseGame()
     {
         CurrentGameState = GameState.Paused;

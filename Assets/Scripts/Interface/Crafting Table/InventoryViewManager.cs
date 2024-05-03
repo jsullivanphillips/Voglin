@@ -4,6 +4,20 @@ using UnityEngine;
 
 public class InventoryViewManager : MonoBehaviour
 {
+    public static InventoryViewManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     [SerializeField]
     GameObject _InventoryView;
     private bool isCooldownActive = false;
@@ -23,6 +37,12 @@ public class InventoryViewManager : MonoBehaviour
         HUDManager.Instance.SetBagIconCooldown(cooldownTime);
         yield return new WaitForSeconds(cooldownTime);
         isCooldownActive = false;
+    }
+
+    public void OpenInventory()
+    {
+        _InventoryView.SetActive(true);
+        GameStateManager.Instance.PauseGame();
     }
 
     public void PressB()

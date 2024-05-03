@@ -80,5 +80,15 @@ public class SimpleCardAnimations : MonoBehaviour
         transform.localScale = originalScale;
     }
 
+    public void StopAnimations()
+    {
+        if(currentAnimation != null)
+        {
+            StopCoroutine(currentAnimation);
+        }
+        transform.position = Vector3.zero;
+        transform.localScale = Vector3.one;
+    }
+
 
 }

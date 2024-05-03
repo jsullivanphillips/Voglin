@@ -88,5 +88,10 @@ public class PassiveCard : DraggableCard
         isInPassiveItemZone = false;
     }
 
+    public void EquipCard()
+    {
+        PassiveItemZone.Instance.EquipCard(this);
+    }
+
 
 }

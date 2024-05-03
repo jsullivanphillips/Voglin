@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87eb1463f03f8c94990e85ccc50cd7d1, type: 3}
-  m_Name: New Attack
+  m_Name: PoorSword
   m_EditorClassIdentifier: 
-  itemName: New Attack
+  itemName: Poor Sword
+  rarity: 0
   id: 0
   cardType: 0
   cooldownRange:
-    min: 1.2
-    max: 2
-  cooldown: 1
+    min: 2
+    max: 3
+  cooldown: 1.5
   cooldownTimer: 0
   attackRange: 5
   damage: 6

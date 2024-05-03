@@ -94,6 +94,11 @@ public class DraggableCard : DraggableObject
         StopCraftingAnimation();
     }
 
+    public void StopAnimations()
+    {
+        simpleCardAnimations.StopAnimations();
+    }
+
     #region Crafting
     public void SetCraftingFlagTrue(DraggableCard craftingPartner)
     {

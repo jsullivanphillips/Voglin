@@ -69,4 +69,9 @@ public class ActiveCard : DraggableCard
         }
         isInActiveItemsZone = false;
     }
+
+    public void EquipCard()
+    {
+        ActiveItemZone.Instance.EquipCard(this);
+    }
 }

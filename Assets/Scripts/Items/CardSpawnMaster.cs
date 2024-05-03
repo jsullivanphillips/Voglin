@@ -26,7 +26,7 @@ public class CardSpawnMaster : MonoBehaviour
     {
         ActiveItemSO activeItem = Instantiate(activeItems[Random.Range(0, activeItems.Count)]);
         activeItem.cooldownTimer = 0f;
-        activeItem.cooldown = activeItem.cooldown + Random.Range(-0.5f, 0.5f);
+        activeItem.cooldown = Random.Range(activeItem.cooldownRange.min, activeItem.cooldownRange.max);
         return activeItem;
     }
 

@@ -11,20 +11,14 @@ public class CraftingHandler : MonoBehaviour, IDropHandler, IPointerEnterHandler
     public void OnDrop(PointerEventData eventData)
     {
         DraggableCard otherCard = eventData.pointerDrag.GetComponent<DraggableCard>();
-        if (otherCard != null && !thisDraggableCard.isCrafting && !thisDraggableCard.isInRack)
+        bool recipeExists = CraftingRecipes.Instance.DoesRecipeExist(thisDraggableCard.GetItemSO(), otherCard.GetItemSO());
+        if (otherCard != null && !thisDraggableCard.isCrafting && !thisDraggableCard.isInRack && recipeExists)
         {
-            if(otherCard.GetCardType() == CardType.Passive)
-            {
-                simpleCardAnimations.ReturnToOriginalPosition();
-                otherCard.SetCraftingFlagTrue(thisDraggableCard);
-                //Passive card dropped in crafting
-            }
-            else if(otherCard.GetCardType() == CardType.Active)
-            {
-                simpleCardAnimations.ReturnToOriginalPosition();
-                otherCard.SetCraftingFlagTrue(thisDraggableCard);
-                //Active card dropped in crafting
-            }
+            simpleCardAnimations.ReturnToOriginalPosition();
+            otherCard.SetCraftingFlagTrue(thisDraggableCard);
+            otherCard.transform.position = transform.position + new Vector3(0f, -30f, 0f);
+        
+            
             thisDraggableCard.StartCraftingAnimation(otherCard);
         }
     }
@@ -36,7 +30,14 @@ public class CraftingHandler : MonoBehaviour, IDropHandler, IPointerEnterHandler
 
         if (eventData.pointerDrag != null)
         {
-            if(!thisDraggableCard.isCrafting)
+            DraggableCard otherCard = eventData.pointerDrag.GetComponent<DraggableCard>();
+            if(otherCard == null)
+            {
+                return;
+            }
+
+            bool recipeExists = CraftingRecipes.Instance.DoesRecipeExist(thisDraggableCard.GetItemSO(), otherCard.GetItemSO());
+            if(!thisDraggableCard.isCrafting && recipeExists)
             {
                 simpleCardAnimations.StartHoverWithDraggedCardAnimation();
             }
@@ -80,7 +81,9 @@ public class CraftingHandler : MonoBehaviour, IDropHandler, IPointerEnterHandler
             }
             else if(result.cardType == CardType.Active)
             {
-                CraftingTableItemManager.Instance.SpawnActiveCard((ActiveItemSO)result, transform.position);
+                ActiveItemSO activeResult = (ActiveItemSO)result;
+                activeResult.cooldown = Random.Range(activeResult.cooldownRange.min, activeResult.cooldownRange.max);
+                CraftingTableItemManager.Instance.SpawnActiveCard(activeResult, transform.position);
             }
             CraftingTableItemManager.Instance.RemoveCard(otherCard.GetId());
             CraftingTableItemManager.Instance.RemoveCard(thisCard.GetId());

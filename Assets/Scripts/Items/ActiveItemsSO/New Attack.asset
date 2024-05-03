@@ -15,6 +15,9 @@ MonoBehaviour:
   itemName: New Attack
   id: 0
   cardType: 0
+  cooldownRange:
+    min: 1.2
+    max: 2
   cooldown: 1
   cooldownTimer: 0
   attackRange: 5

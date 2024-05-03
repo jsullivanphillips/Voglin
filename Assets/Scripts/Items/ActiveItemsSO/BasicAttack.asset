@@ -14,6 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: New Active Item
   id: 0
+  cardType: 0
+  cooldownRange:
+    min: 2
+    max: 3
   cooldown: 1.5
   cooldownTimer: 0
   attackRange: 5

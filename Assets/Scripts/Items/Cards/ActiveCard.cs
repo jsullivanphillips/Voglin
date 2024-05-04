@@ -62,7 +62,7 @@ public class ActiveCard : DraggableCard
         }
         else if(activeItemSO.isSplitOnCrit)
         {
-            _SpecialEffect1Text.text = "Splits in " + activeItemSO.numberOfSplits + " on critical hit";
+            _SpecialEffect1Text.text = "Splits in " + activeItemSO.numberOfSplits + " on critical hit dealing 50% damage";
         }
         else
         {

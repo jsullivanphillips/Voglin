@@ -4,10 +4,38 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    float speed = 5f;
+    float speed = 4f;
     [SerializeField] BoxCollider2D _BoxCollider2D;
     [Tooltip("The layers that the player should collide with.")]
     [SerializeField] LayerMask _CollisionLayerMask;
+
+    public float speedBoostAmount = 10f; // The amount of speed to add
+    public float speedBoostDuration = 2f; // How long the speed boost lasts
+    private float speedBoostTimer = 0f; // A timer to track the boost duration
+    private bool isSpeedBoosted = false; // To check if speed boost is active
+
+    public void ActivateSpeedBoost()
+    {
+        isSpeedBoosted = true;
+        speedBoostTimer = speedBoostDuration; // Reset the timer to the duration of the boost
+    }
+
+    void Update()
+    {
+        if (isSpeedBoosted)
+        {
+            // Decrease the timer
+            speedBoostTimer -= Time.deltaTime;
+
+            // Check if the speed boost duration has ended
+            if (speedBoostTimer <= 0)
+            {
+                isSpeedBoosted = false;
+                speedBoostTimer = 0;
+            }
+        }
+    }
+
 
     public void MovePlayer(Vector2 inputVector)
     {
@@ -18,6 +46,13 @@ public class PlayerMovement : MonoBehaviour
         }
 
         Vector2 currentPosition = new Vector2(transform.position.x, transform.position.y);
+
+        // Calculate the current speed, including any active speed boost
+        float currentSpeed = speed + PlayerPassiveItems.Instance.GetMoveSpeedBonuses();
+        if (isSpeedBoosted)
+        {
+            currentSpeed += speedBoostAmount * (speedBoostTimer / speedBoostDuration); // Apply decaying boost
+        }
 
         Vector2 horizontalMovement = new Vector2(inputVector.x, 0) * (speed + PlayerPassiveItems.Instance.GetMoveSpeedBonuses()) * Time.deltaTime;
         Vector2 verticalMovement = new Vector2(0, inputVector.y) * (speed + PlayerPassiveItems.Instance.GetMoveSpeedBonuses()) * Time.deltaTime;
@@ -58,5 +93,7 @@ public class PlayerMovement : MonoBehaviour
 
         transform.position = new Vector3(currentPosition.x, currentPosition.y, 0f);
     }
+
+
     
 }

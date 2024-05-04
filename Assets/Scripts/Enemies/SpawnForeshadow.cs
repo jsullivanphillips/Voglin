@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpawnForeshadow : MonoBehaviour
 {
-    private float lifetime = 2.5f;
+    private float lifetime = 1.5f;
     private float currentLifetime = 0f;
 
     public GameObject _MobPrefab;

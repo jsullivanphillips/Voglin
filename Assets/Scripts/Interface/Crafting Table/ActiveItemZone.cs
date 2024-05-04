@@ -31,7 +31,7 @@ public class ActiveItemZone : MonoBehaviour, IDropHandler
         ActiveCard card = eventData.pointerDrag.GetComponent<ActiveCard>();
         if (card != null)
         {
-            Debug.Log("Card dropped in active item zone");
+            
             card.transform.SetParent(this.transform);
             card.isInActiveItemsZone = true;
             card.isInRack = true;

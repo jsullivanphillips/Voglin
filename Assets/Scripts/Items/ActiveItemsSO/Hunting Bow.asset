@@ -19,11 +19,18 @@ MonoBehaviour:
   cardType: 0
   damage: 4
   cooldownRange:
-    min: 1.9
-    max: 2.1
+    min: 1.4
+    max: 1.6
   attackRange: 12
   cooldown: 2
   cooldownTimer: 0
+  showSpecialEffectsSection: 0
   isPiercing: 0
   numberOfPierces: 0
+  isStutter: 0
+  stutterDuration: 0.1
+  isSplitOnCrit: 0
+  numberOfSplits: 0
+  passiveEffects: 
+  effectValues: []
   projectilePrefab: {fileID: 2025617104460581626, guid: 79eafc270c42c034485b3a528ee96063, type: 3}

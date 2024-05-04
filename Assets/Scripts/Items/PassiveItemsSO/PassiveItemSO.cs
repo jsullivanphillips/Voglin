@@ -8,12 +8,16 @@ public enum PassiveEffect
     MoveSpeed,
     CooldownReduction,
     RangeBoost,
-    CriticalStrikeDamage
+    CriticalStrikeDamage,
+    GoldenClover
 }
 [CreateAssetMenu(fileName = "New Passive Item", menuName = "Items/Passive Item")]
 public class PassiveItemSO : ItemSO
 {
     public List<PassiveEffect> passiveEffects;
     public List<float> effectValues;
+
+    [TextArea(3,10)]
+    public string customDescription;
 }
         

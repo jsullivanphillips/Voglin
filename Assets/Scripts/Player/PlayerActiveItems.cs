@@ -119,10 +119,16 @@ public class PlayerActiveItems : MonoBehaviour
         // Damage
         float damage = item.damage + PlayerPassiveItems.Instance.GetDamageBonuses();
         float critChance = PlayerPassiveItems.Instance.GetCritChance() + GetActiveItemsCriticalChanceBonus();
+        Debug.Log("Crit Chance: " + critChance);
+        Debug.Log("Crit Damage bonus: " + ((2f + GetActiveCriticalStrikeDamageBonus() + PlayerPassiveItems.Instance.GetCriticalStrikeDamageBonus()) * 100).ToString() + "%");
         if(Random.Range(0f, 1f) < critChance)
         {
             damage *= 2f + GetActiveCriticalStrikeDamageBonus() + PlayerPassiveItems.Instance.GetCriticalStrikeDamageBonus();
             projectileScript.isCrit = true;
+            if(PlayerPassiveItems.Instance.ContainsGreenFeather())
+            {
+                GetComponent<PlayerMovement>().ActivateSpeedBoost();
+            }
         }
         projectileScript.damage = damage;
 

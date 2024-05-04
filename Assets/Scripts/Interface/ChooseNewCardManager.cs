@@ -27,11 +27,6 @@ public class ChooseNewCardManager : MonoBehaviour
 
     private List<GameObject> _DisplayCards = new List<GameObject>();
 
-    void Start()
-    {
-        DisplayCardsForLevel(0);
-    }
-
     private void DisplayCards(List<ItemSO> items)
     {
         GameStateManager.Instance.PauseGame();
@@ -58,13 +53,47 @@ public class ChooseNewCardManager : MonoBehaviour
             case 0:
                 for (int i = 0; i < 3; i++)
                 {
-                    items.Add(ItemDatabase.Instance.GetRandomActiveItemAtRarity(0));
+                    items.Add(ItemDatabase.Instance.GetRandomPassiveItemAtRarity(0));
                 }
                 break;
             default:
                 for (int i = 0; i < 3; i++)
                 {
-                    items.Add(ItemDatabase.Instance.GetRandomItemAtRarity(0));
+                    items.Add(ItemDatabase.Instance.GetRandomPassiveItemAtRarity(0));
+                }
+                break;
+        
+        }
+        DisplayCards(items);
+    }
+
+    public void DisplayCardsForRound(int round)
+    {
+        List<ItemSO> items = new List<ItemSO>();
+        switch (round % 3)
+        {
+            case 0:
+                for (int i = 0; i < 3; i++)
+                {
+                    items.Add(ItemDatabase.Instance.GetRandomActiveItemAtRarity(Rarity.Poor));
+                }
+                break;
+            case 1:
+                for (int i = 0; i < 3; i++)
+                {
+                    items.Add(ItemDatabase.Instance.GetRandomActiveItemAtRarity(Rarity.Poor));
+                }
+                break;
+            case 2:
+                for (int i = 0; i < 3; i++)
+                {
+                    items.Add(ItemDatabase.Instance.GetRandomPassiveItemAtRarity(Rarity.Uncommon));
+                }
+                break;
+            default:
+                for (int i = 0; i < 3; i++)
+                {
+                    items.Add(ItemDatabase.Instance.GetRandomPassiveItemAtRarity(Rarity.Poor));
                 }
                 break;
         

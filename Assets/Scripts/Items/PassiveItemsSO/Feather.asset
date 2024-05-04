@@ -19,4 +19,5 @@ MonoBehaviour:
   cardType: 1
   passiveEffects: 02000000
   effectValues:
-  - 1
+  - 10
+  customDescription: 

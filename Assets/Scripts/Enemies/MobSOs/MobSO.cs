@@ -30,6 +30,8 @@ public class MobSO : ScriptableObject
 
     public float health;
 
+    public float orbDropChance;
+
     public AttackStyle attackStyle;
     public float attackRange;
     public float attackCooldown;

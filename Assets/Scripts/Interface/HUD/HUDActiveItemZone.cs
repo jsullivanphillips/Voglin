@@ -28,7 +28,7 @@ public class HUDActiveItemZone : MonoBehaviour
 
     public void AddActiveItem(ActiveItemSO activeItem, int id)
     {
-        Debug.Log("Adding active item to HUD");
+        
         // Add active item to HUD
         GameObject activeCard = Instantiate(_ActiveCardPrefab, _ActiveItemZone);
         ActiveCard activeCardComponent = activeCard.GetComponent<ActiveCard>();
@@ -41,7 +41,7 @@ public class HUDActiveItemZone : MonoBehaviour
 
     public void RemoveActiveItem(int id)
     {
-        Debug.Log("Removing active item from HUD");
+        
         // Remove active item from HUD
         Destroy(activeCards[id].gameObject);
         activeCards.Remove(id);

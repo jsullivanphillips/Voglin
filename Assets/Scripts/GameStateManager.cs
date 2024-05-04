@@ -5,7 +5,9 @@ using UnityEngine;
 public enum GameState
 {
     Playing,
-    Paused
+    Paused,
+    InbetweenRounds,
+    GameOver
 }
 public class GameStateManager : MonoBehaviour
 {
@@ -17,6 +19,8 @@ public class GameStateManager : MonoBehaviour
 
     [SerializeField]
     private bool resumeAfterDelay = false;
+    [SerializeField]
+    private GameObject _YouWinUI;
 
     private void Awake()
     {
@@ -53,6 +57,20 @@ public class GameStateManager : MonoBehaviour
             _PauseMenuUI.SetActive(false);
         }
         
+    }
+
+    public void SetGameState(GameState gameState)
+    {
+        CurrentGameState = gameState;
+        if(gameState == GameState.GameOver)
+        {
+            _YouWinUI.SetActive(true);
+        }
+    }
+
+    public GameState GetGameState()
+    {
+        return CurrentGameState;
     }
     
     private IEnumerator ResumeAfterDelay(float delay)

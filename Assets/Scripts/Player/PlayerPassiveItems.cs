@@ -59,6 +59,14 @@ public class PlayerPassiveItems : MonoBehaviour
                 critChance += item.effectValues[item.passiveEffects.IndexOf(PassiveEffect.CriticalChance)];
             }
         }
+        if(ContainsGoldenClover())
+        {
+            critChance *= 2;
+        }
+        if(critChance > 100f)
+        {
+            critChance = 100f;
+        }
         return critChance * 0.01f;
     }
 
@@ -71,6 +79,10 @@ public class PlayerPassiveItems : MonoBehaviour
             {
                 criticalStrikeDamageBonus += item.effectValues[item.passiveEffects.IndexOf(PassiveEffect.CriticalStrikeDamage)];
             }
+        }
+        if(ContainsGoldenClover())
+        {
+            criticalStrikeDamageBonus -= 20;
         }
         return criticalStrikeDamageBonus * 0.01f;
     }
@@ -85,7 +97,7 @@ public class PlayerPassiveItems : MonoBehaviour
                 moveSpeedBonuses += item.effectValues[item.passiveEffects.IndexOf(PassiveEffect.MoveSpeed)];
             }
         }
-        return moveSpeedBonuses;
+        return moveSpeedBonuses / 25f;
     }
 
     public float GetRangeBonus()
@@ -112,5 +124,29 @@ public class PlayerPassiveItems : MonoBehaviour
             }
         }
         return cooldownReductionBonus;
+    }
+
+    public bool ContainsGoldenClover()
+    {
+        foreach (PassiveItemSO item in passiveItems.Values)
+        {
+            if (item.itemName == "Golden Clover") // Assuming the name property is called itemName
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool ContainsGreenFeather()
+    {
+        foreach (PassiveItemSO item in passiveItems.Values)
+        {
+            if (item.itemName == "Green Feather") // Assuming the name property is called itemName
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -16,10 +16,6 @@ public class ItemDatabase : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-
-    private void Start()
-    {
         foreach (ItemSO item in items)
         {
             switch (item.rarity)
@@ -85,6 +81,19 @@ public class ItemDatabase : MonoBehaviour
         else
         {
             return GetRandomActiveItemAtRarity(rarity);
+        }
+    }
+
+    public ItemSO GetRandomPassiveItemAtRarity(Rarity rarity)
+    {
+        ItemSO item = GetRandomItemAtRarity(rarity);
+        if (item.cardType == CardType.Passive)
+        {
+            return Instantiate(item);
+        }
+        else
+        {
+            return GetRandomPassiveItemAtRarity(rarity);
         }
     }
    

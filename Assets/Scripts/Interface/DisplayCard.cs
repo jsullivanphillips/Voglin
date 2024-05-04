@@ -100,24 +100,43 @@ public class DisplayCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
         _TitleText.text = passiveItemSO.itemName;
         image.sprite = passiveItemSO.itemSprite;
-        for (int i = 0; i < passiveItemSO.passiveEffects.Count; i++)
+        if(passiveItemSO.itemName == "Golden Clover")
         {
-            switch (i)
+            _TitleText.color = Color.yellow;
+            _EffectType_1_Text.text = "Double your critical strike chance, reduce critical strike damage by 20%";
+        }
+        else if (passiveItemSO.itemName == "Green Feather")
+        {
+            _EffectType_1_Text.text = passiveItemSO.passiveEffects[0].ToString();
+            _EffectValue_1_Text.text = passiveItemSO.effectValues[0].ToString("F2");
+            _EffectType_2_Text.text = passiveItemSO.passiveEffects[1].ToString();
+            _EffectValue_2_Text.text = passiveItemSO.effectValues[1].ToString("F2");
+            _EffectType_3_Text.text = passiveItemSO.customDescription;
+        }
+        else
+        {
+            for (int i = 0; i < passiveItemSO.passiveEffects.Count; i++)
             {
-                case 0:
-                    _EffectType_1_Text.text = passiveItemSO.passiveEffects[i].ToString();
-                    _EffectValue_1_Text.text = passiveItemSO.effectValues[i].ToString("F2");
-                    break;
-                case 1:
-                    _EffectType_2_Text.text = passiveItemSO.passiveEffects[i].ToString();
-                    _EffectValue_2_Text.text = passiveItemSO.effectValues[i].ToString("F2");
-                    break;
-                case 2:
-                    _EffectType_3_Text.text = passiveItemSO.passiveEffects[i].ToString();
-                    _EffectValue_3_Text.text = passiveItemSO.effectValues[i].ToString("F2");
-                    break;
+                switch (i)
+                {
+                    case 0:
+                        _EffectType_1_Text.text = passiveItemSO.passiveEffects[i].ToString();
+                        _EffectValue_1_Text.text = passiveItemSO.effectValues[i].ToString("F2");
+                        break;
+                    case 1:
+                        _EffectType_2_Text.text = passiveItemSO.passiveEffects[i].ToString();
+                        _EffectValue_2_Text.text = passiveItemSO.effectValues[i].ToString("F2");
+                        break;
+                    case 2:
+                        _EffectType_3_Text.text = passiveItemSO.passiveEffects[i].ToString();
+                        _EffectValue_3_Text.text = passiveItemSO.effectValues[i].ToString("F2");
+                        break;
+                }
             }
         }
+
+
+        
 
         if(passiveItemSO.passiveEffects.Count < 3)
         {
@@ -135,21 +154,21 @@ public class DisplayCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     // Implement the IPointerEnterHandler interface
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("MouseEnter");
+       
         // animation
     }
 
     // Implement the IPointerExitHandler interface
     public void OnPointerExit(PointerEventData eventData)
     {
-        Debug.Log("MouseExit");
+        
         // cancel animation
     }
 
     // Implement the IPointerClickHandler interface
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("MouseClick");
+        
         InventoryViewManager.Instance.OpenInventory();
         if(activeItemSO != null)
         {

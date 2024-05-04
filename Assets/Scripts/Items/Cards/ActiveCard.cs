@@ -17,6 +17,8 @@ public class ActiveCard : DraggableCard
     [SerializeField]
     TMP_Text _RangeText;
     [SerializeField]
+    TMP_Text _SpecialEffect1Text;
+    [SerializeField]
     public Image _CooldownFill;
 
     public ActiveItemSO activeItemSO;
@@ -42,9 +44,27 @@ public class ActiveCard : DraggableCard
     private void UpdateCardDisplay()
     {
         _TitleText.text = activeItemSO.itemName;
-        _DamageText.text = "Damage: " + activeItemSO.damage;
-        _CooldownText.text = "Cooldown: " + activeItemSO.cooldown;
-        _RangeText.text = "Range: " + activeItemSO.attackRange;
+        image.sprite = activeItemSO.itemSprite;
+        _DamageText.text = "Damage: " + activeItemSO.damage.ToString("F2");
+        _CooldownText.text = "Cooldown: " + activeItemSO.cooldown.ToString("F2");
+        _RangeText.text = "Range: " + activeItemSO.attackRange.ToString("F2");
+        if(activeItemSO.isPiercing)
+        {
+            _SpecialEffect1Text.text = "Piercing: " + activeItemSO.numberOfPierces;
+        }
+        else if(activeItemSO.isStutter)
+        {
+            _SpecialEffect1Text.text = "Stutter: " + activeItemSO.stutterDuration + "s";
+        }
+        else if(activeItemSO.passiveEffects.Count != 0)
+        {
+            _SpecialEffect1Text.text = activeItemSO.passiveEffects[0].ToString() + ": " + activeItemSO.effectValues[0].ToString();
+        }
+        else
+        {
+            _SpecialEffect1Text.text = "";
+        }
+        
     }
 
     public ActiveItemSO GetActiveItemSO()
@@ -72,6 +92,7 @@ public class ActiveCard : DraggableCard
 
     public void EquipCard()
     {
+
         ActiveItemZone.Instance.EquipCard(this);
     }
 }

@@ -8,7 +8,10 @@ public class Projectile : MonoBehaviour
     public float speed = 20f;
     public float distanceToLive = 5f;
     private float lifetime = 2f;
-    private bool destroyOnCollision = true;
+    public bool isPiercing = false;
+    public int numberOfPierces = 0;
+    public bool isStutter = false;
+    public float stutterDuration = 0.1f;
     public float damage = 5;
 
     private void Update()
@@ -34,14 +37,24 @@ public class Projectile : MonoBehaviour
     {
         if (other.gameObject.tag == "Mob")
         {
-            other.gameObject.GetComponent<Mob>().TakeDamage(damage);
-
-            //other.gameObject.GetComponent<MobMovement>().Stutter(stutterDuration);
-
-            if (destroyOnCollision)
+            if(isStutter)
+            {
+                other.gameObject.GetComponent<MobMovement>().Stutter(stutterDuration);
+            }
+            if (!isPiercing)
             {
                 Destroy(gameObject);
             }
+            else
+            {
+                numberOfPierces--;
+                if(numberOfPierces < 0)
+                {
+                    Destroy(gameObject);
+                }
+            }
+
+            other.gameObject.GetComponent<Mob>().TakeDamage(damage);
         }
     }
 }

@@ -48,4 +48,69 @@ public class PlayerPassiveItems : MonoBehaviour
         }
         return damageBonuses;
     }
+
+    public float GetCritChance()
+    {
+        float critChance = 0f;
+        foreach (PassiveItemSO item in passiveItems.Values)
+        {
+            if (item.passiveEffects.Contains(PassiveEffect.CriticalChance))
+            {
+                critChance += item.effectValues[item.passiveEffects.IndexOf(PassiveEffect.CriticalChance)];
+            }
+        }
+        return critChance * 0.01f;
+    }
+
+    public float GetCriticalStrikeDamageBonus()
+    {
+        float criticalStrikeDamageBonus = 0f;
+        foreach (PassiveItemSO item in passiveItems.Values)
+        {
+            if (item.passiveEffects.Contains(PassiveEffect.CriticalStrikeDamage))
+            {
+                criticalStrikeDamageBonus += item.effectValues[item.passiveEffects.IndexOf(PassiveEffect.CriticalStrikeDamage)];
+            }
+        }
+        return criticalStrikeDamageBonus * 0.01f;
+    }
+
+    public float GetMoveSpeedBonuses()
+    {
+        float moveSpeedBonuses = 0f;
+        foreach (PassiveItemSO item in passiveItems.Values)
+        {
+            if (item.passiveEffects.Contains(PassiveEffect.MoveSpeed))
+            {
+                moveSpeedBonuses += item.effectValues[item.passiveEffects.IndexOf(PassiveEffect.MoveSpeed)];
+            }
+        }
+        return moveSpeedBonuses;
+    }
+
+    public float GetRangeBonus()
+    {
+        float rangeBonus = 0f;
+        foreach (PassiveItemSO item in passiveItems.Values)
+        {
+            if (item.passiveEffects.Contains(PassiveEffect.RangeBoost))
+            {
+                rangeBonus += item.effectValues[item.passiveEffects.IndexOf(PassiveEffect.RangeBoost)];
+            }
+        }
+        return rangeBonus;
+    }
+
+    public float GetCooldownReductionBonus()
+    {
+        float cooldownReductionBonus = 0f;
+        foreach (PassiveItemSO item in passiveItems.Values)
+        {
+            if (item.passiveEffects.Contains(PassiveEffect.CooldownReduction))
+            {
+                cooldownReductionBonus += item.effectValues[item.passiveEffects.IndexOf(PassiveEffect.CooldownReduction)];
+            }
+        }
+        return cooldownReductionBonus;
+    }
 }

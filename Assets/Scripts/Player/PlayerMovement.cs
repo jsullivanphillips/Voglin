@@ -19,8 +19,8 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 currentPosition = new Vector2(transform.position.x, transform.position.y);
 
-        Vector2 horizontalMovement = new Vector2(inputVector.x, 0) * speed * Time.deltaTime;
-        Vector2 verticalMovement = new Vector2(0, inputVector.y) * speed * Time.deltaTime;
+        Vector2 horizontalMovement = new Vector2(inputVector.x, 0) * (speed + PlayerPassiveItems.Instance.GetMoveSpeedBonuses()) * Time.deltaTime;
+        Vector2 verticalMovement = new Vector2(0, inputVector.y) * (speed + PlayerPassiveItems.Instance.GetMoveSpeedBonuses()) * Time.deltaTime;
         #endregion
 
         #region Collision filters

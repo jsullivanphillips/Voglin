@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class DraggableOrb : DraggableObject
 {
-    int rank = 1;
+    Rarity rarity = Rarity.Poor;
 
-    public void SetRank(int _rank)
+    public void SetRarity(Rarity rarity)
     {
-        rank = _rank;
+        this.rarity = rarity;
     }
 
-    public int GetRank()
+    public Rarity GetRarity()
     {
-        return rank;
+        return rarity;
     }
 }

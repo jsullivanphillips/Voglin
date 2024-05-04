@@ -13,22 +13,21 @@ public class OpenOrbZone : MonoBehaviour, IDropHandler
         DraggableOrb orb = eventData.pointerDrag.GetComponent<DraggableOrb>();
         if (orb != null)
         {
-            List<Tuple<CardType, int>> drops = CardDropChanceManager.Instance.GetOrbDrops(orb.GetRank());
-            foreach (Tuple<CardType, int> drop in drops)
+            Rarity rarity = orb.GetRarity();
+            // do drop chance logic here
+            for (int i = 0; i < 2; i++)
             {
-                // CardType is card type
-                // int is rank of card (i.e. 1, 2, 3, etc.)
-                if(drop.Item1 == CardType.Active)
+                ItemSO item = ItemDatabase.Instance.GetRandomItemAtRarity(rarity);
+                if (item is ActiveItemSO)
                 {
-                    ActiveItemSO activeItem = CardSpawnMaster.Instance.GetRandomActiveItem(drop.Item2);
+                    ActiveItemSO activeItem = item as ActiveItemSO;
+                    activeItem.cooldown = UnityEngine.Random.Range(activeItem.cooldownRange.min, activeItem.cooldownRange.max);
                     craftingTableItemManager.SpawnActiveCard(activeItem);
                 }
-                else
+                else if (item is PassiveItemSO)
                 {
-                    PassiveItemSO passiveItem = CardSpawnMaster.Instance.GetRandomPassiveItem(drop.Item2);
-                    craftingTableItemManager.SpawnPassiveCard(passiveItem);
+                    craftingTableItemManager.SpawnPassiveCard(item as PassiveItemSO);
                 }
-                
             }
             Destroy(orb.gameObject);
         }

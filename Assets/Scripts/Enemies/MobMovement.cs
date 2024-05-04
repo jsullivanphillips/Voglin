@@ -6,6 +6,7 @@ public class MobMovement : MonoBehaviour
 {
     float speed = 2f;
     Transform playerTransform;
+    float stutterTimer = 0f;
 
     [SerializeField] BoxCollider2D _BoxCollider2D;
     [Tooltip("The layers that the player should collide with.")]
@@ -20,6 +21,13 @@ public class MobMovement : MonoBehaviour
     {
         if (GameStateManager.Instance.IsPaused())
         {
+            return;
+        }
+
+        // If the stutter timer is greater than 0, reduce it by the time since the last frame and return
+        if (stutterTimer > 0f)
+        {
+            stutterTimer -= Time.deltaTime;
             return;
         }
 
@@ -50,8 +58,11 @@ public class MobMovement : MonoBehaviour
             currentPosition += verticalMovement;
         }
 
-
         transform.position = new Vector3(currentPosition.x, currentPosition.y, 0f);
     }
-    
+
+    public void Stutter(float stutterDuration)
+    {
+        stutterTimer += stutterDuration;
+    }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class DisplayCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
@@ -9,6 +10,8 @@ public class DisplayCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     [SerializeField]
     TMP_Text _TitleText;
+    [SerializeField]
+    Image image;
     // Active Card
     [SerializeField]
     GameObject _ActiveCardStats;
@@ -18,6 +21,8 @@ public class DisplayCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     TMP_Text _CooldownText;
     [SerializeField]
     TMP_Text _RangeText;
+    [SerializeField]
+    TMP_Text _SpecialEffect1Text;
     // Passive Card
     [SerializeField]
     GameObject _PassiveCardStats;
@@ -58,9 +63,27 @@ public class DisplayCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private void UpdateActiveCardDisplay()
     {
         _TitleText.text = activeItemSO.itemName;
+        image.sprite = activeItemSO.itemSprite;
         _DamageText.text = "Damage: " + activeItemSO.damage.ToString("F2");
         _CooldownText.text = "Cooldown: " + activeItemSO.cooldown.ToString("F2");
         _RangeText.text = "Range: " + activeItemSO.attackRange.ToString("F2");
+
+        if(activeItemSO.isPiercing)
+        {
+            _SpecialEffect1Text.text = "Piercing: " + activeItemSO.numberOfPierces;
+        }
+        else if(activeItemSO.isStutter)
+        {
+            _SpecialEffect1Text.text = "Stutter: " + activeItemSO.stutterDuration + "s";
+        }
+        else if(activeItemSO.passiveEffects.Count != 0)
+        {
+            _SpecialEffect1Text.text = activeItemSO.passiveEffects[0].ToString() + ": " + activeItemSO.effectValues[0].ToString();
+        }
+        else
+        {
+            _SpecialEffect1Text.text = "";
+        }
     }
 
     private void UpdatePassiveCardDisplay()
@@ -72,6 +95,7 @@ public class DisplayCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
 
         _TitleText.text = passiveItemSO.itemName;
+        image.sprite = passiveItemSO.itemSprite;
         for (int i = 0; i < passiveItemSO.passiveEffects.Count; i++)
         {
             switch (i)
@@ -125,11 +149,11 @@ public class DisplayCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         InventoryViewManager.Instance.OpenInventory();
         if(activeItemSO != null)
         {
-            CraftingTableItemManager.Instance.SpawnAndEquipActiveCard(activeItemSO);
+            CraftingTableItemManager.Instance.SpawnActiveCard(activeItemSO);
         }
         else if (passiveItemSO != null)
         {
-            CraftingTableItemManager.Instance.SpawnAndEquipPassiveCard(passiveItemSO);
+            CraftingTableItemManager.Instance.SpawnPassiveCard(passiveItemSO);
         }
         ChooseNewCardManager.Instance.CloseDisplay();
     }

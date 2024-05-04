@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7652f7320e4dd3a41a83416693d7ae3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 5
+  health: 4
   _ExperienceMotePrefab: {fileID: 8416166615506956229, guid: 3ce8f1271c82ffb44a82d142aaa28d28, type: 3}
   _ItemDropPrefab: {fileID: 7866015723002787324, guid: e57c9fd4082b5ec46ba5e2c5762daefa, type: 3}
   orbDropChance: 10

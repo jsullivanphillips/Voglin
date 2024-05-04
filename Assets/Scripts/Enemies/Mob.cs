@@ -23,7 +23,7 @@ public class Mob : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        Debug.Log("Taking " + damage + " damage");
+        DamageNumberDisplay.Instance.DisplayDamageNumber((int)damage, transform.position);
         health -= damage;
         if (health <= 0)
         {

@@ -30,6 +30,11 @@ public class GameStateManager : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        Application.targetFrameRate = 144;
+    }
+
     public void PauseGame()
     {
         CurrentGameState = GameState.Paused;

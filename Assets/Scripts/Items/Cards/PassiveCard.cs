@@ -41,6 +41,7 @@ public class PassiveCard : DraggableCard
     private void UpdateCardDisplay()
     {
         _TitleText.text = passiveItemSO.itemName;
+        image.sprite = passiveItemSO.itemSprite;
         for (int i = 0; i < passiveItemSO.passiveEffects.Count; i++)
         {
             switch (i)

@@ -30,6 +30,9 @@ public class DraggableCard : DraggableObject
     public bool isCrafting = false;
     private ItemSO itemSO;
 
+    [SerializeField]
+    protected Image image;
+
     public bool isInRack = false;
 
     public void SetId(int _id)

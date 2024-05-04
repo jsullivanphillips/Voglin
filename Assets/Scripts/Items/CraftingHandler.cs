@@ -11,9 +11,14 @@ public class CraftingHandler : MonoBehaviour, IDropHandler, IPointerEnterHandler
     public void OnDrop(PointerEventData eventData)
     {
         DraggableCard otherCard = eventData.pointerDrag.GetComponent<DraggableCard>();
-        bool recipeExists = CraftingRecipes.Instance.DoesRecipeExist(thisDraggableCard.GetItemSO(), otherCard.GetItemSO());
-        if (otherCard != null && !thisDraggableCard.isCrafting && !thisDraggableCard.isInRack && recipeExists)
+        
+        if (otherCard != null && !thisDraggableCard.isCrafting && !thisDraggableCard.isInRack)
         {
+            bool recipeExists = CraftingRecipes.Instance.DoesRecipeExist(thisDraggableCard.GetItemSO(), otherCard.GetItemSO());
+            if(!recipeExists)
+            {
+                return;
+            }
             simpleCardAnimations.ReturnToOriginalPosition();
             otherCard.SetCraftingFlagTrue(thisDraggableCard);
             otherCard.transform.position = transform.position + new Vector3(0f, -30f, 0f);

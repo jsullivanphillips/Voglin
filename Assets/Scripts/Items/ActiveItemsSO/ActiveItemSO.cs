@@ -27,8 +27,14 @@ public class ActiveItemSO : ItemSO
     public bool isStutter = false;
     [ConditionalHide("showSpecialEffectsSection", true)]
     public float stutterDuration = 0.1f;
+    [ConditionalHide("showSpecialEffectsSection", true)]
+    public bool isSplitOnCrit = false;
+    [ConditionalHide("showSpecialEffectsSection", true)]
+    public int numberOfSplits = 0;
+
     public List<PassiveEffect> passiveEffects;
     public List<float> effectValues;
     public GameObject projectilePrefab;
+    
 }
         

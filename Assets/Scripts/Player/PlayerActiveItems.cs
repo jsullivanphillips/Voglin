@@ -88,6 +88,12 @@ public class PlayerActiveItems : MonoBehaviour
             case "Iron Mace":
                 rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 112);
                 break;
+            case "Elven Bow":
+                rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 226);
+                break;
+            case "Elven Sword":
+                rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 112);
+                break;
             default:
                 rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90);
                 break;
@@ -116,7 +122,7 @@ public class PlayerActiveItems : MonoBehaviour
         if(Random.Range(0f, 1f) < critChance)
         {
             damage *= 2f + GetActiveCriticalStrikeDamageBonus() + PlayerPassiveItems.Instance.GetCriticalStrikeDamageBonus();
-            Debug.Log("Critical hit!");
+            projectileScript.isCrit = true;
         }
         projectileScript.damage = damage;
 
@@ -127,6 +133,10 @@ public class PlayerActiveItems : MonoBehaviour
         // Piercing
         projectileScript.isPiercing = item.isPiercing;
         projectileScript.numberOfPierces = item.numberOfPierces;
+
+        // Split on crit
+        projectileScript.isSplitOnCrit = item.isSplitOnCrit;
+        projectileScript.numberOfSplits = item.numberOfSplits;
 
 
         projectileScript.SetLifetime();

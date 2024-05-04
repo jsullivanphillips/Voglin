@@ -60,6 +60,10 @@ public class ActiveCard : DraggableCard
         {
             _SpecialEffect1Text.text = activeItemSO.passiveEffects[0].ToString() + ": " + activeItemSO.effectValues[0].ToString();
         }
+        else if(activeItemSO.isSplitOnCrit)
+        {
+            _SpecialEffect1Text.text = "Splits in " + activeItemSO.numberOfSplits + " on critical hit";
+        }
         else
         {
             _SpecialEffect1Text.text = "";

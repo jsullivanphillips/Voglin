@@ -80,6 +80,10 @@ public class DisplayCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         {
             _SpecialEffect1Text.text = activeItemSO.passiveEffects[0].ToString() + ": " + activeItemSO.effectValues[0].ToString();
         }
+        else if(activeItemSO.isSplitOnCrit)
+        {
+            _SpecialEffect1Text.text = "Splits in " + activeItemSO.numberOfSplits + " on critical hit dealing 50% damage";
+        }
         else
         {
             _SpecialEffect1Text.text = "";

@@ -5,6 +5,11 @@ using UnityEngine;
 public class Mob : MonoBehaviour
 {
     [SerializeField]
+    MobMovement _MobMovement;
+
+    string mobName;
+
+    [SerializeField]
     private float health = 5;
 
     [SerializeField]
@@ -14,9 +19,12 @@ public class Mob : MonoBehaviour
     [SerializeField]
     private float orbDropChance = 50f;
 
+    private AttackStyle attackStyle;
     private float attackCooldown = 1f;
     private float currentCooldown = 0f;
     private float attackRange = 1.5f;
+
+    private MobSO mobSO;
 
     GameObject player;
 
@@ -41,6 +49,23 @@ public class Mob : MonoBehaviour
             Instantiate(_ItemDropPrefab, offsetSpawnLocation, Quaternion.identity);
         }
         Destroy(gameObject);
+    }
+
+    public void SetMobSO(MobSO mobSO)
+    {
+        this.mobSO = mobSO;
+
+        mobName = mobSO.mobName;
+
+        health = mobSO.health;
+
+        attackStyle = mobSO.attackStyle;
+        attackCooldown = mobSO.attackCooldown;
+        attackRange = mobSO.attackRange;
+
+        _MobMovement.speed = mobSO.movementSpeed;
+        _MobMovement.movementStyle = mobSO.movementStyle;
+        
     }
 
     private void Start()

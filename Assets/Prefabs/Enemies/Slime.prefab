@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -8608344206453829988}
   - component: {fileID: 8706485320158925668}
   m_Layer: 7
-  m_Name: Mob
+  m_Name: Slime
   m_TagString: Mob
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -147,6 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7652f7320e4dd3a41a83416693d7ae3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _MobMovement: {fileID: 8706485320158925668}
   health: 4
   _ExperienceMotePrefab: {fileID: 8416166615506956229, guid: 3ce8f1271c82ffb44a82d142aaa28d28, type: 3}
   _ItemDropPrefab: {fileID: 7866015723002787324, guid: e57c9fd4082b5ec46ba5e2c5762daefa, type: 3}
@@ -163,6 +164,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 634c0a353c4535143b16734b14a60ae0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 2
+  movementStyle: 0
   _BoxCollider2D: {fileID: 6787828209179838967}
   _CollisionLayerMask:
     serializedVersion: 2

@@ -5,8 +5,6 @@ using UnityEngine;
 public class MobSpawner : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _MobPrefab;
-    [SerializeField]
     private GameObject _SpawnForeshadowPrefab;
 
     [SerializeField]
@@ -42,9 +40,26 @@ public class MobSpawner : MonoBehaviour
     {
         Vector3 spawnLocation = GetRandomSpawnPosition();
         Instantiate(_SpawnForeshadowPrefab, spawnLocation, Quaternion.identity);
-        _SpawnForeshadowPrefab.GetComponent<SpawnForeshadow>()._MobPrefab = _MobPrefab;
+        MobSO mobToSpawn = GetMobSOForWave(0);
+        _SpawnForeshadowPrefab.GetComponent<SpawnForeshadow>()._MobPrefab = mobToSpawn.mobPrefab;
+        _SpawnForeshadowPrefab.GetComponent<SpawnForeshadow>().mobSO = mobToSpawn;
         currentCooldown = spawnCooldown;
         ReduceSpawnCooldown();
+    }
+
+    private MobSO GetMobSOForWave(int wave)
+    {
+        var result = EnemyDatabase.Instance.GetMobByName("Slime");
+        if(result != null)
+        {
+            return result;
+        }
+        else
+        {
+            Debug.LogError("Could not find mobSO for wave " + wave);
+            return null;
+        }
+        
     }
 
     private Vector3 GetRandomSpawnPosition()

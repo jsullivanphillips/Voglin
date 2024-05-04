@@ -8,6 +8,7 @@ public class SpawnForeshadow : MonoBehaviour
     private float currentLifetime = 0f;
 
     public GameObject _MobPrefab;
+    public MobSO mobSO;
 
     [SerializeField]
     private int iterationMax = 25;
@@ -49,6 +50,7 @@ public class SpawnForeshadow : MonoBehaviour
         }
 
         GameObject mob = Instantiate(_MobPrefab, spawnLocation, Quaternion.identity);
+        mob.GetComponent<Mob>().SetMobSO(mobSO);
 
         Destroy(gameObject);
     }

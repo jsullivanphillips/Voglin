@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class MobMovement : MonoBehaviour
 {
-    float speed = 2f;
+    public float speed = 2f;
+    public MovementStyle movementStyle;
     Transform playerTransform;
     float stutterTimer = 0f;
+    
 
     [SerializeField] BoxCollider2D _BoxCollider2D;
     [Tooltip("The layers that the player should collide with.")]

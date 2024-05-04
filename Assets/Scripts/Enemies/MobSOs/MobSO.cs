@@ -23,7 +23,8 @@ public enum MovementStyle
     ZigZag,
     KeepDistance
 }
-public class ItemSO : ScriptableObject
+[CreateAssetMenu(fileName = "New Mob", menuName = "Enemies/New Mob")]
+public class MobSO : ScriptableObject
 {
     public string mobName;
 
@@ -35,5 +36,7 @@ public class ItemSO : ScriptableObject
 
     public MovementStyle movementStyle;
     public float movementSpeed;
+
+    public GameObject mobPrefab;
 }
        

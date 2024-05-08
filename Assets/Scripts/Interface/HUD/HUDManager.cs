@@ -26,6 +26,16 @@ public class HUDManager : MonoBehaviour
     private float bagCooldownTimer = 0f;
     private float bagCooldown = 1.5f;
 
+    [SerializeField]
+    Image _BasicAttackIcon;
+    [SerializeField]
+    Image _BasicAttackFillIcon;
+
+    private bool isBasicAttackCooldownActive = false;
+    private float basicAttackCooldownTimer = 0f;
+    private float basicAttackCooldown = 1.5f;
+    
+
     public void SetBagIconCooldown(float cooldownTime)
     {
         isBagCooldownActive = true;
@@ -33,8 +43,20 @@ public class HUDManager : MonoBehaviour
         bagCooldown = cooldownTime;
     }
 
+    public void SetBasicAttackIconCooldown(float cooldownTime)
+    {
+        isBasicAttackCooldownActive = true;
+        basicAttackCooldownTimer = cooldownTime;
+        basicAttackCooldown = cooldownTime;
+    }
+
     private void Update()
     {
+        if(GameStateManager.Instance.IsPaused())
+        {
+            return;
+        }
+
         if (isBagCooldownActive)
         {
             bagCooldownTimer -= Time.deltaTime;
@@ -42,6 +64,16 @@ public class HUDManager : MonoBehaviour
             if (bagCooldownTimer <= 0)
             {
                 isBagCooldownActive = false;
+            }
+        }
+
+        if (isBasicAttackCooldownActive)
+        {
+            basicAttackCooldownTimer -= Time.deltaTime;
+            _BasicAttackFillIcon.fillAmount = basicAttackCooldownTimer / basicAttackCooldown;
+            if (basicAttackCooldownTimer <= 0)
+            {
+                isBasicAttackCooldownActive = false;
             }
         }
     }

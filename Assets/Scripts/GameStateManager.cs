@@ -7,6 +7,7 @@ public enum GameState
     Playing,
     Paused,
     InbetweenRounds,
+    ChoosingNewAbility,
     GameOver
 }
 public class GameStateManager : MonoBehaviour

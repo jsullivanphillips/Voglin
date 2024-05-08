@@ -43,7 +43,6 @@ public class Mob : MonoBehaviour
     {
         Vector3 spawnLocation = new Vector3(transform.position.x, transform.position.y, 1f);
         Instantiate(_ExperienceMotePrefab, spawnLocation, Quaternion.Euler(0f, 0f, 90f));
-        Debug.Log("Orb Drop chance: " + orbDropChance);
         if(Random.Range(0, 100) < orbDropChance)
         {
             Vector3 offsetSpawnLocation = spawnLocation + new Vector3(Random.Range(-1f,1f), Random.Range(-1f,1f), 0f);
@@ -67,6 +66,7 @@ public class Mob : MonoBehaviour
         attackRange = mobSO.attackRange;
 
         _MobMovement.speed = mobSO.movementSpeed;
+        
         _MobMovement.movementStyle = mobSO.movementStyle;
         
     }

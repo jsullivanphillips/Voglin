@@ -48,14 +48,14 @@ public class PlayerMovement : MonoBehaviour
         Vector2 currentPosition = new Vector2(transform.position.x, transform.position.y);
 
         // Calculate the current speed, including any active speed boost
-        float currentSpeed = speed + PlayerPassiveItems.Instance.GetMoveSpeedBonuses();
+        float currentSpeed = speed;
         if (isSpeedBoosted)
         {
             currentSpeed += speedBoostAmount * (speedBoostTimer / speedBoostDuration); // Apply decaying boost
         }
 
-        Vector2 horizontalMovement = new Vector2(inputVector.x, 0) * (speed + PlayerPassiveItems.Instance.GetMoveSpeedBonuses()) * Time.deltaTime;
-        Vector2 verticalMovement = new Vector2(0, inputVector.y) * (speed + PlayerPassiveItems.Instance.GetMoveSpeedBonuses()) * Time.deltaTime;
+        Vector2 horizontalMovement = new Vector2(inputVector.x, 0) * speed * Time.deltaTime;
+        Vector2 verticalMovement = new Vector2(0, inputVector.y) * speed * Time.deltaTime;
         #endregion
 
         #region Collision filters

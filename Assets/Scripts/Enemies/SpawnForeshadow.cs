@@ -45,6 +45,7 @@ public class SpawnForeshadow : MonoBehaviour
             if(i > iterationMax)
             {
                 Debug.LogWarning($"Could not find a valid spawn location for mob after {iterationMax} iterations");
+                Destroy(gameObject);
                 return;
             }
         }

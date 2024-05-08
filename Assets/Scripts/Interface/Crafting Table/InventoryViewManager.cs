@@ -45,6 +45,11 @@ public class InventoryViewManager : MonoBehaviour
         GameStateManager.Instance.PauseGame();
     }
 
+    public void CloseInventory()
+    {
+        _InventoryView.SetActive(false);
+    }
+
     public void PressB()
     {
         // This is to prevent player from reopening inventory while game is unpausing
@@ -54,7 +59,7 @@ public class InventoryViewManager : MonoBehaviour
         }
 
         // If cooldown is active, don't allow opening the inventory
-        if (isCooldownActive)
+        if (isCooldownActive || GameStateManager.Instance.GetGameState() == GameState.ChoosingNewAbility)
         {
             return;
         }

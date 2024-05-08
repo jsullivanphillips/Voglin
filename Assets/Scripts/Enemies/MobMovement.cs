@@ -33,6 +33,11 @@ public class MobMovement : MonoBehaviour
             return;
         }
 
+        if(speed <= 0)
+        {
+            speed = 2; // the first mob spawned for some reason has 0 speed and 0 health
+        }
+
         Vector2 currentPosition = new Vector2(transform.position.x, transform.position.y);
         Vector2 direction = new Vector2(playerTransform.position.x - currentPosition.x, playerTransform.position.y - currentPosition.y);
         direction.Normalize();

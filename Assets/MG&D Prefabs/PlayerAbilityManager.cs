@@ -92,14 +92,18 @@ public class PlayerAbilityManager : MonoBehaviour
     #region Abilities
     private void Activate(AbilitySO ability)
     {
-        if(ability.abilityType == AbilityType.Projectile)
+        switch (ability.abilityType)
         {
-            Shoot(ability);
+            case AbilityType.Projectile:
+                Shoot(ability);
+                break;
+            case AbilityType.AoE:
+                AoE(ability);
+                break;
+            case AbilityType.Orbiter:
+                break;
         }
-        else if(ability.abilityType == AbilityType.AoE)
-        {
-            AoE(ability);
-        }
+
     }
 
     private void AoE(AbilitySO ability)
@@ -154,6 +158,7 @@ public class PlayerAbilityManager : MonoBehaviour
     public void AddAbility(AbilitySO ability)
     {
         abilities.Add(ability);
+        ability.id = Random.Range(0, int.MaxValue);
         if(ability.abilityType == AbilityType.AoE)
         {
             GameObject AoE_Effect = Instantiate(_AoE_Effect, transform.position, Quaternion.identity);
@@ -161,15 +166,42 @@ public class PlayerAbilityManager : MonoBehaviour
             AoE_Effect.transform.localScale = new Vector3(ability.attackRange *2, ability.attackRange *2, 1f);
             ability.projectilePrefab = AoE_Effect;
         }
+        else if(ability.abilityType == AbilityType.Orbiter)
+        {
+            GameObject orbiter = Instantiate(ability.projectilePrefab, transform.position + new Vector3(ability.attackRange, ability.attackRange, 0f), Quaternion.identity);
+            orbiter.GetComponent<Orbiter>().target = transform;
+            orbiter.transform.SetParent(transform);
+            orbiter.transform.localScale = Vector3.one;
+            ability.projectilePrefab = orbiter;
+
+            Projectile projectileScript = orbiter.GetComponent<Projectile>();
+            projectileScript.damage = ability.damage;
+            projectileScript.isOrbiter = true;
+            
+        }
     }
 
-    public void UpdateAoeEffectSize(AbilitySO ability)
+    public void UpdateAoeEffectSize(int id)
     {
-        foreach (AbilitySO a in abilities)
+        foreach(AbilitySO ability in abilities)
         {
-            if(a.abilityType == AbilityType.AoE)
+            if(ability.id == id)
             {
-                a.projectilePrefab.transform.localScale = new Vector3(ability.attackRange * 2, ability.attackRange * 2, 1f);
+                GameObject AoE_Effect = ability.projectilePrefab;
+                AoE_Effect.transform.localScale = new Vector3(ability.attackRange * 2, ability.attackRange * 2, 1f);
+            }
+        }
+    }
+
+    public void IncreaseOrbiterSpeedAndDamage(int id)
+    {
+        foreach(AbilitySO ability in abilities)
+        {
+            if(ability.id == id)
+            {
+                GameObject orbiter = ability.projectilePrefab;
+                orbiter.GetComponent<Orbiter>().speed = orbiter.GetComponent<Orbiter>().speed + 10f;
+                orbiter.GetComponent<Projectile>().damage = orbiter.GetComponent<Projectile>().damage + 2f;
             }
         }
     }

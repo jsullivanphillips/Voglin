@@ -8767,7 +8767,7 @@ MonoBehaviour:
   _AbilityCardPrefab: {fileID: 3208471863611907861, guid: 3eb50cecfd9f69f4a96c71f64344f71c, type: 3}
   _TEMP_Abilities:
   - {fileID: 11400000, guid: 0b1e38c553ecb5446902fe10f18021cb, type: 2}
-  - {fileID: 11400000, guid: 0b1e38c553ecb5446902fe10f18021cb, type: 2}
+  - {fileID: 11400000, guid: 52f4f4738ef0a5045959988a9f944c07, type: 2}
   - {fileID: 11400000, guid: b0d517505faa6594ca07362267b38f46, type: 2}
 --- !u!114 &1065561873
 MonoBehaviour:

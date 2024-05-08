@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     ExperienceBar experienceBar;
 
-    private int xpToLevel = 10;
+    private int xpToLevel = 8;
 
     public delegate void XPChangedDelegate(int newXP);
     public event XPChangedDelegate OnXPChanged;

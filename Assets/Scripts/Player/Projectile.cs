@@ -16,6 +16,8 @@ public class Projectile : MonoBehaviour
     public bool isSplitOnCrit = false;
     public int numberOfSplits = 0;
     public bool isCrit = false;
+    public bool isOrbiter = false;
+
 
     private void Update()
     {
@@ -24,6 +26,10 @@ public class Projectile : MonoBehaviour
             return;
         }
         transform.position += direction * speed * Time.deltaTime;
+
+        if(isOrbiter)
+            return;
+
         lifetime -= Time.deltaTime;
         if(lifetime <= 0)
         {
@@ -74,16 +80,19 @@ public class Projectile : MonoBehaviour
                     projectile.GetComponent<Projectile>().damage = damage / 2f;
                 }
             }
-            if (!isPiercing)
+            if (!isPiercing && !isOrbiter)
             {
                 Destroy(gameObject);
             }
             else
             {
-                numberOfPierces--;
-                if(numberOfPierces < 0)
+                if(isPiercing)
                 {
-                    Destroy(gameObject);
+                    numberOfPierces--;
+                    if(numberOfPierces < 0)
+                    {
+                        Destroy(gameObject);
+                    }
                 }
             }
 

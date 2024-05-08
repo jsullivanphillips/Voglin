@@ -71,8 +71,12 @@ public class AbilityUpgradeManager : MonoBehaviour
             {
                 ability.damage += 1;
                 ability.attackRange += 1;   
-                PlayerAbilityManager.Instance.UpdateAoeEffectSize(ability);    
+                PlayerAbilityManager.Instance.UpdateAoeEffectSize(ability.id);    
             }   
+            else if (ability.abilityType == AbilityType.Orbiter)
+            {
+                PlayerAbilityManager.Instance.IncreaseOrbiterSpeedAndDamage(ability.id);
+            }
                
         }
     }

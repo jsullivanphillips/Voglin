@@ -4,7 +4,8 @@ using UnityEngine;
 public enum AbilityType
 {
     Projectile,
-    AoE
+    AoE,
+    Orbiter
 }
 [CreateAssetMenu(fileName = "New Ability", menuName = "Abilities/Ability")]
 public class AbilitySO : ScriptableObject
@@ -17,4 +18,5 @@ public class AbilitySO : ScriptableObject
     public float cooldownTimer = 0f;
     public GameObject projectilePrefab;
     public AbilityType abilityType;
+    public int id;
 }

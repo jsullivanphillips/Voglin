@@ -62,8 +62,18 @@ public class AbilityUpgradeManager : MonoBehaviour
         if(abilityDictionary.ContainsKey(abilitySlot))
         {
             AbilitySO ability = abilityDictionary[abilitySlot];   
-            _AbilityHUDManager.SetAbilitySlotImage(abilitySlot, ability.icon);     
-            ability.damage += 4;       
+            _AbilityHUDManager.SetAbilitySlotImage(abilitySlot, ability.icon);  
+            if(ability.abilityType == AbilityType.Projectile)
+            {
+                ability.damage += 4;
+            }
+            else if(ability.abilityType == AbilityType.AoE)
+            {
+                ability.damage += 1;
+                ability.attackRange += 1;   
+                PlayerAbilityManager.Instance.UpdateAoeEffectSize(ability);    
+            }   
+               
         }
     }
 

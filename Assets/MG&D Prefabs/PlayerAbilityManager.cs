@@ -163,6 +163,17 @@ public class PlayerAbilityManager : MonoBehaviour
         }
     }
 
+    public void UpdateAoeEffectSize(AbilitySO ability)
+    {
+        foreach (AbilitySO a in abilities)
+        {
+            if(a.abilityType == AbilityType.AoE)
+            {
+                a.projectilePrefab.transform.localScale = new Vector3(ability.attackRange * 2, ability.attackRange * 2, 1f);
+            }
+        }
+    }
+
 
     public void RemoveAbility(AbilitySO ability)
     {

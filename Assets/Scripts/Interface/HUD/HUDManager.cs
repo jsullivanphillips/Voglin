@@ -19,6 +19,11 @@ public class HUDManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    void Start()
+    {
+        _Player.OnHealthChanged += UpdateHealth;
+    }
     
     [SerializeField]
     Image bagIcon;
@@ -40,7 +45,15 @@ public class HUDManager : MonoBehaviour
     TMP_Text _LevelText;
     [SerializeField]
     TMP_Text _AvailableSkillPointsText;
+    [SerializeField]
+    Player _Player;
+    [SerializeField]
+    Image _HealthBar;
     
+    private void UpdateHealth(float health, float maxHealth)
+    {
+        _HealthBar.fillAmount = health / maxHealth;
+    }
 
     public void SetBagIconCooldown(float cooldownTime)
     {

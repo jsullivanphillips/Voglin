@@ -26,15 +26,18 @@ public class CraftingTable : MonoBehaviour
     private RectTransform _BoundsBox;
     [SerializeField]
     private RectTransform _SpawnBoundsBox;
+    [SerializeField]
+    private Transform _ItemComponentsParent;
 
     private Dictionary<int, ItemComponent> _itemComponents = new Dictionary<int, ItemComponent>();
 
     public void SpawnRandomItem()
     {
-        GameObject item = Instantiate(_ItemComponentPrefab, GetRandomSpawnPosition(), Quaternion.identity, _CraftingSpace);
+        GameObject item = Instantiate(_ItemComponentPrefab, GetRandomSpawnPosition(), Quaternion.identity, _ItemComponentsParent);
         ItemComponent itemComponent = item.GetComponent<ItemComponent>();
         itemComponent.boundsBox = _BoundsBox;
         itemComponent.craftingArea = _CraftingSpace;
+        itemComponent.originalParent = _ItemComponentsParent;
         //itemComponent.id = _itemComponents.Count;
         //_itemComponents.Add(itemComponent.id, itemComponent);
     }

@@ -23,17 +23,18 @@ public class Player : MonoBehaviour
         }
     }
 
-    public delegate void HealthChangedDelegate(float newHealth);
+    public delegate void HealthChangedDelegate(float newHealth, float maxHealth);
     public event HealthChangedDelegate OnHealthChanged;
 
     private float _currentHealth = 100;
+    private float _maxHealth = 100;
     public float currentHealth
     {
         get { return _currentHealth; }
         set
         {
             _currentHealth = value;
-            OnHealthChanged?.Invoke(_currentHealth);
+            OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
         }
     }
 

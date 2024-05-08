@@ -7,6 +7,7 @@ public class ItemSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
 
     private bool isMouseOver = false;
 
+
     public void OnDrop(PointerEventData eventData)
     {
         Debug.Log("Item dropped in item slot");
@@ -17,7 +18,7 @@ public class ItemSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
             {
                 
             }
-            item.transform.SetParent(transform);
+            item.SetOriginalParent();
             item.transform.position = transform.position;
             currentItem = item;
         }

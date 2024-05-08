@@ -14,6 +14,10 @@ public class ItemComponent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private Vector2 originalPosition;
 
+    public bool isCrafting = false;
+    public Transform originalParent;
+
+
     private void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
@@ -28,7 +32,6 @@ public class ItemComponent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         
         originalPosition = this.transform.position;
 
-        this.transform.SetParent(craftingArea);
         this.transform.SetAsLastSibling();
 
         canvasGroup.blocksRaycasts = false;
@@ -61,17 +64,36 @@ public class ItemComponent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         // Convert the bounds of the box to screen space
         Vector3[] boxCorners = new Vector3[4];
         boundsBox.GetWorldCorners(boxCorners);
-        Debug.Log("IsOver Item Slot: " + ItemSlotManager.Instance.isItemSlotMousedOver());
+
         // Check if the item is outside the bounds box and not in an item slot
         if ((itemCorners[0].x < boxCorners[0].x || itemCorners[2].x > boxCorners[2].x || 
             itemCorners[0].y < boxCorners[0].y || itemCorners[2].y > boxCorners[2].y) &&
             !ItemSlotManager.Instance.isItemSlotMousedOver())
         {
-            Debug.Log("Settig to original position");
-            // If it is, return the ItemComponent to its original position
             this.transform.position = originalPosition;
         }
 
+        if(ItemSlotManager.Instance.isItemSlotMousedOver())
+        {
+            SetOriginalParent();
+        }
+        else if (!(itemCorners[0].x < boxCorners[0].x || itemCorners[2].x > boxCorners[2].x || 
+            itemCorners[0].y < boxCorners[0].y || itemCorners[2].y > boxCorners[2].y))
+        {
+            SetCraftingAreaParent();
+        }
+
+
         canvasGroup.blocksRaycasts = true;
     } 
+
+    public void SetOriginalParent()
+    {
+        this.transform.SetParent(originalParent);
+    }
+
+    public void SetCraftingAreaParent()
+    {
+        this.transform.SetParent(craftingArea);
+    }
 }

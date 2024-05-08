@@ -17,8 +17,8 @@ TagManager:
   - Player
   - Mob
   - Environment
-  - 
-  - 
+  - ItemComponent
+  - ItemSlot
   - 
   - 
   - 

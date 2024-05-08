@@ -8768,7 +8768,7 @@ MonoBehaviour:
   _TEMP_Abilities:
   - {fileID: 11400000, guid: 0b1e38c553ecb5446902fe10f18021cb, type: 2}
   - {fileID: 11400000, guid: 0b1e38c553ecb5446902fe10f18021cb, type: 2}
-  - {fileID: 11400000, guid: 0b1e38c553ecb5446902fe10f18021cb, type: 2}
+  - {fileID: 11400000, guid: b0d517505faa6594ca07362267b38f46, type: 2}
 --- !u!114 &1065561873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22249,18 +22249,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4b3bdf67f099704786e15b6be13459f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items:
-  - {fileID: 11400000, guid: fd6a1cd7a12e6394484763dd818c6bde, type: 2}
-  - {fileID: 11400000, guid: 8e9e1fbe226b7d1438aa4fe3abe6f3cb, type: 2}
-  - {fileID: 11400000, guid: 9b21a04a639e8184487fbc57bf456649, type: 2}
-  - {fileID: 11400000, guid: 8fbc7d22e1529bb45aa04d84678d90c0, type: 2}
-  - {fileID: 11400000, guid: 440bcb04280564b48b9cac4839cc74c3, type: 2}
-  - {fileID: 11400000, guid: d5130257d91a1a8458a8054c51ef457b, type: 2}
-  - {fileID: 11400000, guid: bd2713023cd41c5458ce1c8fb406fa9b, type: 2}
-  - {fileID: 11400000, guid: 85c6f82deb7e47f4890344d952ec53bf, type: 2}
-  - {fileID: 11400000, guid: b81719b8ced2765408f87e1d1fa0b710, type: 2}
-  - {fileID: 11400000, guid: 32234da22a9f9124099b125dcfbcdeab, type: 2}
-  - {fileID: 11400000, guid: 41132ed434bc8f44c831ad3887297245, type: 2}
+  components:
+  - {fileID: 11400000, guid: fbda46a3482e7294a8d99bf589def094, type: 2}
 --- !u!1 &1528862891
 GameObject:
   m_ObjectHideFlags: 0
@@ -23602,12 +23592,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   craftingRecipes:
-  - {fileID: 11400000, guid: 49ac2f5a642de4c40a1efe7d2721f217, type: 2}
-  - {fileID: 11400000, guid: ea6d75ddd07da544b8764e7500a9b43e, type: 2}
-  - {fileID: 11400000, guid: b3bbd609a5ab1ee419931832e4db5fb1, type: 2}
-  - {fileID: 11400000, guid: c99104961f1d07f439adce23cefb411f, type: 2}
-  - {fileID: 11400000, guid: 1b4414ef6b6587345b82f5850b1fae52, type: 2}
-  - {fileID: 11400000, guid: a17dd54ae14755f4c9cd4d34a16a65ef, type: 2}
+  - {fileID: 11400000, guid: f24a7aea717e5794ab27090c2f6778e9, type: 2}
 --- !u!1 &1669007648
 GameObject:
   m_ObjectHideFlags: 0
@@ -25665,6 +25650,10 @@ PrefabInstance:
       propertyPath: activeItems.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: 204edb2010b33d34481bf71990186fab, type: 2}
+    - target: {fileID: 2023569948972409153, guid: a606b0db4927dfd46ba24cec8d3c5dc4, type: 3}
+      propertyPath: _AoE_Effect
+      value: 
+      objectReference: {fileID: 8256443458610584895, guid: e8bab2fbba9526c4a9baaf90d5be1118, type: 3}
     - target: {fileID: 2023569948972409153, guid: a606b0db4927dfd46ba24cec8d3c5dc4, type: 3}
       propertyPath: abilities.Array.size
       value: 0

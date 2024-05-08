@@ -21,6 +21,10 @@ public class PlayerAbilityManager : MonoBehaviour
     private List<AbilitySO> abilities = new List<AbilitySO>();
     [SerializeField]
     private BasicAttackSO basicAttack;
+
+    [SerializeField]
+    private GameObject _AoE_Effect;
+
     private void Update()
     {
         if (GameStateManager.Instance.IsPaused())
@@ -43,7 +47,7 @@ public class PlayerAbilityManager : MonoBehaviour
         {
             if (ability.cooldownTimer <= 0f)
             {
-                Shoot(ability);
+                Activate(ability);
             }
             else
             {
@@ -86,6 +90,35 @@ public class PlayerAbilityManager : MonoBehaviour
     #endregion
 
     #region Abilities
+    private void Activate(AbilitySO ability)
+    {
+        if(ability.abilityType == AbilityType.Projectile)
+        {
+            Shoot(ability);
+        }
+        else if(ability.abilityType == AbilityType.AoE)
+        {
+            AoE(ability);
+        }
+    }
+
+    private void AoE(AbilitySO ability)
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, ability.attackRange);
+        ability.projectilePrefab.GetComponent<Animator>().SetTrigger("Activate");
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.gameObject.CompareTag("Mob"));
+            {
+                Mob mob = collider.GetComponent<Mob>();
+                if(mob != null)
+                    mob.TakeDamage(ability.damage);
+            }
+        }
+        ability.cooldownTimer = ability.cooldown;
+        AbilityHUDManager.Instance.SetAbilitySlotCooldown(ability.abilitySlot, ability.cooldown);
+    }
+
     private void Shoot(AbilitySO ability)
     {
         if (DetectMobs(ability.attackRange, out Collider2D closestMob))
@@ -121,6 +154,13 @@ public class PlayerAbilityManager : MonoBehaviour
     public void AddAbility(AbilitySO ability)
     {
         abilities.Add(ability);
+        if(ability.abilityType == AbilityType.AoE)
+        {
+            GameObject AoE_Effect = Instantiate(_AoE_Effect, transform.position, Quaternion.identity);
+            AoE_Effect.transform.SetParent(transform);
+            AoE_Effect.transform.localScale = new Vector3(ability.attackRange *2, ability.attackRange *2, 1f);
+            ability.projectilePrefab = AoE_Effect;
+        }
     }
 
 

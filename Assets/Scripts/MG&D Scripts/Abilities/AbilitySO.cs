@@ -1,7 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+public enum AbilityType
+{
+    Projectile,
+    AoE
+}
 [CreateAssetMenu(fileName = "New Ability", menuName = "Abilities/Ability")]
 public class AbilitySO : ScriptableObject
 {
@@ -12,5 +16,5 @@ public class AbilitySO : ScriptableObject
     public float cooldown = 2f;
     public float cooldownTimer = 0f;
     public GameObject projectilePrefab;
-
+    public AbilityType abilityType;
 }

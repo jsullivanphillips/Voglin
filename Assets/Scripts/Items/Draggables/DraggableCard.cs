@@ -23,8 +23,8 @@ public class DraggableCard : DraggableObject
     private Image _CraftingFillBar;
     [SerializeField]
     private GameObject _FillBarGO;
-    [SerializeField]
-    private CraftingHandler craftingHandler;
+    // [SerializeField]
+    // private CraftingHandler craftingHandler;
 
     private DraggableCard craftingPartner;
     public bool isCrafting = false;
@@ -126,7 +126,7 @@ public class DraggableCard : DraggableObject
             _CraftingFillBar.fillAmount = fillAmount;
             yield return null;
         }
-        craftingHandler.CraftItems(this, craftingPartner);
+        // craftingHandler.CraftItems(this, craftingPartner);
         _FillBarGO.SetActive(false);
         isCrafting = false;
     }

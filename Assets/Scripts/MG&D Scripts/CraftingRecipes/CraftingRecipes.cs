@@ -20,17 +20,17 @@ public class CraftingRecipes : MonoBehaviour
 
     public List<CraftingRecipeSO> craftingRecipes = new List<CraftingRecipeSO>();
 
-    public bool DoesRecipeExist(ItemSO item1, ItemSO item2)
+    public bool DoesRecipeExist(ComponentSO item1, ComponentSO item2)
     {
         foreach(CraftingRecipeSO recipe in craftingRecipes)
         {
-            if(recipe.item1.itemName == item1.itemName 
-            && recipe.item2.itemName == item2.itemName)
+            if(recipe.item1.name == item1.name 
+            && recipe.item2.name == item2.name)
             {
                 return true;
             }
-            else if(recipe.item1.itemName == item2.itemName 
-            && recipe.item2.itemName == item1.itemName)
+            else if(recipe.item1.name == item2.name 
+            && recipe.item2.name == item1.name)
             {
                 return true;
             }
@@ -38,17 +38,17 @@ public class CraftingRecipes : MonoBehaviour
         return false;
     }
 
-    public ItemSO GetCraftingResult(ItemSO item1, ItemSO item2)
+    public ComponentSO GetCraftingResult(ComponentSO item1, ComponentSO item2)
     {
         foreach(CraftingRecipeSO recipe in craftingRecipes)
         {
-            if(recipe.item1.itemName == item1.itemName 
-            && recipe.item2.itemName == item2.itemName)
+            if(recipe.item1.name == item1.name 
+            && recipe.item2.name == item2.name)
             {
                 return Instantiate(recipe.result);
             }
-            else if(recipe.item1.itemName == item2.itemName 
-            && recipe.item2.itemName == item1.itemName)
+            else if(recipe.item1.name == item2.name 
+            && recipe.item2.name == item1.name)
             {
                 return Instantiate(recipe.result);
             }

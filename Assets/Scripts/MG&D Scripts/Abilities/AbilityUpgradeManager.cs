@@ -57,12 +57,22 @@ public class AbilityUpgradeManager : MonoBehaviour
         GameStateManager.Instance.ResumeGame();
     }
 
+    public void UpgradeAbilityInSlot(int abilitySlot)
+    {
+        if(abilityDictionary.ContainsKey(abilitySlot))
+        {
+            AbilitySO ability = abilityDictionary[abilitySlot];   
+            _AbilityHUDManager.SetAbilitySlotImage(abilitySlot, ability.icon);     
+            ability.damage += 4;       
+        }
+    }
+
     public void UpgradeAbilitySlot1()
     {
         SkillPointSpent();
         if(abilityDictionary.ContainsKey(1))
         {
-            // Upgrade ability
+            UpgradeAbilityInSlot(1);
         }
         else
         {
@@ -76,7 +86,7 @@ public class AbilityUpgradeManager : MonoBehaviour
         SkillPointSpent();
         if(abilityDictionary.ContainsKey(2))
         {
-            // Upgrade ability
+            UpgradeAbilityInSlot(2);
         }
         else
         {
@@ -89,7 +99,7 @@ public class AbilityUpgradeManager : MonoBehaviour
         SkillPointSpent();
         if(abilityDictionary.ContainsKey(3))
         {
-            // Upgrade ability
+            UpgradeAbilityInSlot(3);
         }
         else
         {
@@ -102,7 +112,7 @@ public class AbilityUpgradeManager : MonoBehaviour
         SkillPointSpent();
         if(abilityDictionary.ContainsKey(4))
         {
-            // Upgrade ability
+            UpgradeAbilityInSlot(4);
         }
         else
         {
@@ -115,7 +125,7 @@ public class AbilityUpgradeManager : MonoBehaviour
         SkillPointSpent();
         if(abilityDictionary.ContainsKey(5))
         {
-            // Upgrade ability
+            UpgradeAbilityInSlot(5);
         }
         else
         {

@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 02b837a4951d2d3428b9605bdee8602d, type: 3}
-  m_Name: Crossbow
+  m_Name: Basic
   m_EditorClassIdentifier: 
-  item1: {fileID: 11400000, guid: 9b21a04a639e8184487fbc57bf456649, type: 2}
-  item2: {fileID: 11400000, guid: 8e9e1fbe226b7d1438aa4fe3abe6f3cb, type: 2}
-  result: {fileID: 11400000, guid: b81719b8ced2765408f87e1d1fa0b710, type: 2}
+  item1: {fileID: 11400000, guid: fbda46a3482e7294a8d99bf589def094, type: 2}
+  item2: {fileID: 11400000, guid: fbda46a3482e7294a8d99bf589def094, type: 2}
+  result: {fileID: 11400000, guid: fbda46a3482e7294a8d99bf589def094, type: 2}

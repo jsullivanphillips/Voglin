@@ -53,13 +53,13 @@ public class ChooseNewCardManager : MonoBehaviour
             case 0:
                 for (int i = 0; i < 3; i++)
                 {
-                    items.Add(ItemDatabase.Instance.GetRandomPassiveItemAtRarity(0));
+                    //items.Add(ItemDatabase.Instance.GetRandomPassiveItemAtRarity(0));
                 }
                 break;
             default:
                 for (int i = 0; i < 3; i++)
                 {
-                    items.Add(ItemDatabase.Instance.GetRandomPassiveItemAtRarity(0));
+                    //items.Add(ItemDatabase.Instance.GetRandomPassiveItemAtRarity(0));
                 }
                 break;
         
@@ -75,25 +75,25 @@ public class ChooseNewCardManager : MonoBehaviour
             case 0:
                 for (int i = 0; i < 3; i++)
                 {
-                    items.Add(ItemDatabase.Instance.GetRandomActiveItemAtRarity(Rarity.Poor));
+                    //items.Add(ItemDatabase.Instance.GetRandomActiveItemAtRarity(Rarity.Poor));
                 }
                 break;
             case 1:
                 for (int i = 0; i < 3; i++)
                 {
-                    items.Add(ItemDatabase.Instance.GetRandomActiveItemAtRarity(Rarity.Poor));
+                    //items.Add(ItemDatabase.Instance.GetRandomActiveItemAtRarity(Rarity.Poor));
                 }
                 break;
             case 2:
                 for (int i = 0; i < 3; i++)
                 {
-                    items.Add(ItemDatabase.Instance.GetRandomPassiveItemAtRarity(Rarity.Uncommon));
+                    //items.Add(ItemDatabase.Instance.GetRandomPassiveItemAtRarity(Rarity.Uncommon));
                 }
                 break;
             default:
                 for (int i = 0; i < 3; i++)
                 {
-                    items.Add(ItemDatabase.Instance.GetRandomPassiveItemAtRarity(Rarity.Poor));
+                    //items.Add(ItemDatabase.Instance.GetRandomPassiveItemAtRarity(Rarity.Poor));
                 }
                 break;
         

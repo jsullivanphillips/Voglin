@@ -58,7 +58,7 @@ public class RoundManager : MonoBehaviour
             return;
         }
         _roundTime -= Time.deltaTime;
-        _timerText.text = "Round: " + round + 1 + " \nTime: " + Mathf.Round(_roundTime).ToString();
+        _timerText.text = "Round: " + (round + 1).ToString() + " \nTime: " + Mathf.Round(_roundTime).ToString();
         if(_roundTime <= 0)
         {
             _roundTime = _MaxRoundTime;

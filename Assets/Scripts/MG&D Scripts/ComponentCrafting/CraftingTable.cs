@@ -38,8 +38,11 @@ public class CraftingTable : MonoBehaviour
         itemComponent.boundsBox = _BoundsBox;
         itemComponent.craftingArea = _CraftingSpace;
         itemComponent.originalParent = _ItemComponentsParent;
-        //itemComponent.id = _itemComponents.Count;
-        //_itemComponents.Add(itemComponent.id, itemComponent);
+        itemComponent.id = Random.Range(0, int.MaxValue);
+        ComponentSO componentSO = ItemDatabase.Instance.GetRandomComponent();
+        componentSO.id = itemComponent.id;
+        itemComponent.SetComponentSO(componentSO);
+        _itemComponents.Add(itemComponent.id, itemComponent);
     }
 
     private Vector3 GetRandomSpawnPosition()
@@ -52,6 +55,29 @@ public class CraftingTable : MonoBehaviour
     
         Vector3 spawnPosition = new Vector3(x, y, 0);
         return spawnPosition;
+    }
+
+    public void RemoveItemComponent(int id)
+    {
+        Debug.Log("Removing component with id: " + id);
+        if (_itemComponents.ContainsKey(id))
+        {
+            Destroy(_itemComponents[id].gameObject);
+            _itemComponents.Remove(id);
+        }
+    }
+
+    public void SpawnItemComponent(ComponentSO componentSO)
+    {
+        GameObject item = Instantiate(_ItemComponentPrefab, GetRandomSpawnPosition(), Quaternion.identity, _ItemComponentsParent);
+        ItemComponent itemComponent = item.GetComponent<ItemComponent>();
+        itemComponent.boundsBox = _BoundsBox;
+        itemComponent.craftingArea = _CraftingSpace;
+        itemComponent.originalParent = _ItemComponentsParent;
+        itemComponent.id = Random.Range(0, int.MaxValue);
+        componentSO.id = itemComponent.id;
+        itemComponent.SetComponentSO(componentSO);
+        _itemComponents.Add(itemComponent.id, itemComponent);
     }
 
 }

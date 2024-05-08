@@ -37,8 +37,21 @@ public class PlayerAbilityManager : MonoBehaviour
         {
             basicAttack.cooldownTimer -= Time.deltaTime;
         }
-    }
 
+        // Abilities
+        foreach (AbilitySO ability in abilities)
+        {
+            if (ability.cooldownTimer <= 0f)
+            {
+                Shoot(ability);
+            }
+            else
+            {
+                ability.cooldownTimer -= Time.deltaTime;
+            }
+        }
+    }
+    #region Basic Attack
     private void Shoot(BasicAttackSO basicAttack)
     {
         if (DetectMobs(basicAttack.attackRange, out Collider2D closestMob))
@@ -70,7 +83,52 @@ public class PlayerAbilityManager : MonoBehaviour
 
         projectileScript.damage = basicAttack.damage;
     }
+    #endregion
 
+    #region Abilities
+    private void Shoot(AbilitySO ability)
+    {
+        if (DetectMobs(ability.attackRange, out Collider2D closestMob))
+        {
+            PerformAbility(ability, closestMob.transform.position);
+            ability.cooldownTimer = ability.cooldown;
+            AbilityHUDManager.Instance.SetAbilitySlotCooldown(ability.abilitySlot, ability.cooldown);
+        }
+    }
+
+    private void PerformAbility(AbilitySO ability, Vector3 targetPosition)
+    {
+        Vector3 direction = (targetPosition - transform.position).normalized;
+
+        // Set a fixed offset distance for the projectile spawn position
+        float offsetDistance = 1f;
+        Vector3 spawnPosition = transform.position + direction * offsetDistance;
+
+        // This is calculated for the sword prefab
+        Quaternion rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 112);
+
+        GameObject projectile = Instantiate(ability.projectilePrefab, spawnPosition, rotation);
+        Projectile projectileScript = projectile.GetComponent<Projectile>();
+
+        projectileScript.direction = direction;
+
+        projectileScript.distanceToLive = ability.attackRange;
+        projectileScript.SetLifetime();
+
+        projectileScript.damage = ability.damage;
+    }
+
+    public void AddAbility(AbilitySO ability)
+    {
+        abilities.Add(ability);
+    }
+
+
+    public void RemoveAbility(AbilitySO ability)
+    {
+        abilities.Remove(ability);
+    }
+    #endregion
     private bool DetectMobs(float range, out Collider2D closestMob)
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, range);

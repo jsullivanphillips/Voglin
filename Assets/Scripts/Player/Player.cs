@@ -57,7 +57,7 @@ public class Player : MonoBehaviour
         currentXP = 0;
         xpToLevel = (int)(xpToLevel * 1.2f);
         experienceBar.maxExperience = xpToLevel;
-        ChooseNewCardManager.Instance.DisplayCardsForLevel(1);
+        AbilityUpgradeManager.Instance.LevelUp();
     }
 
     void Start()

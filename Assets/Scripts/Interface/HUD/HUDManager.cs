@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class HUDManager : MonoBehaviour
 {
@@ -34,6 +35,11 @@ public class HUDManager : MonoBehaviour
     private bool isBasicAttackCooldownActive = false;
     private float basicAttackCooldownTimer = 0f;
     private float basicAttackCooldown = 1.5f;
+
+    [SerializeField]
+    TMP_Text _LevelText;
+    [SerializeField]
+    TMP_Text _AvailableSkillPointsText;
     
 
     public void SetBagIconCooldown(float cooldownTime)
@@ -48,6 +54,17 @@ public class HUDManager : MonoBehaviour
         isBasicAttackCooldownActive = true;
         basicAttackCooldownTimer = cooldownTime;
         basicAttackCooldown = cooldownTime;
+    }
+
+    public void SetLevelText(int level)
+    {
+        _LevelText.text = level.ToString();
+    }
+
+    public void SetAvailableSkillPointsText(int skillPoints)
+    {
+        _AvailableSkillPointsText.transform.parent.gameObject.SetActive(skillPoints > 0);
+        _AvailableSkillPointsText.text = skillPoints.ToString();
     }
 
     private void Update()

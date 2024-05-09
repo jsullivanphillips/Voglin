@@ -112,7 +112,7 @@ public class PlayerAbilityManager : MonoBehaviour
         ability.projectilePrefab.GetComponent<Animator>().SetTrigger("Activate");
         foreach (Collider2D collider in colliders)
         {
-            if (collider.gameObject.CompareTag("Mob"));
+            if (collider.gameObject.CompareTag("Mob"))
             {
                 Mob mob = collider.GetComponent<Mob>();
                 if(mob != null)

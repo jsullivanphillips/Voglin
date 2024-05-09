@@ -7,6 +7,7 @@ public class Orbiter : MonoBehaviour
 
     void Update()
     {
+        if(GameStateManager.Instance.IsPaused()) return;
         // Rotate around the target every frame
         transform.RotateAround(target.position, Vector3.forward, speed * Time.deltaTime);
     }

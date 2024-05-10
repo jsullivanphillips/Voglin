@@ -51,7 +51,7 @@ public class AbilityUpgradeManager : MonoBehaviour
         {
             abilityDictionary.Add(abilitySlot, chosenAbility);
         }
-        _AbilityHUDManager.SetAbilitySlotImage(abilitySlot, chosenAbility.icon);
+        _AbilityHUDManager.SetAbilitySlot(abilitySlot, chosenAbility);
         PlayerAbilityManager.Instance.AddAbility(chosenAbility);
         _newAbilityManager.HideAbilityOptions();
         GameStateManager.Instance.ResumeGame();
@@ -62,7 +62,7 @@ public class AbilityUpgradeManager : MonoBehaviour
         if(abilityDictionary.ContainsKey(abilitySlot))
         {
             AbilitySO ability = abilityDictionary[abilitySlot];   
-            _AbilityHUDManager.SetAbilitySlotImage(abilitySlot, ability.icon);  
+            
             if(ability.abilityType == AbilityType.Projectile)
             {
                 ability.damage += 4;
@@ -77,7 +77,7 @@ public class AbilityUpgradeManager : MonoBehaviour
             {
                 PlayerAbilityManager.Instance.IncreaseOrbiterSpeedAndDamage(ability.id);
             }
-               
+            _AbilityHUDManager.SetAbilitySlot(abilitySlot, ability);  
         }
     }
 

@@ -85,7 +85,9 @@ public class PlayerAbilityManager : MonoBehaviour
         projectileScript.distanceToLive = basicAttack.attackRange;
         projectileScript.SetLifetime();
 
-        projectileScript.damage = basicAttack.damage;
+        // Damage
+        // Basic attack default scaling is 1 physical power = 1 damage
+        projectileScript.damage = basicAttack.damage + PlayerItems.Instance.GetPhysicalPower();
     }
     #endregion
 
@@ -201,6 +203,7 @@ public class PlayerAbilityManager : MonoBehaviour
             {
                 GameObject orbiter = ability.projectilePrefab;
                 orbiter.GetComponent<Orbiter>().speed = orbiter.GetComponent<Orbiter>().speed + 10f;
+                ability.damage += 2f;
                 orbiter.GetComponent<Projectile>().damage = orbiter.GetComponent<Projectile>().damage + 2f;
             }
         }

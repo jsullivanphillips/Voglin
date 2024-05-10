@@ -10,13 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 096519f7025baea44ac3c0cee05cf96b, type: 3}
-  m_Name: Scythe
+  m_Name: Decay
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 5acd404d031a4354793a3739d18894db, type: 3}
-  damage: 4
+  name: Decay
+  icon: {fileID: 21300000, guid: 8e96bce713f06924f9eb3b03b62ec435, type: 3}
+  damage: 3
+  scaling: 1
+  description: Deal <damage> damage to all enemies within <attackRange> units
+  scalingStat: 0
   abilitySlot: 0
-  attackRange: 4
+  attackRange: 3
   cooldown: 3
   cooldownTimer: 0
-  projectilePrefab: {fileID: 2025617104460581626, guid: 0de88596792d5af4dbce548d5ccc2029, type: 3}
-  abilityType: 2
+  projectilePrefab: {fileID: 0}
+  abilityType: 1
+  id: 0

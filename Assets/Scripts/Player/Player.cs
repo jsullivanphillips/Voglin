@@ -5,10 +5,42 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField]
-    ExperienceBar experienceBar;
+    private ExperienceBar experienceBar;
 
-    private int xpToLevel = 8;
+    private int xpToLevel = 4;
 
+    // Health
+    [SerializeField]
+    private float _StartingMaxHealth = 100;
+    private float _currentHealth = 100;
+    private float _maxHealth = 100;
+
+    public delegate void HealthChangedDelegate(float newHealth, float maxHealth);
+    public event HealthChangedDelegate OnHealthChanged;
+
+    public float currentHealth
+    {
+        get { return _currentHealth; }
+        set
+        {
+            _currentHealth = value;
+            OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
+        }
+    }
+
+    public void RecalculateHealthBonuses()
+    {
+        _maxHealth = _StartingMaxHealth + PlayerItems.Instance.GetHealthBonus();
+        OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+    }
+
+
+    // XP
     public delegate void XPChangedDelegate(int newXP);
     public event XPChangedDelegate OnXPChanged;
 
@@ -21,27 +53,6 @@ public class Player : MonoBehaviour
             _currentXP = value;
             OnXPChanged?.Invoke(_currentXP);
         }
-    }
-
-    public delegate void HealthChangedDelegate(float newHealth, float maxHealth);
-    public event HealthChangedDelegate OnHealthChanged;
-
-    private float _currentHealth = 100;
-    private float _maxHealth = 100;
-    public float currentHealth
-    {
-        get { return _currentHealth; }
-        set
-        {
-            _currentHealth = value;
-            OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
-        }
-    }
-
-
-    public void TakeDamage(float damage)
-    {
-        currentHealth -= damage;
     }
 
     public void GainExperience(int experience)
@@ -63,6 +74,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        _maxHealth = _StartingMaxHealth;
         experienceBar.maxExperience = xpToLevel;
     }
 

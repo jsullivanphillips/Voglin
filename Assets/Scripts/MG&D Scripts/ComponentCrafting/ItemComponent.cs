@@ -4,33 +4,35 @@ using UnityEngine.EventSystems;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemComponent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class ItemComponent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    public RectTransform boundsBox;
-    public Transform craftingArea;
-
-    private Coroutine fillBarAnimation;
-
     [SerializeField]
-    protected CanvasGroup canvasGroup;
-    protected bool isDraggable = true;
-
-    private Vector2 originalPosition;
-
-    public bool isCrafting = false;
-    public Transform originalParent;
-
+    private Image _Icon;
+    [SerializeField]
+    private CanvasGroup canvasGroup;
     [SerializeField]
     private Image _CraftingFillBar;
     [SerializeField]
     private GameObject _FillBarGO;
     [SerializeField]
     private ComponentCraftingHandler craftingHandler;
-
+ 
     private ItemComponent craftingPartner;
-
     private ComponentSO componentSO;
-    public int id;
+    private Vector2 originalPosition;
+    private Coroutine fillBarAnimation;
+
+    
+    protected bool isDraggable = true;
+
+    
+    [HideInInspector] public RectTransform boundsBox;
+    [HideInInspector] public Transform craftingArea;
+    [HideInInspector] public Transform originalParent;
+    [HideInInspector] public ItemSlot currentItemSlot;
+    [HideInInspector] public bool isInRack = false;
+    [HideInInspector] public bool isCrafting = false;
+    [HideInInspector] public int id;
 
     private void Awake()
     {
@@ -97,20 +99,51 @@ public class ItemComponent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             itemCorners[0].y < boxCorners[0].y || itemCorners[2].y > boxCorners[2].y))
         {
             SetCraftingAreaParent();
+            
         }
 
 
         canvasGroup.blocksRaycasts = true;
     } 
 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if(eventData.pointerDrag == null)
+        {
+            TooltipManager.Instance.ShowComponentTooltip(componentSO, this.transform.position);
+        }
+        // else, showing crafting result from two items
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        TooltipManager.Instance.HideComponentTooltip();
+    }
+
+    public Vector3 GetOriginalPosition()
+    {
+        return originalPosition;
+    }
+
+    public void SetOriginalPosition(Vector3 newPosition)
+    {
+        originalPosition = newPosition;
+    }
+
     public void SetOriginalParent()
     {
         this.transform.SetParent(originalParent);
+        isInRack = true;
     }
 
     public void SetCraftingAreaParent()
     {
         this.transform.SetParent(craftingArea);
+        if(isInRack)
+        {
+            PlayerItems.Instance.RemoveItem(GetComponentSO());
+        }
+        isInRack = false;
     }
 
     public ComponentSO GetComponentSO()
@@ -121,6 +154,7 @@ public class ItemComponent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void SetComponentSO(ComponentSO _componentSO)
     {
         componentSO = _componentSO;
+        _Icon.sprite = _componentSO.icon;
     }
 
     public void SetCraftingFlagTrue(ItemComponent otherComponent)
@@ -169,7 +203,5 @@ public class ItemComponent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         _FillBarGO.SetActive(false);
         _CraftingFillBar.fillAmount = 0;
         isCrafting = false;
-
-        
     }
 }

@@ -80,4 +80,17 @@ public class CraftingTable : MonoBehaviour
         _itemComponents.Add(itemComponent.id, itemComponent);
     }
 
+    public void SpawnItemComponent(ComponentSO componentSO, Vector3 position)
+    {
+        GameObject item = Instantiate(_ItemComponentPrefab, position, Quaternion.identity, _ItemComponentsParent);
+        ItemComponent itemComponent = item.GetComponent<ItemComponent>();
+        itemComponent.boundsBox = _BoundsBox;
+        itemComponent.craftingArea = _CraftingSpace;
+        itemComponent.originalParent = _ItemComponentsParent;
+        itemComponent.id = Random.Range(0, int.MaxValue);
+        componentSO.id = itemComponent.id;
+        itemComponent.SetComponentSO(componentSO);
+        _itemComponents.Add(itemComponent.id, itemComponent);
+    }
+
 }

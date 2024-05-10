@@ -56,24 +56,24 @@ public class AbilityHUDManager : MonoBehaviour
         _AbilitySlot5.GetComponent<AbilitySlot>().SetSkillPointBtn(state);
     }
 
-    public void SetAbilitySlotImage(int abilitySlot, Sprite image)
+    public void SetAbilitySlot(int abilitySlot, AbilitySO ability)
     {
         switch (abilitySlot)
         {
             case 1:
-                _AbilitySlot1.GetComponent<AbilitySlot>().SetAbilityImage(image);
+                _AbilitySlot1.GetComponent<AbilitySlot>().SetAbility(ability);
                 break;
             case 2:
-                _AbilitySlot2.GetComponent<AbilitySlot>().SetAbilityImage(image);
+                _AbilitySlot2.GetComponent<AbilitySlot>().SetAbility(ability);
                 break;
             case 3:
-                _AbilitySlot3.GetComponent<AbilitySlot>().SetAbilityImage(image);
+                _AbilitySlot3.GetComponent<AbilitySlot>().SetAbility(ability);
                 break;
             case 4:
-                _AbilitySlot4.GetComponent<AbilitySlot>().SetAbilityImage(image);
+                _AbilitySlot4.GetComponent<AbilitySlot>().SetAbility(ability);
                 break;
             case 5:
-                _AbilitySlot5.GetComponent<AbilitySlot>().SetAbilityImage(image);
+                _AbilitySlot5.GetComponent<AbilitySlot>().SetAbility(ability);
                 break;
         }
     }

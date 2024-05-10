@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AbilitySlot : MonoBehaviour
+public class AbilitySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField]
     private Image _AbilityImage;
@@ -14,12 +15,25 @@ public class AbilitySlot : MonoBehaviour
 
     private float cooldown;
     private float cooldownTimer;
+    private AbilitySO _ability;
 
-    public void SetAbilityImage(Sprite image)
+    public void OnPointerEnter(PointerEventData eventData)
     {
+        if(_ability != null)
+            TooltipManager.Instance.ShowAbilityTooltip(_ability, this.transform.position);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        TooltipManager.Instance.HideAbilityTooltip();
+    }
+
+    public void SetAbility(AbilitySO ability)
+    {
+        _ability = ability;
         _AbilityImage.gameObject.SetActive(true);
-        _AbilityImage.sprite = image;
-        _CooldownImage.sprite = image;
+        _AbilityImage.sprite = ability.icon;
+        _CooldownImage.sprite = ability.icon;
     }
 
     public void SetCooldown(float cooldown)
@@ -49,6 +63,5 @@ public class AbilitySlot : MonoBehaviour
         {
             _CooldownImage.fillAmount = 0f;
         }
-
     }
 }

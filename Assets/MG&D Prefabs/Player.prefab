@@ -168,6 +168,7 @@ GameObject:
   - component: {fileID: -6968143222234137950}
   - component: {fileID: 2882368088401893941}
   - component: {fileID: 2023569948972409153}
+  - component: {fileID: 5476699269855059665}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -313,6 +314,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   experienceBar: {fileID: 0}
+  _StartingMaxHealth: 100
 --- !u!50 &2882368088401893941
 Rigidbody2D:
   serializedVersion: 4
@@ -347,6 +349,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   basicAttack: {fileID: 11400000, guid: b9d85114d80894d4fa131e66ad1913cd, type: 2}
+  _AoE_Effect: {fileID: 0}
+--- !u!114 &5476699269855059665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4329587010453625088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cca2873978499c74096b2821c09e24ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: -6968143222234137950}
+  playerMovement: {fileID: 4329587010453625095}
 --- !u!1 &6725749302047498837
 GameObject:
   m_ObjectHideFlags: 0

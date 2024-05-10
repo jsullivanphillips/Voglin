@@ -17,7 +17,7 @@ MonoBehaviour:
   damage: 3
   scaling: 1
   description: Deal <damage> damage to all enemies within <attackRange> units
-  scalingStat: 0
+  scalingStat: 1
   abilitySlot: 0
   attackRange: 3
   cooldown: 3

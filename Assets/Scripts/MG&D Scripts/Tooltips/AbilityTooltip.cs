@@ -35,7 +35,17 @@ public class AbilityTooltip : MonoBehaviour
 
     private string ParseAbilityDescription()
     {
-        float damage = _ability.damage; // Plus scaling with items
+        float scalingStatValue = 0f;
+        if(_ability.scalingStat == ScalingStat.PhysicalPower)
+        {
+            scalingStatValue = PlayerItems.Instance.GetPhysicalPower();
+        }
+        // else if(_ability.scalingStat == ScalingStat.MagicPower)
+        // {
+        //     scalingStatValue = 
+        // }
+
+        float damage = _ability.damage + (_ability.scaling * scalingStatValue); // Plus scaling with items
         float cooldown = _ability.cooldown; // Plus items
         string parsedDescription = _ability.description.Replace("<damage>", "<color=\"yellow\">" + damage.ToString() + "</color>");
         parsedDescription = parsedDescription.Replace("<cooldown>", cooldown.ToString());

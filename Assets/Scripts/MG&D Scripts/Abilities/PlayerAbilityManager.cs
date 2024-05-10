@@ -178,6 +178,7 @@ public class PlayerAbilityManager : MonoBehaviour
 
             Projectile projectileScript = orbiter.GetComponent<Projectile>();
             projectileScript.damage = ability.damage;
+            projectileScript.ability = ability;
             projectileScript.isOrbiter = true;
             
         }

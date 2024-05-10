@@ -26,10 +26,14 @@ public class TooltipManager : MonoBehaviour
     [SerializeField]
     private Transform _AbilityTooltip;
 
+    [SerializeField]
+    private Transform _BasicAttackTooltip;
+
     void Start()
     {
         HideComponentTooltip();
         HideAbilityTooltip();
+        HideBasicAttackTooltip();
     }
 
     public void ShowComponentTooltip(ComponentSO component, Vector3 position)
@@ -54,5 +58,17 @@ public class TooltipManager : MonoBehaviour
     public void HideAbilityTooltip()
     {
         _AbilityTooltip.gameObject.SetActive(false);
+    }
+
+    public void ShowBasicAttackTooltip(BasicAttackSO basicAttack, Vector3 position)
+    {
+        _BasicAttackTooltip.gameObject.SetActive(true);
+        _BasicAttackTooltip.GetComponent<BasicAttackTooltip>().SetBasicAttack(basicAttack);
+        _BasicAttackTooltip.position = position + new Vector3(-8f, 8f, 0f);
+    }
+
+    public void HideBasicAttackTooltip()
+    {
+        _BasicAttackTooltip.gameObject.SetActive(false);
     }
 }

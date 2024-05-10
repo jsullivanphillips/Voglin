@@ -38,6 +38,7 @@ public class CraftingTable : MonoBehaviour
         itemComponent.boundsBox = _BoundsBox;
         itemComponent.craftingArea = _CraftingSpace;
         itemComponent.originalParent = _ItemComponentsParent;
+        itemComponent.SetCraftingAreaParent();
         itemComponent.id = Random.Range(0, int.MaxValue);
         ComponentSO componentSO = ItemDatabase.Instance.GetRandomComponent();
         componentSO.id = itemComponent.id;

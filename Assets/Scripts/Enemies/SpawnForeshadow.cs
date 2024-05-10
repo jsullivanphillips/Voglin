@@ -10,8 +10,7 @@ public class SpawnForeshadow : MonoBehaviour
     public GameObject _MobPrefab;
     public MobSO mobSO;
 
-    [SerializeField]
-    private int iterationMax = 25;
+    private int numberOfIterations = 15;
 
     private void Update()
     {
@@ -33,26 +32,53 @@ public class SpawnForeshadow : MonoBehaviour
             Debug.LogError("Mob Prefab not set in SpawnForeshadow");
             return;
         }
-
+    
         Vector3 spawnLocation = new Vector3(transform.position.x, transform.position.y, 0f);
         Collider2D mobCollider = Physics2D.OverlapCircle(spawnLocation, 2f, LayerMask.GetMask("Mob"));
-        int i = 0;
-        while (mobCollider != null)
+    
+        if (mobCollider == null)
         {
-            spawnLocation += new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), 0f);
-            mobCollider = Physics2D.OverlapCircle(spawnLocation, 2f, LayerMask.GetMask("Mob"));
-            i++;
-            if(i > iterationMax)
-            {
-                Debug.LogWarning($"Could not find a valid spawn location for mob after {iterationMax} iterations");
-                Destroy(gameObject);
-                return;
-            }
+            // The spawnLocation is unoccupied, so spawn the mob here
+            GameObject mob = Instantiate(_MobPrefab, spawnLocation, Quaternion.identity);
+            mob.GetComponent<Mob>().SetMobSO(mobSO);
+    
+            Destroy(gameObject);
+            return;
         }
-
-        GameObject mob = Instantiate(_MobPrefab, spawnLocation, Quaternion.identity);
-        mob.GetComponent<Mob>().SetMobSO(mobSO);
-
+    
+        int distance = 1;
+        while (distance <= numberOfIterations)
+        {
+            // Check the four directions: left, right, up, down
+            Vector3[] directions = new Vector3[]
+            {
+                new Vector3(-distance, 0, 0), // Left
+                new Vector3(distance, 0, 0),  // Right
+                new Vector3(0, distance, 0),  // Up
+                new Vector3(0, -distance, 0)  // Down
+            };
+    
+            foreach (Vector3 direction in directions)
+            {
+                Vector3 checkPosition = spawnLocation + direction;
+                mobCollider = Physics2D.OverlapCircle(checkPosition, 2f, LayerMask.GetMask("Mob"));
+                if (mobCollider == null)
+                {
+                    // The checkPosition is unoccupied, so spawn the mob here
+                    GameObject mob = Instantiate(_MobPrefab, checkPosition, Quaternion.identity);
+                    mob.GetComponent<Mob>().SetMobSO(mobSO);
+    
+                    Destroy(gameObject);
+                    return;
+                }
+            }
+    
+            // Increase the distance for the next iteration
+            distance++;
+        }
+    
+        // If we reach this point, all cells are occupied
+        Debug.LogWarning("Could not find a valid spawn location for mob");
         Destroy(gameObject);
     }
 }

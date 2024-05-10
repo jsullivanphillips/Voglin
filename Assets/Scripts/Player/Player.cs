@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private ExperienceBar experienceBar;
 
-    private int xpToLevel = 4;
+    private int xpToLevel = 6;
 
     // Health
     [SerializeField]

@@ -64,6 +64,11 @@ public class InventoryViewManager : MonoBehaviour
             return;
         }
 
+        if(_InventoryView.activeSelf)
+        {
+            TooltipManager.Instance.HideComponentTooltip();
+        }
+        
         _InventoryView.SetActive(!_InventoryView.activeSelf);
 
         if (_InventoryView.activeSelf)

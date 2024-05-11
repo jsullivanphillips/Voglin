@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class InventoryViewManager : MonoBehaviour
 {
-    #region Singleton
     public static InventoryViewManager Instance { get; private set; }
 
     private void Awake()
@@ -18,13 +17,68 @@ public class InventoryViewManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    #endregion
 
     [SerializeField]
-    private GameObject _InventoryUI;
+    GameObject _InventoryView;
+    private bool isCooldownActive = false;
+    private float cooldownTime = 1.5f; // Set your desired cooldown time here
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+           PressB();
+        }
+    }
+
+    private IEnumerator StartCooldown()
+    {
+        isCooldownActive = true;
+        HUDManager.Instance.SetBagIconCooldown(cooldownTime);
+        yield return new WaitForSeconds(cooldownTime);
+        isCooldownActive = false;
+    }
 
     public void OpenInventory()
     {
-        _InventoryUI.SetActive(true);
+        _InventoryView.SetActive(true);
+        GameStateManager.Instance.PauseGame();
+    }
+
+    public void CloseInventory()
+    {
+        _InventoryView.SetActive(false);
+    }
+
+    public void PressB()
+    {
+        // This is to prevent player from reopening inventory while game is unpausing
+        if(!_InventoryView.activeSelf && GameStateManager.Instance.IsPaused())
+        {
+            return;
+        }
+
+        // If cooldown is active, don't allow opening the inventory
+        if (isCooldownActive || GameStateManager.Instance.GetGameState() == GameState.ChoosingNewAbility)
+        {
+            return;
+        }
+
+        if(_InventoryView.activeSelf)
+        {
+            TooltipManager.Instance.HideComponentTooltip();
+        }
+        
+        _InventoryView.SetActive(!_InventoryView.activeSelf);
+
+        if (_InventoryView.activeSelf)
+        {
+            GameStateManager.Instance.PauseGame();
+        }
+        else
+        {
+            GameStateManager.Instance.ResumeGame();
+            StartCoroutine(StartCooldown());
+        }
     }
 }

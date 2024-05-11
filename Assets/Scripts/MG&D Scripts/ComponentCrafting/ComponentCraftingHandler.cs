@@ -15,7 +15,6 @@ public class ComponentCraftingHandler : MonoBehaviour, IDropHandler
     public void OnDrop(PointerEventData eventData)
     {
         ItemComponent otherComponent = eventData.pointerDrag.GetComponent<ItemComponent>();
-        Debug.Log("This item is InRack: " + thisItemComponent.isInRack);
         if(otherComponent != null && !thisItemComponent.isCrafting 
         && !thisItemComponent.isInRack)
         {

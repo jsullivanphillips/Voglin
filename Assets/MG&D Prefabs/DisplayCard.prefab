@@ -304,7 +304,7 @@ GameObject:
   - component: {fileID: 8519530489514510114}
   - component: {fileID: 3673949803422212509}
   m_Layer: 5
-  m_Name: SubHeading
+  m_Name: Summary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -775,7 +775,7 @@ GameObject:
   - component: {fileID: 6027350308080676323}
   - component: {fileID: 4784950385217527639}
   m_Layer: 5
-  m_Name: Title
+  m_Name: NameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1044,7 +1044,7 @@ GameObject:
   - component: {fileID: 8450798563670042791}
   - component: {fileID: 8450798563670042789}
   - component: {fileID: 8450798563670042788}
-  - component: {fileID: 4877415287146355844}
+  - component: {fileID: 137973052126292982}
   m_Layer: 5
   m_Name: DisplayCard
   m_TagString: Untagged
@@ -1114,7 +1114,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4877415287146355844
+--- !u!114 &137973052126292982
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1123,7 +1123,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8450798563670042790}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7f78c462929da94f8b43a07fa02f84c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c6815f41a2018e4caa0db9cf2ae20e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 6883835341432101203}
@@ -1133,4 +1133,3 @@ MonoBehaviour:
   statRow2: {fileID: 3160369722238782337}
   statRow3: {fileID: 8315011789680626019}
   uniquePassiveText: {fileID: 4671930342881800473}
-  _component: {fileID: 0}

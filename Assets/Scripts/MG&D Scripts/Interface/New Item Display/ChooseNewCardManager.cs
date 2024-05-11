@@ -19,7 +19,7 @@ public class ChooseNewCardManager : MonoBehaviour
     }
 
     [SerializeField]
-    GameObject _Levelup_Screen;
+    GameObject _RoundCompleteScreen;
     [SerializeField] 
     GameObject _DisplayCardPrefab;
     [SerializeField]
@@ -30,7 +30,8 @@ public class ChooseNewCardManager : MonoBehaviour
     private void DisplayCards(List<ComponentSO> components)
     {
         GameStateManager.Instance.PauseGame();
-        _Levelup_Screen.SetActive(true);
+        InventoryViewManager.Instance.CloseInventory();
+        _RoundCompleteScreen.SetActive(true);
         for (int i = 0; i < components.Count; i++)
         {
             GameObject newCard = Instantiate(_DisplayCardPrefab, _CardSpots[i]);
@@ -59,7 +60,7 @@ public class ChooseNewCardManager : MonoBehaviour
 
     public void CloseDisplay()
     {
-        _Levelup_Screen.SetActive(false);
+        _RoundCompleteScreen.SetActive(false);
         foreach (GameObject card in _DisplayCards)
         {
             Destroy(card);

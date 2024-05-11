@@ -31,5 +31,6 @@ public class ComponentSO : ScriptableObject
     public string uniquePassive;
     public float uniquePassiveValue;
 
+    public int rank;
     public int id;
 }

@@ -98,9 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01f7c02f972fbe0469ceef93ca1dfca3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MobPrefab: {fileID: 6787828209179838966, guid: 00dd1a3a0b6833d4fafccb779cc058ad, type: 3}
-  mobSO: {fileID: 0}
-  iterationMax: 25
+  _MobPrefab: {fileID: 6787828209179838966, guid: 7e4fbe01e1d10e54b86e1e30b8f4e0f2, type: 3}
+  mobSO: {fileID: 11400000, guid: 6c372b446b04a6a4983ade0298ad7627, type: 2}
 --- !u!95 &8399196422822120391
 Animator:
   serializedVersion: 4

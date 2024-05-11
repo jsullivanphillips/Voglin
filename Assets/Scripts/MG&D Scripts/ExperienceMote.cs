@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExperienceMote : MonoBehaviour
+public class ExperienceMote : PickupableObject
 {
-    protected void OnTriggerEnter2D(Collider2D other)
+    protected override void  OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player")
         {

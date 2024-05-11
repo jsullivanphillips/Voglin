@@ -15,9 +15,9 @@ MonoBehaviour:
   name: Decay
   icon: {fileID: 21300000, guid: 8e96bce713f06924f9eb3b03b62ec435, type: 3}
   damage: 3
-  scaling: 1
   description: Deal <damage> damage to all enemies within <attackRange> units
   scalingStat: 1
+  scaling: 0.5
   abilitySlot: 0
   attackRange: 3
   cooldown: 3

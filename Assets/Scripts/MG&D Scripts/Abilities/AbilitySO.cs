@@ -18,10 +18,10 @@ public class AbilitySO : ScriptableObject
     public new string name;
     public Sprite icon;
     public float damage = 6f;
-    public float scaling = 1f;
     [TextArea(3, 10)]
     public string description;
     public ScalingStat scalingStat;
+    public float scaling = 1f;
     public int abilitySlot = 0;
     public float attackRange = 5f;
     public float cooldown = 2f;

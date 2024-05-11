@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 02b837a4951d2d3428b9605bdee8602d, type: 3}
-  m_Name: Basic
+  m_Name: Giants Belt
   m_EditorClassIdentifier: 
   item1: {fileID: 11400000, guid: 15685ff9c4e8ce640895599dcf4570aa, type: 2}
   item2: {fileID: 11400000, guid: 15685ff9c4e8ce640895599dcf4570aa, type: 2}
-  result: {fileID: 11400000, guid: 15685ff9c4e8ce640895599dcf4570aa, type: 2}
+  result: {fileID: 11400000, guid: 1d36e003d29cdc04aa4740b53d0adb20, type: 2}

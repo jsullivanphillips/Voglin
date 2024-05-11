@@ -71,4 +71,5 @@ public class TooltipManager : MonoBehaviour
     {
         _BasicAttackTooltip.gameObject.SetActive(false);
     }
+
 }

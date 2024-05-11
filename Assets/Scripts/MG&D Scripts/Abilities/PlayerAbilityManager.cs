@@ -112,17 +112,32 @@ public class PlayerAbilityManager : MonoBehaviour
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, ability.attackRange);
         ability.projectilePrefab.GetComponent<Animator>().SetTrigger("Activate");
+        
+        float damage = GetDamage(ability);
+
         foreach (Collider2D collider in colliders)
         {
             if (collider.gameObject.CompareTag("Mob"))
             {
                 Mob mob = collider.GetComponent<Mob>();
                 if(mob != null)
-                    mob.TakeDamage(ability.damage);
+                    mob.TakeDamage(damage);
             }
         }
         ability.cooldownTimer = ability.cooldown;
         AbilityHUDManager.Instance.SetAbilitySlotCooldown(ability.abilitySlot, ability.cooldown);
+    }
+
+    private float GetDamage(AbilitySO ability)
+    {
+        if(ability.scalingStat == ScalingStat.PhysicalPower)
+        {
+            return ability.damage + PlayerItems.Instance.GetPhysicalPower() * ability.scaling;
+        }
+        else
+        {
+            return ability.damage + PlayerItems.Instance.GetMagicPower() * ability.scaling;
+        }
     }
 
     private void Shoot(AbilitySO ability)
@@ -154,7 +169,9 @@ public class PlayerAbilityManager : MonoBehaviour
         projectileScript.distanceToLive = ability.attackRange;
         projectileScript.SetLifetime();
 
-        projectileScript.damage = ability.damage;
+        float damage = GetDamage(ability);
+
+        projectileScript.damage = damage;
     }
 
     public void AddAbility(AbilitySO ability)

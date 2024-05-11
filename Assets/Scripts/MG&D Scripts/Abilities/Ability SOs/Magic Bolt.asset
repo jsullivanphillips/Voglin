@@ -15,10 +15,10 @@ MonoBehaviour:
   name: Magic Bolt
   icon: {fileID: 21300000, guid: 12b298403fb1809479535708d47b3008, type: 3}
   damage: 6
-  scaling: 1
   description: Fire a projectile at the nearest enemy within <attackRange> units,
     dealing <damage> damage
   scalingStat: 1
+  scaling: 1
   abilitySlot: 0
   attackRange: 8
   cooldown: 2

@@ -10,14 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 44e585f8c1f0ba440a7bf176c81a5745, type: 3}
-  m_Name: Ruby Crystal
+  m_Name: Phage
   m_EditorClassIdentifier: 
-  name: Ruby Crystal
-  icon: {fileID: 21300000, guid: 9ea375f1ef15f3444b7daaa93b299aaf, type: 3}
-  summary: Health
+  name: Phage
+  icon: {fileID: 21300000, guid: 027845652c588e8489449c3280340544, type: 3}
+  summary: Bruiser
   stats:
+  - stat: 2
+    value: 3
   - stat: 7
-    value: 10
+    value: 15
   uniquePassive: 
   uniquePassiveValue: 0
   id: 0

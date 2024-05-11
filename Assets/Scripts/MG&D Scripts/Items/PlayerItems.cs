@@ -77,4 +77,20 @@ public class PlayerItems : MonoBehaviour
         return physicalPower;
     }
 
+    public float GetMagicPower()
+    {
+        float magicPower = 0;
+        foreach (ComponentSO item in playerItems)
+        {
+            foreach (StatFloatPair stat in item.stats)
+            {
+                if (stat.stat == Stat.MagicPower)
+                {
+                    magicPower += stat.value;
+                }
+            }
+        }
+        return magicPower;
+    }
+
 }

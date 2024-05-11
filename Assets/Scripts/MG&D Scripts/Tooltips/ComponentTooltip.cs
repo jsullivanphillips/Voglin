@@ -43,11 +43,11 @@ public class ComponentTooltip : MonoBehaviour
                     break;
                 case 1:
                     statRow2.gameObject.SetActive(true);
-                    statRow2.text = currentComponent.stats[i].stat.ToString() + ": " + currentComponent.stats[i].value;
+                    statRow2.text = "+ " + currentComponent.stats[i].value + " <color=\"green\">" + BreakEnumToString(currentComponent.stats[i].stat) + "</color>";
                     break;
                 case 2:
                     statRow3.gameObject.SetActive(true);
-                    statRow3.text = currentComponent.stats[i].stat.ToString() + ": " + currentComponent.stats[i].value;
+                    statRow3.text = "+ " + currentComponent.stats[i].value + " <color=\"green\">" + BreakEnumToString(currentComponent.stats[i].stat) + "</color>";
                     break;
             }
         }

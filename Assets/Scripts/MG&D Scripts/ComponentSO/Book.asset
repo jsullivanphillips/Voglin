@@ -10,14 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 44e585f8c1f0ba440a7bf176c81a5745, type: 3}
-  m_Name: Ruby Crystal
+  m_Name: Book
   m_EditorClassIdentifier: 
-  name: Ruby Crystal
-  icon: {fileID: 21300000, guid: 9ea375f1ef15f3444b7daaa93b299aaf, type: 3}
-  summary: Health
+  name: Book
+  icon: {fileID: 21300000, guid: 8c74c7246c452d740a3020d3b580bcf1, type: 3}
+  summary: Magic Bruiser
   stats:
+  - stat: 3
+    value: 6
   - stat: 7
-    value: 10
+    value: 15
   uniquePassive: 
   uniquePassiveValue: 0
   id: 0

@@ -27,73 +27,29 @@ public class ChooseNewCardManager : MonoBehaviour
 
     private List<GameObject> _DisplayCards = new List<GameObject>();
 
-    private void DisplayCards(List<ItemSO> items)
+    private void DisplayCards(List<ComponentSO> components)
     {
         GameStateManager.Instance.PauseGame();
         _Levelup_Screen.SetActive(true);
-        for (int i = 0; i < items.Count; i++)
+        for (int i = 0; i < components.Count; i++)
         {
             GameObject newCard = Instantiate(_DisplayCardPrefab, _CardSpots[i]);
             _DisplayCards.Add(newCard);
             newCard.transform.localPosition = Vector3.zero;
-            if(items[i] is ActiveItemSO)
-            {
-                ActiveItemSO activeItem = items[i] as ActiveItemSO;
-                activeItem.cooldown = Random.Range(activeItem.cooldownRange.min, activeItem.cooldownRange.max);
-            }
-            newCard.GetComponent<DisplayCard>().SetItemSO(items[i]);
+            newCard.transform.localScale = new Vector3(2f,2f,1f);
+            newCard.GetComponent<DisplayCard>().SetComponentSO(components[i]);
         }
-    }
-
-    public void DisplayCardsForLevel(int level)
-    {
-        List<ItemSO> items = new List<ItemSO>();
-        switch (level)
-        {
-            case 0:
-                for (int i = 0; i < 3; i++)
-                {
-                    //items.Add(ItemDatabase.Instance.GetRandomPassiveItemAtRarity(0));
-                }
-                break;
-            default:
-                for (int i = 0; i < 3; i++)
-                {
-                    //items.Add(ItemDatabase.Instance.GetRandomPassiveItemAtRarity(0));
-                }
-                break;
-        
-        }
-        DisplayCards(items);
     }
 
     public void DisplayCardsForRound(int round)
     {
-        List<ItemSO> items = new List<ItemSO>();
+        List<ComponentSO> items = new List<ComponentSO>();
         switch (round % 3)
         {
-            case 0:
-                for (int i = 0; i < 3; i++)
-                {
-                    //items.Add(ItemDatabase.Instance.GetRandomActiveItemAtRarity(Rarity.Poor));
-                }
-                break;
-            case 1:
-                for (int i = 0; i < 3; i++)
-                {
-                    //items.Add(ItemDatabase.Instance.GetRandomActiveItemAtRarity(Rarity.Poor));
-                }
-                break;
-            case 2:
-                for (int i = 0; i < 3; i++)
-                {
-                    //items.Add(ItemDatabase.Instance.GetRandomPassiveItemAtRarity(Rarity.Uncommon));
-                }
-                break;
             default:
                 for (int i = 0; i < 3; i++)
                 {
-                    //items.Add(ItemDatabase.Instance.GetRandomPassiveItemAtRarity(Rarity.Poor));
+                    items.Add(ItemDatabase.Instance.GetRandomComponent());
                 }
                 break;
         

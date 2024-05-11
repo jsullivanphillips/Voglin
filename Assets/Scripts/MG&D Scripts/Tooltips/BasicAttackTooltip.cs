@@ -18,11 +18,7 @@ public class BasicAttackTooltip : MonoBehaviour
     {
         _basicAttack = basicAttack;
 
-        icon.sprite = basicAttack.icon;
-        nameText.text = basicAttack.name;
-        subHeading.text = BreakEnumToString(basicAttack.scalingStat);
-        cooldown.text = basicAttack.cooldown + " sec Cooldown";
-        description.text = ParseAbilityDescription();
+        ShowBasicTooltip();
     }
 
     private string BreakEnumToString(ScalingStat stat)
@@ -34,21 +30,82 @@ public class BasicAttackTooltip : MonoBehaviour
 
     private string ParseAbilityDescription()
     {
+        string statColor = "";
         float scalingStatValue = 0f;
         if(_basicAttack.scalingStat == ScalingStat.PhysicalPower)
         {
             scalingStatValue = PlayerItems.Instance.GetPhysicalPower();
+            statColor = "<color=\"orange\">";
         }
-        // else if(_ability.scalingStat == ScalingStat.MagicPower)
-        // {
-        //     scalingStatValue = 
-        // }
+        else if(_basicAttack.scalingStat == ScalingStat.MagicPower)
+        {
+            scalingStatValue = PlayerItems.Instance.GetMagicPower();
+            statColor = "<color=#00FFFF>";
+        }
 
-        float damage = _basicAttack.damage + (_basicAttack.scaling * scalingStatValue); // Plus scaling with items
+        float scalingDamage = (_basicAttack.scaling * scalingStatValue); 
         float cooldown = _basicAttack.cooldown; // Plus items
-        string parsedDescription = _basicAttack.description.Replace("<damage>", "<color=\"yellow\">" + damage.ToString() + "</color>");
+        string parsedDescription = _basicAttack.description.Replace("<damage>", $"<color=\"yellow\">{_basicAttack.damage.ToString()}</color>" 
+        + $" {statColor}(+{scalingDamage})</color>");
         parsedDescription = parsedDescription.Replace("<cooldown>", cooldown.ToString());
         parsedDescription = parsedDescription.Replace("<attackRange>", _basicAttack.attackRange.ToString());
         return parsedDescription;
+    }
+
+    private string ParseAbilityDescriptionDetailed()
+    {
+        string statColor = "";
+        float scalingStatValue = 0f;
+        if(_basicAttack.scalingStat == ScalingStat.PhysicalPower)
+        {
+            scalingStatValue = PlayerItems.Instance.GetPhysicalPower();
+            statColor = "<color=\"orange\">";
+        }
+        else if(_basicAttack.scalingStat == ScalingStat.MagicPower)
+        {
+            scalingStatValue = PlayerItems.Instance.GetMagicPower();
+            statColor = "<color=#00FFFF>";
+        }
+
+        float scalingDamage = (_basicAttack.scaling * scalingStatValue); 
+        float cooldown = _basicAttack.cooldown; // Plus items
+        string parsedDescription = _basicAttack.description.Replace("<damage>", $"<color=\"yellow\">{_basicAttack.damage.ToString()}</color>" 
+        + $" {statColor}(+{_basicAttack.scaling * 100}% of {scalingStatValue} {BreakEnumToString(_basicAttack.scalingStat)})</color>");
+        parsedDescription = parsedDescription.Replace("<cooldown>", cooldown.ToString());
+        parsedDescription = parsedDescription.Replace("<attackRange>", _basicAttack.attackRange.ToString());
+        return parsedDescription;
+    }
+
+    private void ShowDetailedTooltip()
+    {
+        icon.sprite = _basicAttack.icon;
+        nameText.text = _basicAttack.name;
+        subHeading.text = BreakEnumToString(_basicAttack.scalingStat);
+        cooldown.text = _basicAttack.cooldown + " sec Cooldown";
+        description.text = ParseAbilityDescriptionDetailed();
+    }
+
+    private void ShowBasicTooltip()
+    {
+        icon.sprite = _basicAttack.icon;
+        nameText.text = _basicAttack.name;
+        subHeading.text = BreakEnumToString(_basicAttack.scalingStat);
+        cooldown.text = _basicAttack.cooldown + " sec Cooldown";
+        description.text = ParseAbilityDescription();
+    }
+
+    void Update()
+    {
+        if(this.gameObject.activeSelf)
+        {
+            if(Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                ShowDetailedTooltip();
+            }
+            if(Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                ShowBasicTooltip();
+            }
+        }
     }
 }

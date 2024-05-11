@@ -38,7 +38,7 @@ public class RoundManager : MonoBehaviour
             GameStateManager.Instance.SetGameState(GameState.GameOver);
             return;
         }
-        //ChooseNewCardManager.Instance.DisplayCardsForRound(round);
+        ChooseNewCardManager.Instance.DisplayCardsForRound(round);
         _MobSpawner.SetRoundSO(Instantiate(_Rounds[round]), round);
     }
 

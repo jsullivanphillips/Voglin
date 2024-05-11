@@ -25,6 +25,9 @@ public class MobSpawner : MonoBehaviour
     private int round;
 
     [SerializeField]
+    private Transform _spawnBounds;
+
+    [SerializeField]
     private GameObject _SpawnForeshadowPrefab;
 
     [SerializeField]
@@ -182,7 +185,12 @@ public class MobSpawner : MonoBehaviour
 
     private Vector3 GetRandomSpawnPosition()
     {
-        return new Vector3(Random.Range(-16f, 16f), Random.Range(-12f, 12f), 1f);
+        Vector3 position = new Vector3(
+            Random.Range(_spawnBounds.position.x - _spawnBounds.localScale.x / 2, _spawnBounds.position.x + _spawnBounds.localScale.x / 2),
+            Random.Range(_spawnBounds.position.y - _spawnBounds.localScale.y / 2, _spawnBounds.position.y + _spawnBounds.localScale.y / 2),
+            Random.Range(_spawnBounds.position.z - _spawnBounds.localScale.z / 2, _spawnBounds.position.z + _spawnBounds.localScale.z / 2)
+        );
+        return position;
     }
 
 }

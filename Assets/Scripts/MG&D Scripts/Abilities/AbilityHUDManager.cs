@@ -31,20 +31,34 @@ public class AbilityHUDManager : MonoBehaviour
     private Transform _AbilitySlot5;
     [SerializeField]
     private TMP_Text _availableSkillPointsText;
+    [SerializeField]
+    private TMP_Text _ClickPlusIconText;
+
+    private int _skillPoints;
 
     public void SetSkillPoints(int skillPoints)
     {
+        _skillPoints = skillPoints;
         _availableSkillPointsText.text = skillPoints.ToString();
         if (skillPoints > 0)
         {
             _availableSkillPointsText.transform.parent.gameObject.SetActive(true);
             SetSkillPoints(true);
+            StartCoroutine(ShowClickPlusIcon());
         }
         else
         {
             SetSkillPoints(false);
             _availableSkillPointsText.transform.parent.gameObject.SetActive(false);
+            _ClickPlusIconText.gameObject.SetActive(false);
         }
+    }
+
+    private IEnumerator ShowClickPlusIcon()
+    {
+        yield return new WaitForSeconds(5f);
+        if(_skillPoints > 0)
+            _ClickPlusIconText.gameObject.SetActive(true);
     }
 
     public void SetSkillPoints(bool state)

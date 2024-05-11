@@ -20,8 +20,8 @@ public class InventoryViewManager : MonoBehaviour
 
     [SerializeField]
     GameObject _InventoryView;
-    private bool isCooldownActive = false;
-    private float cooldownTime = 1.5f; // Set your desired cooldown time here
+    [SerializeField]
+    GameObject _DarkenBackground;
 
     void Update()
     {
@@ -31,22 +31,17 @@ public class InventoryViewManager : MonoBehaviour
         }
     }
 
-    private IEnumerator StartCooldown()
-    {
-        isCooldownActive = true;
-        HUDManager.Instance.SetBagIconCooldown(cooldownTime);
-        yield return new WaitForSeconds(cooldownTime);
-        isCooldownActive = false;
-    }
 
     public void OpenInventory()
     {
+        _DarkenBackground.SetActive(true);
         _InventoryView.SetActive(true);
         GameStateManager.Instance.PauseGame();
     }
 
     public void CloseInventory()
     {
+        _DarkenBackground.SetActive(false);
         _InventoryView.SetActive(false);
     }
 
@@ -59,7 +54,7 @@ public class InventoryViewManager : MonoBehaviour
         }
 
         // If cooldown is active, don't allow opening the inventory
-        if (isCooldownActive || GameStateManager.Instance.GetGameState() == GameState.ChoosingNewAbility)
+        if (GameStateManager.Instance.GetGameState() == GameState.ChoosingNewAbility)
         {
             return;
         }
@@ -69,6 +64,7 @@ public class InventoryViewManager : MonoBehaviour
             TooltipManager.Instance.HideComponentTooltip();
         }
         
+        _DarkenBackground.SetActive(!_DarkenBackground.activeSelf);
         _InventoryView.SetActive(!_InventoryView.activeSelf);
 
         if (_InventoryView.activeSelf)
@@ -78,7 +74,6 @@ public class InventoryViewManager : MonoBehaviour
         else
         {
             GameStateManager.Instance.ResumeGame();
-            StartCoroutine(StartCooldown());
         }
     }
 }

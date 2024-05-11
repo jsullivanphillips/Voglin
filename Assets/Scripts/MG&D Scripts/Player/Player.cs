@@ -14,6 +14,9 @@ public class Player : MonoBehaviour
     private float _StartingMaxHealth = 100;
     private float _currentHealth = 100;
     private float _maxHealth = 100;
+    private float _StartingHealthRegen = 0.1f;
+    private float _healthRegen = 0.1f;
+    private int level = 1;
 
     public delegate void HealthChangedDelegate(float newHealth, float maxHealth);
     public event HealthChangedDelegate OnHealthChanged;
@@ -31,6 +34,8 @@ public class Player : MonoBehaviour
     public void RecalculateHealthBonuses()
     {
         _maxHealth = _StartingMaxHealth + PlayerItems.Instance.GetHealthBonus();
+        _healthRegen = _StartingHealthRegen + PlayerItems.Instance.GetHealthRegenBonus();
+        HUDManager.Instance.SetHealthRegenText(_healthRegen);
         OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
     }
 
@@ -39,6 +44,10 @@ public class Player : MonoBehaviour
         currentHealth -= damage;
     }
 
+    public float GetMaxHealth()
+    {
+        return _maxHealth;
+    }
 
     // XP
     public delegate void XPChangedDelegate(int newXP);
@@ -66,6 +75,9 @@ public class Player : MonoBehaviour
 
     private void LevelUp()
     {
+        level++;
+        HUDManager.Instance.SetLevelText(level);
+
         currentXP = 0;
         xpToLevel = (int)(xpToLevel * 1.2f);
         experienceBar.maxExperience = xpToLevel;
@@ -76,6 +88,16 @@ public class Player : MonoBehaviour
     {
         _maxHealth = _StartingMaxHealth;
         experienceBar.maxExperience = xpToLevel;
+        InvokeRepeating(nameof(RegenerateHealth), 1f, 1f);
+    }
+
+    private void RegenerateHealth()
+    {
+        if(GameStateManager.Instance.IsPaused())
+        {
+            return;
+        }
+        currentHealth = Mathf.Min(_currentHealth + _healthRegen, _maxHealth);
     }
 
     void Update()

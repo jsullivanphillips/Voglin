@@ -61,6 +61,22 @@ public class PlayerItems : MonoBehaviour
         return healthBonus;
     }
 
+    public float GetHealthRegenBonus()
+    {
+        float healthRegenBonus = 0;
+        foreach (ComponentSO item in playerItems)
+        {
+            foreach (StatFloatPair stat in item.stats)
+            {
+                if (stat.stat == Stat.HealthRegen)
+                {
+                    healthRegenBonus += stat.value;
+                }
+            }
+        }
+        return healthRegenBonus;
+    }
+
     public float GetPhysicalPower()
     {
         float physicalPower = 0;
@@ -91,6 +107,62 @@ public class PlayerItems : MonoBehaviour
             }
         }
         return magicPower;
+    }
+
+    public float GetScalingStat(ScalingStat scalingStat)
+    {
+        float scalingStatValue = 0;
+
+        if(scalingStat == ScalingStat.MaxHealth)
+        {
+            return GetMaxHealth();
+        }
+
+
+        foreach (ComponentSO item in playerItems)
+        {
+            foreach (StatFloatPair stat in item.stats)
+            {
+                switch (scalingStat)
+                {
+                    case ScalingStat.PhysicalPower:
+                        if (stat.stat == Stat.PhysicalPower)
+                        {
+                            scalingStatValue += stat.value;
+                        }
+                        break;
+                    case ScalingStat.MagicPower:
+                        if (stat.stat == Stat.MagicPower)
+                        {
+                            scalingStatValue += stat.value;
+                        }
+                        break;
+                }
+            }
+        }
+
+        return scalingStatValue;
+    }
+
+    public string GetStatHexColor(ScalingStat scalingStat)
+    {
+        switch (scalingStat)
+        {
+            case ScalingStat.PhysicalPower:
+                return "<color=\"orange\">";
+            case ScalingStat.MagicPower:
+                return "<color=#00FFFF>";
+            case ScalingStat.MaxHealth:
+                return "<color=#FF0000>";
+            default:
+                return "<color=#FFFFFF>";
+        }
+
+    }
+
+    public float GetMaxHealth()
+    {
+        return player.GetMaxHealth();
     }
 
 }

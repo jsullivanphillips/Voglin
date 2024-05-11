@@ -10,7 +10,8 @@ public enum Stat
     CriticalChance,
     MoveSpeed,
     LifeSteal,
-    Health
+    Health,
+    HealthRegen
 }
 
 [System.Serializable]

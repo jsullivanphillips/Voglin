@@ -18,6 +18,9 @@ MonoBehaviour:
   stats:
   - stat: 7
     value: 25
+  - stat: 8
+    value: 0.3
   uniquePassive: 
   uniquePassiveValue: 0
+  rank: 0
   id: 0

@@ -40,8 +40,7 @@ public class MobSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (GameStateManager.Instance.GetGameState() == GameState.InbetweenRounds 
-        || GameStateManager.Instance.GetGameState() == GameState.Paused)
+        if (GameStateManager.Instance.GetGameState() == GameState.Paused)
         {
             return;
         }
@@ -70,8 +69,7 @@ public class MobSpawner : MonoBehaviour
         while (_RoundManager.RoundTime > spawnData.Time)
         {
             // Check if the game is paused or in between rounds
-            if (GameStateManager.Instance.GetGameState() == GameState.Paused 
-                || GameStateManager.Instance.GetGameState() == GameState.InbetweenRounds)
+            if (GameStateManager.Instance.GetGameState() == GameState.Paused )
             {
                 yield return null; // Wait for the next frame without advancing the wait time
             }

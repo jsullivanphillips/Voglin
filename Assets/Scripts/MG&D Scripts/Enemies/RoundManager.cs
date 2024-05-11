@@ -52,8 +52,7 @@ public class RoundManager : MonoBehaviour
 
     void Update()
     {
-        if(GameStateManager.Instance.GetGameState() == GameState.InbetweenRounds 
-        || GameStateManager.Instance.GetGameState() == GameState.Paused)
+        if (GameStateManager.Instance.GetGameState() == GameState.Paused)
         {
             return;
         }

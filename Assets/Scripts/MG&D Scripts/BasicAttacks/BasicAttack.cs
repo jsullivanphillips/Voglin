@@ -6,19 +6,19 @@ using UnityEngine;
 public class BasicAttack : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField]
-    private BasicAttackSO basicAttackSO;
+    private AbilitySO basicAttack;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         if(eventData.pointerDrag == null)
         {
-            TooltipManager.Instance.ShowBasicAttackTooltip(basicAttackSO, this.transform.position);
+            TooltipManager.Instance.ShowAbilityTooltip(basicAttack, this.transform.position);
         }
         // else, showing crafting result from two items
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        TooltipManager.Instance.HideBasicAttackTooltip();
+        TooltipManager.Instance.HideAbilityTooltip();
     }
 }

@@ -65,12 +65,14 @@ public class AbilityUpgradeManager : MonoBehaviour
             
             if(ability.abilityType == AbilityType.Projectile)
             {
-                ability.damage += 4;
+                ability.damage += 3;
+                ability.cooldown -= 0.1f;
             }
             else if(ability.abilityType == AbilityType.AoE)
             {
                 ability.damage += 1;
-                ability.attackRange += 1;   
+                ability.attackRange += 0.5f;   
+                ability.cooldown -= 0.1f;
                 PlayerAbilityManager.Instance.UpdateAoeEffectSize(ability.id);    
             }   
             else if (ability.abilityType == AbilityType.Orbiter)

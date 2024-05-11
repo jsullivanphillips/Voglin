@@ -14,15 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Magic Bolt
   icon: {fileID: 21300000, guid: 12b298403fb1809479535708d47b3008, type: 3}
-  damage: 6
+  summary: Magic Projectile
   description: Fire a projectile at the nearest enemy within <attackRange> units,
     dealing <damage> damage
-  scalingStat: 1
-  scaling: 1
-  abilitySlot: 0
+  abilityType: 0
+  damage: 6
+  scalingStats:
+  - scalingStat: 1
+    scaling: 0.8
   attackRange: 8
   cooldown: 2
   cooldownTimer: 0
+  isPiercing: 0
+  numberOfPierces: 0
+  isStutter: 0
+  stutterDuration: 0
+  isSplitOnCrit: 0
+  numberOfSplits: 0
+  appliesOnHit: 0
   projectilePrefab: {fileID: 2025617104460581626, guid: ecd53f17c927b124db4b14b6c8fc5c9b, type: 3}
-  abilityType: 0
   id: 0
+  abilitySlot: 0

@@ -14,14 +14,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Decay
   icon: {fileID: 21300000, guid: 8e96bce713f06924f9eb3b03b62ec435, type: 3}
-  damage: 3
+  summary: Ticking Magic
   description: Deal <damage> damage to all enemies within <attackRange> units
-  scalingStat: 1
-  scaling: 0.5
-  abilitySlot: 0
+  abilityType: 1
+  damage: 2
+  scalingStats:
+  - scalingStat: 1
+    scaling: 0.3
+  - scalingStat: 2
+    scaling: 0.03
   attackRange: 3
   cooldown: 3
   cooldownTimer: 0
+  isPiercing: 0
+  numberOfPierces: 0
+  isStutter: 0
+  stutterDuration: 0
+  isSplitOnCrit: 0
+  numberOfSplits: 0
+  appliesOnHit: 0
   projectilePrefab: {fileID: 0}
-  abilityType: 1
   id: 0
+  abilitySlot: 0

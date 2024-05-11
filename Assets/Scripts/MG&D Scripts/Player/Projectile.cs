@@ -8,18 +8,17 @@ public class Projectile : MonoBehaviour
     public float speed = 20f;
     public float distanceToLive = 5f;
     private float lifetime = 2f;
-    public bool isPiercing = false;
-    public int numberOfPierces = 0;
-    public bool isStutter = false;
-    public float stutterDuration = 0.1f;
-    public float damage = 5;
-    public bool isSplitOnCrit = false;
-    public int numberOfSplits = 0;
+
     public bool isCrit = false;
-    public bool isOrbiter = false;
 
-    public AbilitySO ability;
+    private AbilitySO ability;
+    private int numberOfPierces = 0;
 
+    public void SetAbilitySO(AbilitySO _ability)
+    {
+        ability = _ability;
+        numberOfPierces = ability.numberOfPierces;
+    }
 
     private void Update()
     {
@@ -29,7 +28,7 @@ public class Projectile : MonoBehaviour
         }
         transform.position += direction * speed * Time.deltaTime;
 
-        if(isOrbiter)
+        if(ability.IsOrbiter())
             return;
 
         lifetime -= Time.deltaTime;
@@ -48,21 +47,23 @@ public class Projectile : MonoBehaviour
     {
         if (other.gameObject.tag == "Mob")
         {
-            if(isStutter)
+            other.gameObject.GetComponent<Mob>().TakeDamage(ability.GetDamage());
+
+            if(ability.isStutter)
             {
-                other.gameObject.GetComponent<MobMovement>().Stutter(stutterDuration);
+                other.gameObject.GetComponent<MobMovement>().Stutter(ability.stutterDuration);
             }
-            if(isSplitOnCrit && isCrit)
+            if(ability.isSplitOnCrit && isCrit)
             {
                 Split();
             }
-            if (!isPiercing && !isOrbiter)
+            if (!ability.isPiercing && !ability.IsOrbiter())
             {
                 Destroy(gameObject);
             }
             else
             {
-                if(isPiercing)
+                if(ability.isPiercing)
                 {
                     numberOfPierces--;
                     if(numberOfPierces < 0)
@@ -72,53 +73,44 @@ public class Projectile : MonoBehaviour
                 }
             }
 
-            float bonusDamage = BonusDamage();
-            other.gameObject.GetComponent<Mob>().TakeDamage(damage + bonusDamage);
+            
         }
     }
 
-    private float BonusDamage()
-    {
-        float bonusDamage = 0f;
-        if(isOrbiter)
-        {
-            if(ability.scalingStat == ScalingStat.PhysicalPower)
-            {
-                bonusDamage += ability.scaling * PlayerItems.Instance.GetPhysicalPower();
-            }
-            //else do magic
-        }
-        return bonusDamage;
-    }
+
 
     private void Split()
     {
         // Ensure there's at least one split to avoid division by zero
-        if (numberOfSplits > 1)
+        if (ability.numberOfSplits > 1)
         {
-            for (int i = 0; i < numberOfSplits; i++)
+            for (int i = 0; i < ability.numberOfSplits; i++)
             {
-                float angleStep = 90f / (numberOfSplits - 1); // Divide the total angle by the number of intervals
+                float angleStep = 90f / (ability.numberOfSplits - 1); // Divide the total angle by the number of intervals
                 float projectileDirection = -45f + (angleStep * i);
                 Vector3 newDirection = Quaternion.Euler(0, 0, projectileDirection) * direction.normalized;
                 // Calculate the correct rotation for the new direction
                 Quaternion rotation = Quaternion.Euler(0, 0, projectileDirection + transform.eulerAngles.z);
                 GameObject projectile = Instantiate(gameObject, transform.position, rotation);
-                projectile.GetComponent<Projectile>().direction = newDirection;
-                projectile.GetComponent<Projectile>().isCrit = false; // Prevent infinite splitting
-                projectile.GetComponent<Projectile>().damage = damage / 2f;
+                Projectile projectileScript = projectile.GetComponent<Projectile>();
+                projectileScript.direction = newDirection;
+                projectileScript.isCrit = false; 
+                projectileScript.SetAbilitySO(Instantiate(ability)); 
+
+                
             }
         }
-        else if (numberOfSplits == 1)
+        else if (ability.numberOfSplits == 1)
         {
             // For a single split, you might want to keep the original direction but still adjust the rotation
             float randomDirection = Random.Range(-45f, 45f);
             Vector3 newDirection = Quaternion.Euler(0, 0, randomDirection) * direction.normalized;
             Quaternion rotation = Quaternion.Euler(0, 0, randomDirection + transform.eulerAngles.z);
             GameObject projectile = Instantiate(gameObject, transform.position, rotation);
-            projectile.GetComponent<Projectile>().direction = newDirection;
-            projectile.GetComponent<Projectile>().isCrit = false; // Prevent infinite splitting
-            projectile.GetComponent<Projectile>().damage = damage / 2f;
+            Projectile projectileScript = projectile.GetComponent<Projectile>();
+            projectileScript.direction = newDirection;
+            projectileScript.isCrit = false; 
+            projectileScript.SetAbilitySO(Instantiate(ability)); 
         }
     }
 }

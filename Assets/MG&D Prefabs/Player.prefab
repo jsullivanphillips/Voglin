@@ -348,7 +348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1501aa1365fd4704289ed546e4eb680d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  basicAttack: {fileID: 11400000, guid: b9d85114d80894d4fa131e66ad1913cd, type: 2}
+  basicAttack: {fileID: 11400000, guid: 25f1bfd2057e1024a85a253ba650877b, type: 2}
   _AoE_Effect: {fileID: 0}
 --- !u!114 &5476699269855059665
 MonoBehaviour:

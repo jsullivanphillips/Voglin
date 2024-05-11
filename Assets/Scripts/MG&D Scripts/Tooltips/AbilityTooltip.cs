@@ -29,49 +29,51 @@ public class AbilityTooltip : MonoBehaviour
 
     private string ParseAbilityDescription()
     {
-        string statColor = "";
-        float scalingStatValue = 0f;
-        if(_ability.scalingStat == ScalingStat.PhysicalPower)
+        string damageVar = $"<color=\"yellow\">{_ability.damage.ToString("F0")}</color> ";
+        int i = 0;
+        foreach(ScalingStats stat in _ability.scalingStats)
         {
-            scalingStatValue = PlayerItems.Instance.GetPhysicalPower();
-            statColor = "<color=\"orange\">";
-        }
-        else if(_ability.scalingStat == ScalingStat.MagicPower)
-        {
-            scalingStatValue = PlayerItems.Instance.GetMagicPower();
-            statColor = "<color=#00FFFF>";
+            string statColour = PlayerItems.Instance.GetStatHexColor(stat.scalingStat);
+            string statDamage = (stat.scaling * PlayerItems.Instance.GetScalingStat(stat.scalingStat)).ToString("F0");
+            damageVar += $"{statColour}(+{statDamage})</color>";
+
+            if(i != _ability.scalingStats.Count - 1)
+            {
+                damageVar += " ";
+            }
+            i++;
         }
 
-        float scalingDamage = (_ability.scaling * scalingStatValue); // Plus scaling with items
         float cooldown = _ability.cooldown; // Plus items
-        string parsedDescription = _ability.description.Replace("<damage>", $"<color=\"yellow\">{_ability.damage.ToString()}</color>" 
-        + $" {statColor}(+{scalingDamage})</color>");
-        parsedDescription = parsedDescription.Replace("<cooldown>", cooldown.ToString());
-        parsedDescription = parsedDescription.Replace("<attackRange>", _ability.attackRange.ToString());
+        string parsedDescription = _ability.description.Replace("<damage>", damageVar);
+        parsedDescription = parsedDescription.Replace("<cooldown>", cooldown.ToString("F1"));
+        parsedDescription = parsedDescription.Replace("<attackRange>", _ability.attackRange.ToString("F0"));
         return parsedDescription;
     }
 
     private string ParseAbilityDescriptionDetailed()
     {
-        string statColor = "";
-        float scalingStatValue = 0f;
-        if(_ability.scalingStat == ScalingStat.PhysicalPower)
+        string damageVar = $"<color=\"yellow\">{_ability.damage.ToString("F0")}</color> ";
+        int i = 0;
+        foreach(ScalingStats stat in _ability.scalingStats)
         {
-            scalingStatValue = PlayerItems.Instance.GetPhysicalPower();
-            statColor = "<color=\"orange\">";
-        }
-        else if(_ability.scalingStat == ScalingStat.MagicPower)
-        {
-            scalingStatValue = PlayerItems.Instance.GetMagicPower();
-            statColor = "<color=#00FFFF>";
+            string statColour = PlayerItems.Instance.GetStatHexColor(stat.scalingStat);
+            string scalingStatValue = PlayerItems.Instance.GetScalingStat(stat.scalingStat).ToString("F0");
+            string scalingValue = (stat.scaling * 100).ToString("F0");
+            string statName = BreakEnumToString(stat.scalingStat);
+            damageVar += $"{statColour}(+{scalingValue}% of {scalingStatValue} {statName})</color>";
+
+            if(i != _ability.scalingStats.Count - 1)
+            {
+                damageVar += " ";
+            }
+            i++;
         }
 
-        float scalingDamage = (_ability.scaling * scalingStatValue); 
         float cooldown = _ability.cooldown; // Plus items
-        string parsedDescription = _ability.description.Replace("<damage>", $"<color=\"yellow\">{_ability.damage.ToString()}</color>" 
-        + $" {statColor}(+{_ability.scaling * 100}% of {scalingStatValue} {BreakEnumToString(_ability.scalingStat)})</color>");
-        parsedDescription = parsedDescription.Replace("<cooldown>", cooldown.ToString());
-        parsedDescription = parsedDescription.Replace("<attackRange>", _ability.attackRange.ToString());
+        string parsedDescription = _ability.description.Replace("<damage>", damageVar);
+        parsedDescription = parsedDescription.Replace("<cooldown>", cooldown.ToString("F1"));
+        parsedDescription = parsedDescription.Replace("<attackRange>", _ability.attackRange.ToString("F0"));
         return parsedDescription;
     }
 
@@ -79,8 +81,8 @@ public class AbilityTooltip : MonoBehaviour
     {
         icon.sprite = _ability.icon;
         nameText.text = _ability.name;
-        subHeading.text = BreakEnumToString(_ability.scalingStat);
-        cooldown.text = _ability.cooldown + " sec Cooldown";
+        subHeading.text = _ability.summary;
+        cooldown.text = _ability.cooldown.ToString("F1") + " sec Cooldown";
         description.text = ParseAbilityDescription();
         uniquePassiveText.text = "";
     }
@@ -89,8 +91,8 @@ public class AbilityTooltip : MonoBehaviour
     {
         icon.sprite = _ability.icon;
         nameText.text = _ability.name;
-        subHeading.text = BreakEnumToString(_ability.scalingStat);
-        cooldown.text = _ability.cooldown + " sec Cooldown";
+        subHeading.text = _ability.summary;
+        cooldown.text = _ability.cooldown.ToString("F1") + " sec Cooldown";
         description.text = ParseAbilityDescriptionDetailed();
         uniquePassiveText.text = "";
     }

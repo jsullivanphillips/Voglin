@@ -20,10 +20,12 @@ public class PlayerAbilityManager : MonoBehaviour
 
     private List<AbilitySO> abilities = new List<AbilitySO>();
     [SerializeField]
-    private BasicAttackSO basicAttack;
+    private AbilitySO basicAttack;
 
     [SerializeField]
     private GameObject _AoE_Effect;
+
+
 
     private void Update()
     {
@@ -55,41 +57,6 @@ public class PlayerAbilityManager : MonoBehaviour
             }
         }
     }
-    #region Basic Attack
-    private void Shoot(BasicAttackSO basicAttack)
-    {
-        if (DetectMobs(basicAttack.attackRange, out Collider2D closestMob))
-        {
-            PerformAttack(basicAttack, closestMob.transform.position);
-            basicAttack.cooldownTimer = basicAttack.cooldown;
-            HUDManager.Instance.SetBasicAttackIconCooldown(basicAttack.cooldown);
-        }
-    }
-
-    private void PerformAttack(BasicAttackSO basicAttack, Vector3 targetPosition)
-    {
-        Vector3 direction = (targetPosition - transform.position).normalized;
-        
-        // Set a fixed offset distance for the projectile spawn position
-        float offsetDistance = 1f;
-        Vector3 spawnPosition = transform.position + direction * offsetDistance;
-
-        // This is calculated for the sword prefab
-        Quaternion rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 112);
-
-        GameObject projectile = Instantiate(basicAttack.projectilePrefab, spawnPosition, rotation);
-        Projectile projectileScript = projectile.GetComponent<Projectile>();
-
-        projectileScript.direction = direction;
-
-        projectileScript.distanceToLive = basicAttack.attackRange;
-        projectileScript.SetLifetime();
-
-        // Damage
-        // Basic attack default scaling is 1 physical power = 1 damage
-        projectileScript.damage = basicAttack.damage + PlayerItems.Instance.GetPhysicalPower();
-    }
-    #endregion
 
     #region Abilities
     private void Activate(AbilitySO ability)
@@ -113,7 +80,7 @@ public class PlayerAbilityManager : MonoBehaviour
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, ability.attackRange);
         ability.projectilePrefab.GetComponent<Animator>().SetTrigger("Activate");
         
-        float damage = GetDamage(ability);
+        float damage = ability.GetDamage();
 
         foreach (Collider2D collider in colliders)
         {
@@ -128,17 +95,7 @@ public class PlayerAbilityManager : MonoBehaviour
         AbilityHUDManager.Instance.SetAbilitySlotCooldown(ability.abilitySlot, ability.cooldown);
     }
 
-    private float GetDamage(AbilitySO ability)
-    {
-        if(ability.scalingStat == ScalingStat.PhysicalPower)
-        {
-            return ability.damage + PlayerItems.Instance.GetPhysicalPower() * ability.scaling;
-        }
-        else
-        {
-            return ability.damage + PlayerItems.Instance.GetMagicPower() * ability.scaling;
-        }
-    }
+    
 
     private void Shoot(AbilitySO ability)
     {
@@ -146,7 +103,14 @@ public class PlayerAbilityManager : MonoBehaviour
         {
             PerformAbility(ability, closestMob.transform.position);
             ability.cooldownTimer = ability.cooldown;
-            AbilityHUDManager.Instance.SetAbilitySlotCooldown(ability.abilitySlot, ability.cooldown);
+            if(ability.IsBasicAttack())
+            {
+                HUDManager.Instance.SetBasicAttackIconCooldown(ability.cooldown);
+            }
+            else
+            {
+                AbilityHUDManager.Instance.SetAbilitySlotCooldown(ability.abilitySlot, ability.cooldown);
+            }
         }
     }
 
@@ -164,14 +128,11 @@ public class PlayerAbilityManager : MonoBehaviour
         GameObject projectile = Instantiate(ability.projectilePrefab, spawnPosition, rotation);
         Projectile projectileScript = projectile.GetComponent<Projectile>();
 
-        projectileScript.direction = direction;
+        projectileScript.SetAbilitySO(ability);
 
+        projectileScript.direction = direction;
         projectileScript.distanceToLive = ability.attackRange;
         projectileScript.SetLifetime();
-
-        float damage = GetDamage(ability);
-
-        projectileScript.damage = damage;
     }
 
     public void AddAbility(AbilitySO ability)
@@ -194,9 +155,7 @@ public class PlayerAbilityManager : MonoBehaviour
             ability.projectilePrefab = orbiter;
 
             Projectile projectileScript = orbiter.GetComponent<Projectile>();
-            projectileScript.damage = ability.damage;
-            projectileScript.ability = ability;
-            projectileScript.isOrbiter = true;
+            projectileScript.SetAbilitySO(ability);
             
         }
     }
@@ -222,7 +181,6 @@ public class PlayerAbilityManager : MonoBehaviour
                 GameObject orbiter = ability.projectilePrefab;
                 orbiter.GetComponent<Orbiter>().speed = orbiter.GetComponent<Orbiter>().speed + 10f;
                 ability.damage += 2f;
-                orbiter.GetComponent<Projectile>().damage = orbiter.GetComponent<Projectile>().damage + 2f;
             }
         }
     }

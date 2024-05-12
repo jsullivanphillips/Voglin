@@ -77,7 +77,6 @@ public class Projectile : MonoBehaviour
         {
             lifetime = ability.attackRange / speed;
         }
-        
     }
 
     private void OnTriggerEnter2D(Collider2D other)

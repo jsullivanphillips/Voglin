@@ -52,41 +52,9 @@ public class MobSpawner : MonoBehaviour
     //     spawnList.Add(new SpawnData(time, mob, position));
     // }
 
-    // TESTING THIS OUT
-    public void AddSpawn(float time, MobSO mob, Vector3 position)
-    {
-        var spawnData = new SpawnData(time, mob, position);
-        spawnList.Add(spawnData);
-        StartCoroutine(SpawnAtTime(spawnData));
-    }
+    
 
-    private IEnumerator SpawnAtTime(SpawnData spawnData)
-    {
-        // Calculate the target time for spawning based on the countdown
-       
     
-        // Wait until the round time is less than or equal to the target time
-        while (_RoundManager.RoundTime > spawnData.Time)
-        {
-            // Check if the game is paused or in between rounds
-            if (GameStateManager.Instance.GetGameState() == GameState.Paused )
-            {
-                yield return null; // Wait for the next frame without advancing the wait time
-            }
-            else
-            {
-                // Wait for a short period before checking again to reduce performance impact
-                yield return new WaitForSeconds(0.1f);
-            }
-        }
-    
-        // Check if the spawn data is still in the list before spawning
-        if (spawnList.Contains(spawnData))
-        {
-            SpawnMob(spawnData.Mob, spawnData.Position);
-            spawnList.Remove(spawnData); // Remove after spawning
-        }
-    }
     // TESTING
 
     public void RemoveSpawnsBeforeTime(float time)
@@ -94,7 +62,7 @@ public class MobSpawner : MonoBehaviour
         spawnList.RemoveAll(spawn => spawn.Time < time);
     }
 
-    public void RemoveAllSpawns()
+    public void ClearSpawns()
     {
         spawnList.Clear();
     }
@@ -126,7 +94,7 @@ public class MobSpawner : MonoBehaviour
         switch (waveSO.spawnType)
         {
             case WaveSpawnType.Random:
-                SetupRandomWave(waveSO, waveStartTime);
+                PrepareRandomWave(waveSO, waveStartTime);
                 break;
             // case WaveSpawnType.Line:
             //     SpawnLineWave(waveSO);
@@ -134,9 +102,9 @@ public class MobSpawner : MonoBehaviour
             // case WaveSpawnType.Circle:
             //     SpawnCircleWave(waveSO);
             //     break;
-            // case WaveSpawnType.Clump:
-            //     SpawnClumpWave(waveSO);
-            //     break;
+            case WaveSpawnType.Clump:
+                PrepareClumpWave(waveSO, waveStartTime);
+                break;
         }
     }
 
@@ -162,7 +130,7 @@ public class MobSpawner : MonoBehaviour
         }
     }
 
-    private void SetupRandomWave(WaveSO waveSO, float waveStartTime)
+    private void PrepareRandomWave(WaveSO waveSO, float waveStartTime)
     {
         MobSO mob = Instantiate(waveSO.mob);
         mob.health = waveSO.mob.health + (round * 2);
@@ -170,6 +138,52 @@ public class MobSpawner : MonoBehaviour
         {
             float spawnTime = _RoundManager._MaxRoundTime - ((i) * waveSO.timeBetweenSpawns) - waveStartTime;
             AddSpawn(spawnTime, mob, GetRandomSpawnPosition());
+        }
+    }
+
+    private void PrepareClumpWave(WaveSO waveSO, float waveStartTime)
+    {
+        MobSO mob = Instantiate(waveSO.mob);
+        mob.health = waveSO.mob.health + (round * 2);
+        List<Vector3> spawnPositions = GetClumpSpawnPositions(waveSO.mobCount);
+
+        for (int i = 0; i < waveSO.mobCount; i++)
+        {
+            float spawnTime = _RoundManager._MaxRoundTime - waveStartTime;
+
+            if(i > spawnPositions.Count)
+                break;
+
+            AddSpawn(spawnTime, mob, spawnPositions[i]);
+        }
+    }
+
+    public void AddSpawn(float time, MobSO mob, Vector3 position)
+    {
+        var spawnData = new SpawnData(time, mob, position);
+        spawnList.Add(spawnData);
+        StartCoroutine(SpawnAtTime(spawnData));
+    }
+
+    private IEnumerator SpawnAtTime(SpawnData spawnData)
+    {
+        while (_RoundManager.RoundTime > spawnData.Time)
+        {
+            if (GameStateManager.Instance.GetGameState() == GameState.Paused )
+            {
+                yield return null;
+            }
+            else
+            {
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+    
+        // Check if the spawn data is still in the list before spawning
+        if (spawnList.Contains(spawnData))
+        {
+            SpawnMob(spawnData.Mob, spawnData.Position);
+            spawnList.Remove(spawnData); // Remove after spawning
         }
     }
 
@@ -189,6 +203,26 @@ public class MobSpawner : MonoBehaviour
             Random.Range(_spawnBounds.position.z - _spawnBounds.localScale.z / 2, _spawnBounds.position.z + _spawnBounds.localScale.z / 2)
         );
         return position;
+    }
+
+    private List<Vector3> GetClumpSpawnPositions(int count)
+    {
+
+        List<Vector3> spawnPositions = new List<Vector3>();
+        Vector3 clumpCenter = GetRandomSpawnPosition();
+
+        for (int i = 0; i < count; i++)
+        {
+            float spawnRadius = 1 * count;
+            Vector3 spawnPosition = new Vector3(
+                Random.Range(clumpCenter.x - spawnRadius, clumpCenter.x + spawnRadius),
+                Random.Range(clumpCenter.y - spawnRadius, clumpCenter.y + spawnRadius),
+                0f
+            );
+            spawnPositions.Add(spawnPosition);
+        }
+
+        return spawnPositions;
     }
 
 }

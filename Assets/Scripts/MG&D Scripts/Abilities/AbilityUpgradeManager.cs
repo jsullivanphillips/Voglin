@@ -22,6 +22,8 @@ public class AbilityUpgradeManager : MonoBehaviour
     private NewAbilityManager _newAbilityManager;
     [SerializeField]
     private AbilityHUDManager _AbilityHUDManager;
+    [SerializeField]
+    private HUDManager _HUDManager;
 
     Dictionary<int, AbilitySO> abilityDictionary = new Dictionary<int, AbilitySO>();
 
@@ -37,6 +39,8 @@ public class AbilityUpgradeManager : MonoBehaviour
     {
         _availableSkillPoints--;
         _AbilityHUDManager.SetSkillPoints(_availableSkillPoints);
+        _HUDManager.SetDarkenedBackgroundForHUDHighLight(false);
+        _HUDManager.SetSpendAbilityPointsText(false);
     }
 
     public void ChooseAbility(AbilitySO ability, int abilitySlot)

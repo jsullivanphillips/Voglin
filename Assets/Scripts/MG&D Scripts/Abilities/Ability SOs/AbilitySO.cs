@@ -7,7 +7,8 @@ public enum AbilityType
     AoE,
     Orbiter,
     Lobbed,
-    BasicAttack
+    BasicAttack,
+    AttackSpeed
 }
 
 public enum ScalingStat
@@ -66,18 +67,7 @@ public class AbilitySO : ScriptableObject
         float bonusDamage = 0f;
         foreach(ScalingStats statPair in scalingStats)
         {
-            switch(statPair.scalingStat)
-            {
-                case ScalingStat.PhysicalPower:
-                    bonusDamage += PlayerItems.Instance.GetPhysicalPower() * statPair.scaling;
-                    break;
-                case ScalingStat.MagicPower:
-                    bonusDamage += PlayerItems.Instance.GetMagicPower() * statPair.scaling;
-                    break;
-                case ScalingStat.MaxHealth:
-                    bonusDamage += PlayerItems.Instance.GetMaxHealth() * statPair.scaling;
-                    break;
-            }
+            bonusDamage += PlayerItems.Instance.GetScalingStat(statPair.scalingStat) * statPair.scaling;
         }
         return damage + bonusDamage;
     }

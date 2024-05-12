@@ -8,7 +8,7 @@ public class RoundSO : ScriptableObject
     [System.Serializable]
     public class WaveEntry
     {
-        [Range(1,60)]
+        [Range(2,30)]
         public float startTime;
         public WaveSO wave;
     }

@@ -12,7 +12,7 @@ public enum MobType
 public enum AttackStyle
 {
     Melee,
-    Projectile,
+    Ranged,
     Swipe,
     AoE1
 }
@@ -29,6 +29,7 @@ public class MobSO : ScriptableObject
     public string mobName;
 
     public float health;
+    public float damage;
 
     public float orbDropChance;
 
@@ -40,5 +41,7 @@ public class MobSO : ScriptableObject
     public float movementSpeed;
 
     public GameObject mobPrefab;
+    public GameObject projectilePrefab;
+    public float projectileSpeed;
 }
        

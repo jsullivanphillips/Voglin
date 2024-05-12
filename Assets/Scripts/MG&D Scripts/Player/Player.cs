@@ -42,6 +42,7 @@ public class Player : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
+        DamageNumberDisplay.Instance.DisplayDamageNumber((int)damage, transform.position);
     }
 
     public float GetMaxHealth()
@@ -76,7 +77,7 @@ public class Player : MonoBehaviour
     private void LevelUp()
     {
         level++;
-        HUDManager.Instance.SetLevelText(level);
+        HUDManager.Instance.LevelUp(level);
 
         currentXP = 0;
         xpToLevel = (int)(xpToLevel * 1.2f);

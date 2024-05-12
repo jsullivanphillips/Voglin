@@ -10,14 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5667750c0205d5c46923410247dd6549, type: 3}
-  m_Name: Slime
+  m_Name: SlimeBruiser
   m_EditorClassIdentifier: 
-  mobName: Slime
-  health: 4
+  mobName: SlimeBruiser
+  health: 10
+  damage: 6
   orbDropChance: 0
   attackStyle: 0
-  attackRange: 1.5
+  attackRange: 1.2
   attackCooldown: 1
   movementStyle: 0
-  movementSpeed: 2
-  mobPrefab: {fileID: 6787828209179838966, guid: 7e4fbe01e1d10e54b86e1e30b8f4e0f2, type: 3}
+  movementSpeed: 1.5
+  mobPrefab: {fileID: 6787828209179838966, guid: 57c1adec929eba94caf8663447ab9524, type: 3}
+  projectilePrefab: {fileID: 0}

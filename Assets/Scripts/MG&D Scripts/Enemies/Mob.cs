@@ -9,31 +9,44 @@ public class Mob : MonoBehaviour
 
     string mobName;
 
+
     [SerializeField]
-    private float health = 5;
+    private float _StartingMaxHealth = 5;
+    private float _currentHealth = 5;
+    private float _maxHealth = 5;
 
     [SerializeField]
     private GameObject _ExperienceMotePrefab;
-    [SerializeField]
-    private GameObject _ItemDropPrefab;
-
-    private float orbDropChance = 50f;
 
     private AttackStyle attackStyle;
     private float attackCooldown = 1f;
     private float currentCooldown = 0f;
     private float attackRange = 1.5f;
+    private float damage = 5f;
 
     private MobSO mobSO;
 
-    GameObject player;
+    GameObject playerGO;
+
+    public delegate void HealthChangedDelegate(float newHealth, float maxHealth);
+    public event HealthChangedDelegate OnHealthChanged;
+
+    public float currentHealth
+    {
+        get { return _currentHealth; }
+        set
+        {
+            _currentHealth = value;
+            OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
+        }
+    }
 
 
     public void TakeDamage(float damage)
     {
         DamageNumberDisplay.Instance.DisplayDamageNumber((int)damage, transform.position);
-        health -= damage;
-        if (health <= 0)
+        currentHealth -= damage;
+        if (currentHealth <= 0)
         {
             Die();
         }
@@ -43,11 +56,6 @@ public class Mob : MonoBehaviour
     {
         Vector3 spawnLocation = new Vector3(transform.position.x, transform.position.y, 1f);
         Instantiate(_ExperienceMotePrefab, spawnLocation, Quaternion.Euler(0f, 0f, 90f));
-        if(Random.Range(0, 100) < orbDropChance)
-        {
-            Vector3 offsetSpawnLocation = spawnLocation + new Vector3(Random.Range(-1f,1f), Random.Range(-1f,1f), 0f);
-            Instantiate(_ItemDropPrefab, offsetSpawnLocation, Quaternion.identity);
-        }
         Destroy(gameObject);
     }
 
@@ -55,15 +63,18 @@ public class Mob : MonoBehaviour
     {
         this.mobSO = mobSO;
 
+        GetComponent<MobHUD>().SetMob(this);
+
         mobName = mobSO.mobName;
 
-        orbDropChance = mobSO.orbDropChance;
-
-        health = mobSO.health;
+        _StartingMaxHealth = mobSO.health;
+        _maxHealth = mobSO.health;
+        currentHealth = _maxHealth;
 
         attackStyle = mobSO.attackStyle;
         attackCooldown = mobSO.attackCooldown;
         attackRange = mobSO.attackRange;
+        damage = mobSO.damage;
 
         _MobMovement.speed = mobSO.movementSpeed;
         
@@ -73,7 +84,7 @@ public class Mob : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.Find("Player");
+        playerGO = GameObject.Find("Player");
     }
 
     
@@ -84,17 +95,38 @@ public class Mob : MonoBehaviour
         {
             return;
         }
-        if (player != null && Vector3.Distance(transform.position, player.transform.position) <= attackRange)
+        if (playerGO != null && Vector3.Distance(transform.position, playerGO.transform.position) <= attackRange)
         {
             if (currentCooldown <= 0f)
             {
-                player.GetComponent<Player>().TakeDamage(5);
-                currentCooldown = attackCooldown;
+                Attack(playerGO.GetComponent<Player>());
             }
             else
             {
                 currentCooldown -= Time.deltaTime;
             }
         }
+    }
+
+    private void Attack(Player player)
+    {
+        switch (attackStyle)
+        {
+            case AttackStyle.Melee:
+                player.TakeDamage(damage);
+                break;
+            case AttackStyle.Ranged:
+                FireProjectile(player);
+                break;
+        }
+        currentCooldown = attackCooldown;
+    }
+
+    private void FireProjectile(Player player)
+    {
+        _MobMovement.Stutter(0.5f);
+        GameObject projectile = Instantiate(mobSO.projectilePrefab, transform.position, Quaternion.identity);
+        projectile.GetComponent<MobProjectile>().SetMobSO(mobSO);
+        projectile.GetComponent<MobProjectile>().SetTarget(player.transform);
     }
 }

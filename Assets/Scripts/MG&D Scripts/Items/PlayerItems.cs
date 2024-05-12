@@ -77,36 +77,21 @@ public class PlayerItems : MonoBehaviour
         return healthRegenBonus;
     }
 
-    public float GetPhysicalPower()
+    public float GetAttackSpeed()
     {
-        float physicalPower = 0;
+        float attackSpeed = 0;
         foreach (ComponentSO item in playerItems)
         {
             foreach (StatFloatPair stat in item.stats)
             {
-                if (stat.stat == Stat.PhysicalPower)
+                if (stat.stat == Stat.AttackSpeed)
                 {
-                    physicalPower += stat.value;
+                    attackSpeed += stat.value;
                 }
             }
         }
-        return physicalPower;
-    }
-
-    public float GetMagicPower()
-    {
-        float magicPower = 0;
-        foreach (ComponentSO item in playerItems)
-        {
-            foreach (StatFloatPair stat in item.stats)
-            {
-                if (stat.stat == Stat.MagicPower)
-                {
-                    magicPower += stat.value;
-                }
-            }
-        }
-        return magicPower;
+        attackSpeed += PlayerAbilityManager.Instance.GetAttackSpeed();
+        return attackSpeed;
     }
 
     public float GetScalingStat(ScalingStat scalingStat)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,6 +28,22 @@ public class AbilityTooltip : MonoBehaviour
         return finalString;
     }
 
+    private string GetCooldownText()
+    {
+        string cooldownText = "";
+        if(_ability.abilityType == AbilityType.BasicAttack)
+        {
+            float cooldownReduction = PlayerItems.Instance.GetAttackSpeed() / 100f;
+            cooldownReduction = Mathf.Min(cooldownReduction, 0.65f); // Ensure the reduction does not exceed 65%
+            cooldownText = (_ability.cooldown * (1 - cooldownReduction)).ToString("F1") + "s";
+        }
+        else
+        {
+            cooldownText = _ability.cooldown.ToString("F1") + "s"; // Plus items
+        }   
+        return cooldownText;
+    }
+
     private string ParseAbilityDescription()
     {
         string damageVar = $"<color=\"yellow\">{_ability.damage.ToString("F0")}</color> ";
@@ -44,9 +61,10 @@ public class AbilityTooltip : MonoBehaviour
             i++;
         }
 
-        float cooldown = _ability.cooldown; // Plus items
+
+        string cooldownText = GetCooldownText();
         string parsedDescription = _ability.description.Replace("<damage>", damageVar);
-        parsedDescription = parsedDescription.Replace("<cooldown>", cooldown.ToString("F1"));
+        parsedDescription = parsedDescription.Replace("<cooldown>", cooldownText);
         parsedDescription = parsedDescription.Replace("<attackRange>", _ability.attackRange.ToString("F0"));
         return parsedDescription;
     }
@@ -70,9 +88,9 @@ public class AbilityTooltip : MonoBehaviour
             i++;
         }
 
-        float cooldown = _ability.cooldown; // Plus items
+        string cooldownText = GetCooldownText();
         string parsedDescription = _ability.description.Replace("<damage>", damageVar);
-        parsedDescription = parsedDescription.Replace("<cooldown>", cooldown.ToString("F1"));
+        parsedDescription = parsedDescription.Replace("<cooldown>", cooldownText);
         parsedDescription = parsedDescription.Replace("<attackRange>", _ability.attackRange.ToString("F0"));
         return parsedDescription;
     }
@@ -82,7 +100,7 @@ public class AbilityTooltip : MonoBehaviour
         icon.sprite = _ability.icon;
         nameText.text = _ability.name;
         subHeading.text = _ability.summary;
-        cooldown.text = _ability.cooldown.ToString("F1") + " sec Cooldown";
+        cooldown.text = GetCooldownText() + "ec Cooldown";
         description.text = ParseAbilityDescription();
         uniquePassiveText.text = "";
     }
@@ -92,7 +110,7 @@ public class AbilityTooltip : MonoBehaviour
         icon.sprite = _ability.icon;
         nameText.text = _ability.name;
         subHeading.text = _ability.summary;
-        cooldown.text = _ability.cooldown.ToString("F1") + " sec Cooldown";
+        cooldown.text = GetCooldownText() + "ec Cooldown";
         description.text = ParseAbilityDescriptionDetailed();
         uniquePassiveText.text = "";
     }

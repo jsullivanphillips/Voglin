@@ -33,20 +33,23 @@ public class RoundManager : MonoBehaviour
 
     private void DoRound(int round)
     {
+        // If there are no more rounds, Game Over!
         if(round >= _Rounds.Count)
         {
             GameStateManager.Instance.SetGameState(GameState.GameOver);
             return;
         }
-        ChooseNewCardManager.Instance.DisplayCardsForRound(round);
+
+        // Display 3 new items to choose from
+        ChooseNewCardManager.Instance.DisplayItemsRewards();
+
         _MobSpawner.SetRoundSO(Instantiate(_Rounds[round]), round);
     }
 
     public void RoundComplete()
     {
         round++;
-        _MobSpawner.DestroyAllMobs();
-        _MobSpawner.RemoveAllSpawns();
+        _MobSpawner.ClearSpawns();
         DoRound(round);
     }
 

@@ -71,6 +71,8 @@ public class PlayerAbilityManager : MonoBehaviour
                 break;
             case AbilityType.Orbiter:
                 break;
+            case AbilityType.AttackSpeed:
+                break;
             case AbilityType.Lobbed:
                 Lob(ability);
                 break;
@@ -137,16 +139,34 @@ public class PlayerAbilityManager : MonoBehaviour
         if (DetectMobs(ability.attackRange, out Collider2D closestMob))
         {
             PerformAbility(ability, closestMob.transform.position);
-            ability.cooldownTimer = ability.cooldown;
+            
             if(ability.IsType(AbilityType.BasicAttack))
             {
-                HUDManager.Instance.SetBasicAttackIconCooldown(ability.cooldown);
+                float cooldownReduction = PlayerItems.Instance.GetAttackSpeed() / 100f;
+                cooldownReduction = Mathf.Min(cooldownReduction, 0.65f); // Ensure the reduction does not exceed 65%
+                float cooldown = ability.cooldown * (1 - cooldownReduction);
+                ability.cooldownTimer = cooldown;
+                HUDManager.Instance.SetBasicAttackIconCooldown(cooldown);
             }
             else
             {
+                ability.cooldownTimer = ability.cooldown;
                 AbilityHUDManager.Instance.SetAbilitySlotCooldown(ability.abilitySlot, ability.cooldown);
             }
         }
+    }
+
+    public float GetAttackSpeed()
+    {
+        float attackSpeed = 0;
+        foreach (AbilitySO ability in abilities)
+        {
+            if (ability.IsType(AbilityType.AttackSpeed))
+            {
+                attackSpeed += ability.damage;
+            }
+        }
+        return attackSpeed;
     }
 
     private void PerformAbility(AbilitySO ability, Vector3 targetPosition)
@@ -173,25 +193,31 @@ public class PlayerAbilityManager : MonoBehaviour
     {
         abilities.Add(ability);
         ability.id = Random.Range(0, int.MaxValue);
-        if(ability.abilityType == AbilityType.AoE)
-        {
-            GameObject AoE_Effect = Instantiate(_AoE_Effect, transform.position, Quaternion.identity);
-            AoE_Effect.transform.SetParent(transform);
-            AoE_Effect.transform.localScale = new Vector3(ability.attackRange *2, ability.attackRange *2, 1f);
-            ability.projectilePrefab = AoE_Effect;
-        }
-        else if(ability.abilityType == AbilityType.Orbiter)
-        {
-            GameObject orbiter = Instantiate(ability.projectilePrefab, transform.position + new Vector3(ability.attackRange, ability.attackRange, 0f), Quaternion.identity);
-            orbiter.GetComponent<Orbiter>().target = transform;
-            orbiter.transform.SetParent(transform);
-            orbiter.transform.localScale = Vector3.one;
-            ability.projectilePrefab = orbiter;
 
-            Projectile projectileScript = orbiter.GetComponent<Projectile>();
-            projectileScript.SetAbilitySO(ability);
-            
+        switch (ability.abilityType)
+        {
+            case AbilityType.AoE:
+                GameObject AoE_Effect = Instantiate(_AoE_Effect, transform.position, Quaternion.identity);
+                AoE_Effect.transform.SetParent(transform);
+                AoE_Effect.transform.localScale = new Vector3(ability.attackRange *2, ability.attackRange *2, 1f);
+                ability.projectilePrefab = AoE_Effect;
+                break;
+            case AbilityType.Orbiter:
+                GameObject orbiter = Instantiate(ability.projectilePrefab, transform.position + new Vector3(ability.attackRange, ability.attackRange, 0f), Quaternion.identity);
+                orbiter.GetComponent<Orbiter>().target = transform;
+                orbiter.transform.SetParent(transform);
+                orbiter.transform.localScale = Vector3.one;
+                ability.projectilePrefab = orbiter;
+
+                Projectile projectileScript = orbiter.GetComponent<Projectile>();
+                projectileScript.SetAbilitySO(ability);
+                break;
+            case AbilityType.AttackSpeed:
+                break;
+            default:
+                break;
         }
+
     }
 
     public void UpdateAoeEffectSize(int id)

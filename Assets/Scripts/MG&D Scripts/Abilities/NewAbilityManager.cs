@@ -18,30 +18,32 @@ public class NewAbilityManager : MonoBehaviour
     public void StartDisplayAbilityOptions(int abilitySlot)
     {
         GameStateManager.Instance.PauseGame();
-        _AbilityOptionsLayoutGroup.transform.parent.gameObject.SetActive(true);
 
-        StartCoroutine(DisplayAbilityOptions(abilitySlot));
+        
+
+        DisplayAbilityOptions(abilitySlot);
     }
 
-    private IEnumerator DisplayAbilityOptions(int abilitySlot)
+    private void DisplayAbilityOptions(int abilitySlot)
     {
-        yield return new WaitForSeconds(0.25f);
+        _AbilityOptionsLayoutGroup.transform.parent.gameObject.SetActive(true);
 
         List<AbilitySO> availableAbilities = new List<AbilitySO>();
         availableAbilities.AddRange(_Abilities);
 
         for(int i = 0; i < 3; i++)
         {
+            if(availableAbilities.Count == 0)
+            {
+                break;
+            }
             GameObject abilityOption = Instantiate(_AbilityCardPrefab, _AbilityOptionsLayoutGroup);
 
             AbilitySO tempAbility = availableAbilities[Random.Range(0, availableAbilities.Count)];
             availableAbilities.Remove(tempAbility);
 
             abilityOption.GetComponent<AbilityCard>().SetAbility(tempAbility, abilitySlot);
-            if(availableAbilities.Count == 0)
-            {
-                break;
-            }
+            
         }
     }
 

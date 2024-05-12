@@ -37,6 +37,9 @@ public class HUDManager : MonoBehaviour
     [SerializeField]
     TMP_Text _HealthRegenText;
 
+    [SerializeField]
+    private GameObject _DarkenedBackgroundForHUDHighLight, _SpendSkillPointsTutorialText;
+
     private bool isBasicAttackCooldownActive = false;
     private float basicAttackCooldownTimer = 0f;
     private float basicAttackCooldown = 1.5f;
@@ -68,9 +71,26 @@ public class HUDManager : MonoBehaviour
         basicAttackCooldown = cooldownTime;
     }
 
-    public void SetLevelText(int level)
+    public void SetDarkenedBackgroundForHUDHighLight(bool active)
+    {
+        _DarkenedBackgroundForHUDHighLight.SetActive(active);
+    }
+
+    public void SetSpendAbilityPointsText(bool active)
+    {
+        _SpendSkillPointsTutorialText.SetActive(active);
+    }
+
+    public void LevelUp(int level)
     {
         _LevelText.text = level.ToString();
+
+        if (level == 2)
+        {
+            GameStateManager.Instance.PauseGame();
+            _DarkenedBackgroundForHUDHighLight.SetActive(true);
+            _SpendSkillPointsTutorialText.SetActive(true);
+        }
     }
 
     public void SetHealthRegenText(float healthRegen)

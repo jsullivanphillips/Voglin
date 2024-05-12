@@ -37,25 +37,22 @@ public class ChooseNewCardManager : MonoBehaviour
             GameObject newCard = Instantiate(_DisplayCardPrefab, _CardSpots[i]);
             _DisplayCards.Add(newCard);
             newCard.transform.localPosition = Vector3.zero;
-            newCard.transform.localScale = new Vector3(2f,2f,1f);
             newCard.GetComponent<DisplayCard>().SetComponentSO(components[i]);
         }
     }
 
-    public void DisplayCardsForRound(int round)
+    public void DisplayItemsRewards()
     {
-        List<ComponentSO> items = new List<ComponentSO>();
-        switch (round % 3)
-        {
-            default:
-                for (int i = 0; i < 3; i++)
-                {
-                    items.Add(ItemDatabase.Instance.GetRandomComponent());
-                }
-                break;
+        int numberOfCards = 3;
         
+        List<ComponentSO> itemsToDisplay = new List<ComponentSO>();
+
+        for (int i = 0; i < numberOfCards; i++)
+        {
+            itemsToDisplay.Add(ItemDatabase.Instance.GetRandomComponent());
         }
-        DisplayCards(items);
+    
+        DisplayCards(itemsToDisplay);
     }
 
     public void CloseDisplay()

@@ -56,7 +56,6 @@ public class AbilitySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
         if(cooldownTimer > 0f)
         {   
-            Debug.Log($"Cooldown for {_ability.name} is {cooldownTimer}");
             cooldownTimer -= Time.deltaTime;
             _CooldownImage.fillAmount = cooldownTimer / cooldown;
         }

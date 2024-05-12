@@ -71,6 +71,9 @@ public class PlayerAbilityManager : MonoBehaviour
                 break;
             case AbilityType.Orbiter:
                 break;
+            case AbilityType.Lobbed:
+                Lob(ability);
+                break;
         }
 
     }
@@ -95,6 +98,38 @@ public class PlayerAbilityManager : MonoBehaviour
         AbilityHUDManager.Instance.SetAbilitySlotCooldown(ability.abilitySlot, ability.cooldown);
     }
 
+    private void Lob(AbilitySO ability)
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, ability.attackRange);
+        Collider2D furthestMob = null;
+        float maxDistance = 0;
+    
+        foreach (var collider in colliders)
+        {
+            if (collider.gameObject.CompareTag("Mob"))
+            {
+                float distance = Vector2.Distance(transform.position, collider.transform.position);
+                if (distance > maxDistance)
+                {
+                    maxDistance = distance;
+                    furthestMob = collider;
+                }
+            }
+        }
+    
+        if (furthestMob != null)
+        {
+            // Spawn the projectile at the position of the furthest enemy
+            var lobPrefab = Instantiate(ability.projectilePrefab, furthestMob.transform.position, Quaternion.identity);
+            lobPrefab.transform.localScale = new Vector3(ability.explosionRadius, ability.explosionRadius, 1f);
+            Projectile lobProjectile = lobPrefab.GetComponent<Projectile>();
+            lobProjectile.SetAbilitySO(ability);
+            lobProjectile.SetLifetime();
+            ability.cooldownTimer = ability.cooldown;
+            AbilityHUDManager.Instance.SetAbilitySlotCooldown(ability.abilitySlot, ability.cooldown);
+        }
+    }
+
     
 
     private void Shoot(AbilitySO ability)
@@ -103,7 +138,7 @@ public class PlayerAbilityManager : MonoBehaviour
         {
             PerformAbility(ability, closestMob.transform.position);
             ability.cooldownTimer = ability.cooldown;
-            if(ability.IsBasicAttack())
+            if(ability.IsType(AbilityType.BasicAttack))
             {
                 HUDManager.Instance.SetBasicAttackIconCooldown(ability.cooldown);
             }
@@ -131,7 +166,6 @@ public class PlayerAbilityManager : MonoBehaviour
         projectileScript.SetAbilitySO(ability);
 
         projectileScript.direction = direction;
-        projectileScript.distanceToLive = ability.attackRange;
         projectileScript.SetLifetime();
     }
 

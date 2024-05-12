@@ -13,7 +13,7 @@ public class NewAbilityManager : MonoBehaviour
 
     // TEMP
     [SerializeField]
-    private List<AbilitySO> _TEMP_Abilities = new List<AbilitySO>();
+    private List<AbilitySO> _Abilities = new List<AbilitySO>();
 
     public void StartDisplayAbilityOptions(int abilitySlot)
     {
@@ -27,10 +27,21 @@ public class NewAbilityManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.25f);
 
-        foreach (AbilitySO ability in _TEMP_Abilities)
+        List<AbilitySO> availableAbilities = new List<AbilitySO>();
+        availableAbilities.AddRange(_Abilities);
+
+        for(int i = 0; i < 3; i++)
         {
             GameObject abilityOption = Instantiate(_AbilityCardPrefab, _AbilityOptionsLayoutGroup);
-            abilityOption.GetComponent<AbilityCard>().SetAbility(ability, abilitySlot);
+
+            AbilitySO tempAbility = availableAbilities[Random.Range(0, availableAbilities.Count)];
+            availableAbilities.Remove(tempAbility);
+
+            abilityOption.GetComponent<AbilityCard>().SetAbility(tempAbility, abilitySlot);
+            if(availableAbilities.Count == 0)
+            {
+                break;
+            }
         }
     }
 
@@ -41,6 +52,11 @@ public class NewAbilityManager : MonoBehaviour
             Destroy(child.gameObject);
         }
         _AbilityOptionsLayoutGroup.transform.parent.gameObject.SetActive(false);
+    }
+
+    public void RemoveAbility(AbilitySO abilityToRemove)
+    {
+        _Abilities.RemoveAll(ability => ability.name == abilityToRemove.name);
     }
 
 

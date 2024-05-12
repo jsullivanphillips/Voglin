@@ -48,35 +48,17 @@ public class AbilitySO : ScriptableObject
     public bool isSplitOnCrit = false;
     public int numberOfSplits = 0;
     public bool appliesOnHit = false;
+    public float lobDelayTime = 0f;
+    public float explosionRadius = 0f;
     
     public GameObject projectilePrefab;
     
     public int id;
     public int abilitySlot = 0;
 
-    public bool IsOrbiter()
+    public bool IsType(AbilityType type)
     {
-        return abilityType == AbilityType.Orbiter;
-    }
-
-    public bool IsAoE()
-    {
-        return abilityType == AbilityType.AoE;
-    }
-
-    public bool IsLobbed()
-    {
-        return abilityType == AbilityType.Lobbed;
-    }
-
-    public bool IsProjectile()
-    {
-        return abilityType == AbilityType.Projectile;
-    }
-
-    public bool IsBasicAttack()
-    {
-        return abilityType == AbilityType.BasicAttack;
+        return abilityType == type;
     }
 
     public float GetDamage()

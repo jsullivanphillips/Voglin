@@ -43,6 +43,7 @@ public class AbilityUpgradeManager : MonoBehaviour
     {
         AbilitySO chosenAbility = Instantiate(ability);
         chosenAbility.abilitySlot = abilitySlot;
+        
         if(abilityDictionary.ContainsKey(abilitySlot))
         {
             abilityDictionary[abilitySlot] = chosenAbility;
@@ -53,6 +54,7 @@ public class AbilityUpgradeManager : MonoBehaviour
         }
         _AbilityHUDManager.SetAbilitySlot(abilitySlot, chosenAbility);
         PlayerAbilityManager.Instance.AddAbility(chosenAbility);
+        _newAbilityManager.RemoveAbility(ability);
         _newAbilityManager.HideAbilityOptions();
         GameStateManager.Instance.ResumeGame();
     }
@@ -62,23 +64,29 @@ public class AbilityUpgradeManager : MonoBehaviour
         if(abilityDictionary.ContainsKey(abilitySlot))
         {
             AbilitySO ability = abilityDictionary[abilitySlot];   
+
+            // THIS WILL NEED TO CHANGE TO A SYSTEM WITH SO'S
+            switch (ability.abilityType)
+            {
+                case AbilityType.Projectile:
+                    ability.damage += 3;
+                    ability.cooldown -= 0.1f;
+                    break;
+                case AbilityType.AoE:
+                    ability.damage += 1;
+                    ability.attackRange += 0.5f;   
+                    ability.cooldown -= 0.1f;
+                    PlayerAbilityManager.Instance.UpdateAoeEffectSize(ability.id);   
+                    break;
+                case AbilityType.Orbiter:
+                    PlayerAbilityManager.Instance.IncreaseOrbiterSpeedAndDamage(ability.id);
+                    break;
+                case AbilityType.Lobbed:
+                    ability.damage += 1;
+                    ability.cooldown -= 0.1f;
+                    break;
+            }
             
-            if(ability.abilityType == AbilityType.Projectile)
-            {
-                ability.damage += 3;
-                ability.cooldown -= 0.1f;
-            }
-            else if(ability.abilityType == AbilityType.AoE)
-            {
-                ability.damage += 1;
-                ability.attackRange += 0.5f;   
-                ability.cooldown -= 0.1f;
-                PlayerAbilityManager.Instance.UpdateAoeEffectSize(ability.id);    
-            }   
-            else if (ability.abilityType == AbilityType.Orbiter)
-            {
-                PlayerAbilityManager.Instance.IncreaseOrbiterSpeedAndDamage(ability.id);
-            }
             _AbilityHUDManager.SetAbilitySlot(abilitySlot, ability);  
         }
     }

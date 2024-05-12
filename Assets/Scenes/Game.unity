@@ -622,14 +622,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.23765479, g: 0.19344074, b: 0.254717, a: 0.74509805}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2f947e1d06c593e498f32fd18afa8362, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3121,10 +3121,10 @@ RectTransform:
   m_Father: {fileID: 997111449}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 100}
-  m_SizeDelta: {x: 1000, y: 600}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &472441073
 Animator:
@@ -13654,10 +13654,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _AbilityOptionsLayoutGroup: {fileID: 444986622}
   _AbilityCardPrefab: {fileID: 3208471863611907861, guid: 3eb50cecfd9f69f4a96c71f64344f71c, type: 3}
-  _TEMP_Abilities:
+  _Abilities:
+  - {fileID: 11400000, guid: af0ce76b8d9b7904dab232930b76b1fd, type: 2}
   - {fileID: 11400000, guid: 0b1e38c553ecb5446902fe10f18021cb, type: 2}
-  - {fileID: 11400000, guid: 52f4f4738ef0a5045959988a9f944c07, type: 2}
   - {fileID: 11400000, guid: b0d517505faa6594ca07362267b38f46, type: 2}
+  - {fileID: 11400000, guid: 52f4f4738ef0a5045959988a9f944c07, type: 2}
+  - {fileID: 11400000, guid: 52f4f4738ef0a5045959988a9f944c07, type: 2}
 --- !u!114 &1065561873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40624,7 +40626,7 @@ GameObject:
   - component: {fileID: 1462464756}
   - component: {fileID: 1462464757}
   m_Layer: 0
-  m_Name: ChooseNewCardManager
+  m_Name: ChooseNewItemManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -13,6 +13,8 @@ public class Projectile : MonoBehaviour
 
     private AbilitySO ability;
     private int numberOfPierces = 0;
+    [SerializeField]
+    private GameObject _LobExplosion;
 
     public void SetAbilitySO(AbilitySO _ability)
     {
@@ -26,25 +28,63 @@ public class Projectile : MonoBehaviour
         {
             return;
         }
-        transform.position += direction * speed * Time.deltaTime;
 
-        if(ability.IsOrbiter())
+        Move();
+
+        if(ability.IsType(AbilityType.Orbiter))
             return;
 
         lifetime -= Time.deltaTime;
+
         if(lifetime <= 0)
         {
-            Destroy(gameObject);
+            if(ability.IsType(AbilityType.Lobbed))
+            {
+                _LobExplosion.SetActive(true);
+
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, ability.explosionRadius);
+
+                foreach (Collider2D collider in colliders)
+                {
+                    Mob mob = collider.GetComponent<Mob>();
+                    if (mob != null)
+                        mob.TakeDamage(ability.GetDamage());
+                }
+                lifetime = 0.3f;
+                Destroy(gameObject, 0.2f);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+            
         }
+    }
+
+
+    private void Move()
+    {
+        transform.position += direction * speed * Time.deltaTime;
     }
 
     public void SetLifetime()
     {
-        lifetime = distanceToLive / speed;
+        if(ability.IsType(AbilityType.Lobbed))
+        {
+            lifetime = ability.lobDelayTime;
+        }
+        else
+        {
+            lifetime = ability.attackRange / speed;
+        }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (ability.IsType(AbilityType.Lobbed))
+            return;
+             
         if (other.gameObject.tag == "Mob")
         {
             other.gameObject.GetComponent<Mob>().TakeDamage(ability.GetDamage());
@@ -57,7 +97,7 @@ public class Projectile : MonoBehaviour
             {
                 Split();
             }
-            if (!ability.isPiercing && !ability.IsOrbiter())
+            if (!ability.isPiercing && !ability.IsType(AbilityType.Orbiter))
             {
                 Destroy(gameObject);
             }

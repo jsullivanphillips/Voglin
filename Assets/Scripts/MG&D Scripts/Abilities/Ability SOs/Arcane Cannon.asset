@@ -15,12 +15,14 @@ MonoBehaviour:
   name: Arcane Cannon
   icon: {fileID: 21300000, guid: c5243d6a8d67c9e48b10b4f57df73687, type: 3}
   summary: Ranged Magic
-  description: Launch an arcane cannon shot at a cluster of enemies within <attackRange>
-    units, dealing <damage> in an area
+  description: Launch an explosion at the furthest enemy within <attackRange> units,
+    dealing <damage> in an area
   abilityType: 3
   damage: 6
-  scalingStats: []
-  attackRange: 8
+  scalingStats:
+  - scalingStat: 1
+    scaling: 0.5
+  attackRange: 10
   cooldown: 3
   cooldownTimer: 0
   isPiercing: 0
@@ -30,6 +32,8 @@ MonoBehaviour:
   isSplitOnCrit: 0
   numberOfSplits: 0
   appliesOnHit: 0
-  projectilePrefab: {fileID: 0}
+  lobDelayTime: 0.5
+  explosionRadius: 2
+  projectilePrefab: {fileID: 2025617104460581626, guid: d34c36a363e908040856ad33bf7772d9, type: 3}
   id: 0
   abilitySlot: 0

@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 569008688072191459}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2025617104460581605}
@@ -110,7 +110,7 @@ Transform:
   m_GameObject: {fileID: 1547594188537022690}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2025617104460581605}
@@ -159,7 +159,7 @@ Transform:
   m_GameObject: {fileID: 2025617104460581626}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4568487181720861982}
@@ -183,16 +183,8 @@ MonoBehaviour:
   direction: {x: 0, y: 0, z: 0}
   speed: 20
   distanceToLive: 5
-  isPiercing: 0
-  numberOfPierces: 0
-  isStutter: 0
-  stutterDuration: 0.1
-  damage: 5
-  isSplitOnCrit: 0
-  numberOfSplits: 0
   isCrit: 0
-  isOrbiter: 0
-  ability: {fileID: 0}
+  _LobExplosion: {fileID: 7734084251196478321}
 --- !u!61 &2221732494257168789
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -236,7 +228,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2597536092811221979
 Transform:
   m_ObjectHideFlags: 0
@@ -244,14 +236,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7734084251196478321}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.01745245, w: 0.99984777}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2025617104460581605}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -2}
 --- !u!212 &3150736715681197444
 SpriteRenderer:
   m_ObjectHideFlags: 0

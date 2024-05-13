@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PlayerItems : MonoBehaviour
 {
@@ -29,6 +30,13 @@ public class PlayerItems : MonoBehaviour
 
     public void AddItem(ComponentSO item)
     {
+        // Check if playerItems already contains an item with the same id
+        if (playerItems.Any(existingItem => existingItem.id == item.id))
+        {
+            return; 
+        }
+    
+        Debug.Log("Adding item: " + item.name);
         playerItems.Add(item);
         RecalculateStats();
     }
@@ -94,50 +102,37 @@ public class PlayerItems : MonoBehaviour
         return attackSpeed;
     }
 
-    public float GetScalingStat(ScalingStat scalingStat)
+    public float GetScalingStat(Stat scalingStat)
     {
-        float scalingStatValue = 0;
-
-        if(scalingStat == ScalingStat.MaxHealth)
+        if(scalingStat == Stat.Health)
         {
             return GetMaxHealth();
         }
 
-
+        
+        float value = 0;
         foreach (ComponentSO item in playerItems)
         {
             foreach (StatFloatPair stat in item.stats)
             {
-                switch (scalingStat)
+                if (stat.stat == scalingStat)
                 {
-                    case ScalingStat.PhysicalPower:
-                        if (stat.stat == Stat.PhysicalPower)
-                        {
-                            scalingStatValue += stat.value;
-                        }
-                        break;
-                    case ScalingStat.MagicPower:
-                        if (stat.stat == Stat.MagicPower)
-                        {
-                            scalingStatValue += stat.value;
-                        }
-                        break;
+                    value += stat.value;
                 }
             }
         }
-
-        return scalingStatValue;
+        return value;
     }
 
-    public string GetStatHexColor(ScalingStat scalingStat)
+    public string GetStatHexColor(Stat scalingStat)
     {
         switch (scalingStat)
         {
-            case ScalingStat.PhysicalPower:
+            case Stat.PhysicalPower:
                 return "<color=\"orange\">";
-            case ScalingStat.MagicPower:
+            case Stat.MagicPower:
                 return "<color=#00FFFF>";
-            case ScalingStat.MaxHealth:
+            case Stat.Health:
                 return "<color=#FF0000>";
             default:
                 return "<color=#FFFFFF>";

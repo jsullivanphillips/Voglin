@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SlimeMage
   m_EditorClassIdentifier: 
   mobName: SlimeMage
-  health: 8
+  health: 6
   damage: 8
   orbDropChance: 0
   attackStyle: 1

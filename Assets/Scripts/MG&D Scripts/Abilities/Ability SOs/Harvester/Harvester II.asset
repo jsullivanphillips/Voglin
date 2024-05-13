@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 096519f7025baea44ac3c0cee05cf96b, type: 3}
-  m_Name: Decay
+  m_Name: Harvester II
   m_EditorClassIdentifier: 
-  name: Decay
-  icon: {fileID: 21300000, guid: 8e96bce713f06924f9eb3b03b62ec435, type: 3}
-  summary: Ticking Magic
-  description: Deal <damage> damage to all enemies within <attackRange> units
-  abilityType: 1
-  damage: 2
+  name: Harvester
+  icon: {fileID: 21300000, guid: 5acd404d031a4354793a3739d18894db, type: 3}
+  upgrade: {fileID: 11400000, guid: 28a08fa13debc2648b47a6c8d58f9aa3, type: 2}
+  summary: Orbiting Physical
+  description: Spins in a circle around you dealing <damage> damage to all enemies
+    it passes through
+  abilityType: 2
+  damage: 6
   scalingStats:
-  - scalingStat: 1
-    scaling: 0.3
   - scalingStat: 2
-    scaling: 0.03
-  attackRange: 3
+    scaling: 0.65
+  attackRange: 4
   cooldown: 3
   cooldownTimer: 0
   isPiercing: 0
@@ -33,6 +33,9 @@ MonoBehaviour:
   isSplitOnCrit: 0
   numberOfSplits: 0
   appliesOnHit: 0
-  projectilePrefab: {fileID: 0}
+  lobDelayTime: 0
+  explosionRadius: 0
+  projectilePrefab: {fileID: 2025617104460581626, guid: 0de88596792d5af4dbce548d5ccc2029, type: 3}
+  projectileSpeed: 75
   id: 0
   abilitySlot: 0

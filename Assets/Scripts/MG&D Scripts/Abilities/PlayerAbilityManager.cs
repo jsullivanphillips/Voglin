@@ -203,13 +203,17 @@ public class PlayerAbilityManager : MonoBehaviour
                 ability.projectilePrefab = AoE_Effect;
                 break;
             case AbilityType.Orbiter:
-                GameObject orbiter = Instantiate(ability.projectilePrefab, transform.position + new Vector3(ability.attackRange, ability.attackRange, 0f), Quaternion.identity);
-                orbiter.GetComponent<Orbiter>().target = transform;
-                orbiter.transform.SetParent(transform);
-                orbiter.transform.localScale = Vector3.one;
-                ability.projectilePrefab = orbiter;
+                GameObject orbiterGO = Instantiate(ability.projectilePrefab, transform.position + new Vector3(ability.attackRange, ability.attackRange, 0f), Quaternion.identity);
+                
+                orbiterGO.transform.SetParent(transform);
+                orbiterGO.transform.localScale = Vector3.one;
 
-                Projectile projectileScript = orbiter.GetComponent<Projectile>();
+                Orbiter orbiter = orbiterGO.GetComponent<Orbiter>();
+                orbiter.target = transform;
+                orbiter.SetAbilitySO(ability);
+                ability.projectilePrefab = orbiterGO;
+
+                Projectile projectileScript = orbiterGO.GetComponent<Projectile>();
                 projectileScript.SetAbilitySO(ability);
                 break;
             case AbilityType.AttackSpeed:
@@ -228,19 +232,6 @@ public class PlayerAbilityManager : MonoBehaviour
             {
                 GameObject AoE_Effect = ability.projectilePrefab;
                 AoE_Effect.transform.localScale = new Vector3(ability.attackRange * 2, ability.attackRange * 2, 1f);
-            }
-        }
-    }
-
-    public void IncreaseOrbiterSpeedAndDamage(int id)
-    {
-        foreach(AbilitySO ability in abilities)
-        {
-            if(ability.id == id)
-            {
-                GameObject orbiter = ability.projectilePrefab;
-                orbiter.GetComponent<Orbiter>().speed = orbiter.GetComponent<Orbiter>().speed + 10f;
-                ability.damage += 2f;
             }
         }
     }

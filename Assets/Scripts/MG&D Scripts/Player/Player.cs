@@ -74,6 +74,12 @@ public class Player : MonoBehaviour
         }
     }
 
+    // TESTING
+    public void GainExperience()
+    {
+        GainExperience(1);
+    }
+
     private void LevelUp()
     {
         level++;

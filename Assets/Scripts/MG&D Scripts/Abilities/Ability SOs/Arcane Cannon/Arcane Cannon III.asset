@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 096519f7025baea44ac3c0cee05cf96b, type: 3}
-  m_Name: Basic Attack
+  m_Name: Arcane Cannon III
   m_EditorClassIdentifier: 
-  name: Basic Sword
-  icon: {fileID: 21300000, guid: 7bd3c205887cd624081dc656a939dabf, type: 3}
+  name: Arcane Cannon
+  icon: {fileID: 21300000, guid: c5243d6a8d67c9e48b10b4f57df73687, type: 3}
   upgrade: {fileID: 0}
-  summary: Basic Attack
-  description: Fire a sword at the nearest enemy within <attackRange> units, dealing
-    <damage> damage
-  abilityType: 4
-  damage: 6
+  summary: Ranged Magic
+  description: Launch an explosion at the furthest enemy within <attackRange> units,
+    dealing <damage> in an area
+  abilityType: 3
+  damage: 10
   scalingStats:
-  - scalingStat: 2
-    scaling: 1
-  attackRange: 5
-  cooldown: 2
-  cooldownTimer: 0.8165726
+  - scalingStat: 3
+    scaling: 0.65
+  attackRange: 12
+  cooldown: 2.4
+  cooldownTimer: 0
   isPiercing: 0
   numberOfPierces: 0
   isStutter: 0
@@ -33,9 +33,9 @@ MonoBehaviour:
   isSplitOnCrit: 0
   numberOfSplits: 0
   appliesOnHit: 0
-  lobDelayTime: 0
-  explosionRadius: 0
-  projectilePrefab: {fileID: 2025617104460581626, guid: 7aa933f4b34bf344c81d019b356a3c2d, type: 3}
+  lobDelayTime: 0.5
+  explosionRadius: 2
+  projectilePrefab: {fileID: 2025617104460581626, guid: d34c36a363e908040856ad33bf7772d9, type: 3}
   projectileSpeed: 20
   id: 0
   abilitySlot: 0

@@ -5,7 +5,6 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public Vector3 direction;
-    public float speed = 20f;
     public float distanceToLive = 5f;
     private float lifetime = 2f;
 
@@ -64,7 +63,7 @@ public class Projectile : MonoBehaviour
 
     private void Move()
     {
-        transform.position += direction * speed * Time.deltaTime;
+        transform.position += direction * ability.projectileSpeed * Time.deltaTime;
     }
 
     public void SetLifetime()
@@ -75,7 +74,7 @@ public class Projectile : MonoBehaviour
         }
         else
         {
-            lifetime = ability.attackRange / speed;
+            lifetime = ability.attackRange / ability.projectileSpeed;
         }
     }
 

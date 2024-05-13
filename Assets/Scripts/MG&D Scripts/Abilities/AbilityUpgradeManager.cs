@@ -29,6 +29,11 @@ public class AbilityUpgradeManager : MonoBehaviour
 
     private int _availableSkillPoints = 0;
 
+    public int GetAvailableSkillPoints()
+    {
+        return _availableSkillPoints;
+    }
+
     public void LevelUp()
     {
         _availableSkillPoints++;
@@ -39,7 +44,12 @@ public class AbilityUpgradeManager : MonoBehaviour
     {
         _availableSkillPoints--;
         _AbilityHUDManager.SetSkillPoints(_availableSkillPoints);
-        _HUDManager.SetDarkenedBackgroundForHUDHighLight(false);
+
+        if(!InventoryViewManager.Instance.IsInventoryOpen())
+        {
+            _HUDManager.SetDarkenedBackgroundForHUDHighLight(false);
+        }
+        
         _HUDManager.SetSpendAbilityPointsText(false);
     }
 
@@ -60,7 +70,10 @@ public class AbilityUpgradeManager : MonoBehaviour
         PlayerAbilityManager.Instance.AddAbility(chosenAbility);
         _newAbilityManager.RemoveAbility(ability);
         _newAbilityManager.HideAbilityOptions();
-        GameStateManager.Instance.ResumeGame();
+        if(!InventoryViewManager.Instance.IsInventoryOpen())
+        {
+            GameStateManager.Instance.ResumeGame();
+        }
     }
 
     public void UpgradeAbilityInSlot(int abilitySlot)
@@ -69,26 +82,13 @@ public class AbilityUpgradeManager : MonoBehaviour
         {
             AbilitySO ability = abilityDictionary[abilitySlot];   
 
-            // THIS WILL NEED TO CHANGE TO A SYSTEM WITH SO'S
-            switch (ability.abilityType)
+            if(ability.upgrade != null)
             {
-                case AbilityType.Projectile:
-                    ability.damage += 3;
-                    ability.cooldown -= 0.1f;
-                    break;
-                case AbilityType.AoE:
-                    ability.damage += 1;
-                    ability.attackRange += 0.5f;   
-                    ability.cooldown -= 0.1f;
-                    PlayerAbilityManager.Instance.UpdateAoeEffectSize(ability.id);   
-                    break;
-                case AbilityType.Orbiter:
-                    PlayerAbilityManager.Instance.IncreaseOrbiterSpeedAndDamage(ability.id);
-                    break;
-                case AbilityType.Lobbed:
-                    ability.damage += 1;
-                    ability.cooldown -= 0.1f;
-                    break;
+                ability.UpgradeAbility(ability.upgrade);
+            }
+            else
+            {
+                Debug.Log("No upgrade available for " + ability.name);
             }
             
             _AbilityHUDManager.SetAbilitySlot(abilitySlot, ability);  

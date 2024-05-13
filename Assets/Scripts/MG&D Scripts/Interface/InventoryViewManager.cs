@@ -45,6 +45,11 @@ public class InventoryViewManager : MonoBehaviour
         _InventoryView.SetActive(false);
     }
 
+    public bool IsInventoryOpen()
+    {
+        return _InventoryView.activeSelf;
+    }
+
     public void PressB()
     {
         // This is to prevent player from reopening inventory while game is unpausing

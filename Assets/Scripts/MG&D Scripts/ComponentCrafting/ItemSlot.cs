@@ -13,8 +13,7 @@ public class ItemSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
         ItemComponent item = eventData.pointerDrag.GetComponent<ItemComponent>();
         if(item != null)
         {
-            if(!item.isInRack)
-                PlayerItems.Instance.AddItem(item.GetComponentSO());
+            PlayerItems.Instance.AddItem(item.GetComponentSO());
             
             item.SetOriginalParent();
             item.transform.position = transform.position;

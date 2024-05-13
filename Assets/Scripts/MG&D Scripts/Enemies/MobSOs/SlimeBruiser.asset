@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SlimeBruiser
   m_EditorClassIdentifier: 
   mobName: SlimeBruiser
-  health: 10
+  health: 8
   damage: 6
   orbDropChance: 0
   attackStyle: 0
@@ -23,3 +23,4 @@ MonoBehaviour:
   movementSpeed: 1.5
   mobPrefab: {fileID: 6787828209179838966, guid: 57c1adec929eba94caf8663447ab9524, type: 3}
   projectilePrefab: {fileID: 0}
+  projectileSpeed: 0

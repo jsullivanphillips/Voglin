@@ -20,7 +20,16 @@ public class AbilitySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerEnter(PointerEventData eventData)
     {
         if(_ability != null)
-            TooltipManager.Instance.ShowAbilityTooltip(_ability, this.transform.position);
+        {
+            if(AbilityUpgradeManager.Instance.GetAvailableSkillPoints() > 0 && _ability.upgrade != null)
+            {
+                TooltipManager.Instance.ShowUpgradeAbilityTooltip(_ability, _ability.upgrade, this.transform.position);
+            }
+            else
+            {
+                TooltipManager.Instance.ShowAbilityTooltip(_ability, this.transform.position);
+            }
+        }    
     }
 
     public void OnPointerExit(PointerEventData eventData)

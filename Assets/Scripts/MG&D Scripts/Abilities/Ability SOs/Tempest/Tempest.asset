@@ -10,22 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 096519f7025baea44ac3c0cee05cf96b, type: 3}
-  m_Name: Basic Attack
+  m_Name: Tempest
   m_EditorClassIdentifier: 
-  name: Basic Sword
-  icon: {fileID: 21300000, guid: 7bd3c205887cd624081dc656a939dabf, type: 3}
-  upgrade: {fileID: 0}
-  summary: Basic Attack
-  description: Fire a sword at the nearest enemy within <attackRange> units, dealing
-    <damage> damage
-  abilityType: 4
-  damage: 6
+  name: Tempest
+  icon: {fileID: 21300000, guid: a57e7d93fac3bf248ab1bab56727ab7c, type: 3}
+  upgrade: {fileID: 11400000, guid: de147a82849077146a866bdf0e20e09e, type: 2}
+  summary: Attack Speed
+  description: Gain <damage> attack speed for your basic attack
+  abilityType: 5
+  damage: 15
   scalingStats:
-  - scalingStat: 2
-    scaling: 1
+  - scalingStat: 3
+    scaling: 0.03
   attackRange: 5
   cooldown: 2
-  cooldownTimer: 0.8165726
+  cooldownTimer: 0
   isPiercing: 0
   numberOfPierces: 0
   isStutter: 0
@@ -35,7 +34,7 @@ MonoBehaviour:
   appliesOnHit: 0
   lobDelayTime: 0
   explosionRadius: 0
-  projectilePrefab: {fileID: 2025617104460581626, guid: 7aa933f4b34bf344c81d019b356a3c2d, type: 3}
+  projectilePrefab: {fileID: 0}
   projectileSpeed: 20
   id: 0
   abilitySlot: 0

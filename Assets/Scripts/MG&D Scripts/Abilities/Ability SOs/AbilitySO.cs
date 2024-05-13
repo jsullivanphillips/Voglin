@@ -11,17 +11,10 @@ public enum AbilityType
     AttackSpeed
 }
 
-public enum ScalingStat
-{
-    PhysicalPower,
-    MagicPower,
-    MaxHealth
-}
-
 [System.Serializable]
 public class ScalingStats
 {
-    public ScalingStat scalingStat;
+    public Stat scalingStat;
     public float scaling;
 }
 
@@ -31,11 +24,13 @@ public class AbilitySO : ScriptableObject
 {
     public new string name;
     public Sprite icon;
+    public AbilitySO upgrade;
     public string summary;
     [TextArea(3, 10)]
     public string description;
     public AbilityType abilityType;
     
+
     public float damage = 6f;
     public List<ScalingStats> scalingStats;
     public float attackRange = 5f;
@@ -53,6 +48,7 @@ public class AbilitySO : ScriptableObject
     public float explosionRadius = 0f;
     
     public GameObject projectilePrefab;
+    public float projectileSpeed = 20f;
     
     public int id;
     public int abilitySlot = 0;
@@ -70,5 +66,35 @@ public class AbilitySO : ScriptableObject
             bonusDamage += PlayerItems.Instance.GetScalingStat(statPair.scalingStat) * statPair.scaling;
         }
         return damage + bonusDamage;
+    }
+
+
+    public void UpgradeAbility(AbilitySO upgradedAbilitySO)
+    {
+        name = upgradedAbilitySO.name;
+        icon = upgradedAbilitySO.icon;
+        summary = upgradedAbilitySO.summary;
+        description = upgradedAbilitySO.description;
+        abilityType = upgradedAbilitySO.abilityType;
+        upgrade = upgradedAbilitySO.upgrade;
+        damage = upgradedAbilitySO.damage;
+        scalingStats = upgradedAbilitySO.scalingStats;
+        attackRange = upgradedAbilitySO.attackRange;
+        cooldown = upgradedAbilitySO.cooldown;
+        cooldownTimer = upgradedAbilitySO.cooldownTimer;
+        isPiercing = upgradedAbilitySO.isPiercing;
+        numberOfPierces = upgradedAbilitySO.numberOfPierces;
+        isStutter = upgradedAbilitySO.isStutter;
+        stutterDuration = upgradedAbilitySO.stutterDuration;
+        isSplitOnCrit = upgradedAbilitySO.isSplitOnCrit;
+        numberOfSplits = upgradedAbilitySO.numberOfSplits;
+        appliesOnHit = upgradedAbilitySO.appliesOnHit;
+        lobDelayTime = upgradedAbilitySO.lobDelayTime;
+        explosionRadius = upgradedAbilitySO.explosionRadius;
+
+        projectileSpeed = upgradedAbilitySO.projectileSpeed;
+
+
+
     }
 }

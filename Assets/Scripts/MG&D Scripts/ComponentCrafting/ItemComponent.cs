@@ -47,7 +47,8 @@ public class ItemComponent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
         
         originalPosition = this.transform.position;
-
+        
+        SetOriginalParent();
         this.transform.SetAsLastSibling();
 
         canvasGroup.blocksRaycasts = false;

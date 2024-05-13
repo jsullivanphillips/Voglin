@@ -10,22 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 096519f7025baea44ac3c0cee05cf96b, type: 3}
-  m_Name: Basic Attack
+  m_Name: Decay III
   m_EditorClassIdentifier: 
-  name: Basic Sword
-  icon: {fileID: 21300000, guid: 7bd3c205887cd624081dc656a939dabf, type: 3}
-  upgrade: {fileID: 0}
-  summary: Basic Attack
-  description: Fire a sword at the nearest enemy within <attackRange> units, dealing
-    <damage> damage
-  abilityType: 4
-  damage: 6
+  name: Decay
+  icon: {fileID: 21300000, guid: 8e96bce713f06924f9eb3b03b62ec435, type: 3}
+  upgrade: {fileID: 11400000, guid: ba6a6515bcf6c7548a1942272482a7e4, type: 2}
+  summary: Ticking Magic
+  description: Deal <damage> damage to all enemies within <attackRange> units
+  abilityType: 1
+  damage: 2
   scalingStats:
-  - scalingStat: 2
-    scaling: 1
-  attackRange: 5
-  cooldown: 2
-  cooldownTimer: 0.8165726
+  - scalingStat: 3
+    scaling: 0.3
+  - scalingStat: 7
+    scaling: 0.05
+  attackRange: 6
+  cooldown: 2.5
+  cooldownTimer: 0
   isPiercing: 0
   numberOfPierces: 0
   isStutter: 0
@@ -35,7 +36,7 @@ MonoBehaviour:
   appliesOnHit: 0
   lobDelayTime: 0
   explosionRadius: 0
-  projectilePrefab: {fileID: 2025617104460581626, guid: 7aa933f4b34bf344c81d019b356a3c2d, type: 3}
+  projectilePrefab: {fileID: 0}
   projectileSpeed: 20
   id: 0
   abilitySlot: 0

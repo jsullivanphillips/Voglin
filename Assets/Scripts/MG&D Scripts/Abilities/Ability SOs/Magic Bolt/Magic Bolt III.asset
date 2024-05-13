@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 096519f7025baea44ac3c0cee05cf96b, type: 3}
-  m_Name: Basic Attack
+  m_Name: Magic Bolt III
   m_EditorClassIdentifier: 
-  name: Basic Sword
-  icon: {fileID: 21300000, guid: 7bd3c205887cd624081dc656a939dabf, type: 3}
+  name: Magic Bolt
+  icon: {fileID: 21300000, guid: 12b298403fb1809479535708d47b3008, type: 3}
   upgrade: {fileID: 0}
-  summary: Basic Attack
-  description: Fire a sword at the nearest enemy within <attackRange> units, dealing
-    <damage> damage
-  abilityType: 4
-  damage: 6
+  summary: Magic Projectile
+  description: Fire a projectile at the nearest enemy within <attackRange> units,
+    dealing <damage> damage
+  abilityType: 0
+  damage: 9
   scalingStats:
-  - scalingStat: 2
-    scaling: 1
-  attackRange: 5
-  cooldown: 2
-  cooldownTimer: 0.8165726
+  - scalingStat: 3
+    scaling: 0.7
+  attackRange: 9
+  cooldown: 1.7
+  cooldownTimer: 0
   isPiercing: 0
   numberOfPierces: 0
   isStutter: 0
@@ -35,7 +35,7 @@ MonoBehaviour:
   appliesOnHit: 0
   lobDelayTime: 0
   explosionRadius: 0
-  projectilePrefab: {fileID: 2025617104460581626, guid: 7aa933f4b34bf344c81d019b356a3c2d, type: 3}
+  projectilePrefab: {fileID: 2025617104460581626, guid: ecd53f17c927b124db4b14b6c8fc5c9b, type: 3}
   projectileSpeed: 20
   id: 0
   abilitySlot: 0

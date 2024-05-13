@@ -102,7 +102,7 @@ public class AbilityCard : MonoBehaviour, IPointerClickHandler
         return parsedDescription;
     }
 
-    private string BreakEnumToString(ScalingStat stat)
+    private string BreakEnumToString(Stat stat)
     {
         string statString = stat.ToString();
         string finalString = Regex.Replace(statString, "(?<!^)([A-Z])", " $1");

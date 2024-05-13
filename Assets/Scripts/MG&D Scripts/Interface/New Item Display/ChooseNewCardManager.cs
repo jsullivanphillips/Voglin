@@ -46,10 +46,17 @@ public class ChooseNewCardManager : MonoBehaviour
         int numberOfCards = 3;
         
         List<ComponentSO> itemsToDisplay = new List<ComponentSO>();
-
+    
         for (int i = 0; i < numberOfCards; i++)
         {
-            itemsToDisplay.Add(ItemDatabase.Instance.GetRandomComponent());
+            ComponentSO randomComponent;
+            do
+            {
+                randomComponent = ItemDatabase.Instance.GetRandomComponent();
+            } 
+            while (itemsToDisplay.Contains(randomComponent));
+    
+            itemsToDisplay.Add(randomComponent);
         }
     
         DisplayCards(itemsToDisplay);
